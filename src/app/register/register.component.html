@@ -1,0 +1,28 @@
+
+
+
+
+
+<div class="main">
+    <p class="sign" align="center">Sign up</p>
+    <form  class="form1">
+
+        <input class="un " type="text" align="center" name="email"  [(ngModel)]="user.email"
+            placeholder="name@example.com">
+
+        <input class="pass" type="password" align="center" name="password" 
+            [(ngModel)]="user.password" placeholder="Password">
+
+            <div class="alert alert-danger" *ngIf="messageError">
+                {{messageError}}
+            </div>
+            
+        <button class="submit" align="center" (click)="register()" >Sign up</button>
+
+        <p class="forgot" align="center"><a routerLink="/forgot-password" >Forgot Password?</a></p>
+
+        <p align="center"><a routerLink="/">Sign in </a></p>
+
+    </form>
+</div>
+
