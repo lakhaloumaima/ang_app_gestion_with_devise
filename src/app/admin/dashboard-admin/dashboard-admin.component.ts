@@ -41,7 +41,6 @@ export class DashboardAdminComponent  {
     console.log(this.admindata)
 
     this.usersServicesService.countAllForAdmin().subscribe(result => {
-
       this.dataArrayy = result
 
       console.log(this.dataArrayy),

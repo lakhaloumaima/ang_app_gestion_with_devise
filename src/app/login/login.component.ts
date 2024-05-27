@@ -52,14 +52,14 @@ export class LoginComponent  {
           if (response.user.email_confirmed == true) {
             if (response.role == "admin") {
 
-              sessionStorage.setItem('admindata', JSON.stringify(response));
+              sessionStorage.setItem('user', JSON.stringify(response));
               console.log(response);
               this.route.navigate(['/dashboard-admin']);
 
             }
             else if (response.role == "employee") {
 
-              sessionStorage.setItem('employeedata', JSON.stringify(response));
+              sessionStorage.setItem('user', JSON.stringify(response));
               console.log(response);
               this.route.navigate(['/dashboard-employee']);
 

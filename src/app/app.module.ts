@@ -36,6 +36,15 @@ import { ContactComponent } from './contact/contact.component';
 import { TestComponent } from './test/test.component';
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.component';
+import { ChatComponent } from './chat/chat.component';
+
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+
+
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 // import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 // import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -73,6 +82,7 @@ import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.compo
     ContactComponent,
     TestComponent,
     ProfileAdminComponent,
+    ChatComponent,
 
 
   ],
@@ -89,6 +99,7 @@ import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.compo
     BrowserAnimationsModule,
 
     ChartsModule,
+    SocketIoModule.forRoot(config),
 
    // Ng2SearchPipeModule ,
 
@@ -97,7 +108,7 @@ import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.compo
 
   ],
 
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

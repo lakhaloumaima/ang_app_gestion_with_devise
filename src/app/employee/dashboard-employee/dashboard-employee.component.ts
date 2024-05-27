@@ -21,7 +21,7 @@ export class DashboardEmployeeComponent {
 
   constructor(private employeesServicesService: UsersServicesService, private router: Router) {
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('employeedata')!);
+    this.employeedata = JSON.parse(sessionStorage.getItem('user')!);
     // console.log(this.employeedata.user.last_name)
 
     this.imageupdate = new UntypedFormGroup({ avatar: new UntypedFormControl('', [Validators.required]), });

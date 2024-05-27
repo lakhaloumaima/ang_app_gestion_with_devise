@@ -12,7 +12,7 @@ export class SidebarComponent  {
 
   constructor( private usersServicesService: UsersServicesService , private router: Router  ) {
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('employeedata')!);
+    this.employeedata = JSON.parse(sessionStorage.getItem('user')!);
     console.log(this.employeedata.id)
     
   }

@@ -2,20 +2,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersServicesService {
 
+  private currentUserSubject: BehaviorSubject<any> | undefined;
+  public currentUser: Observable<any> | undefined;
+
   constructor(private http: HttpClient, public router: Router) {
 
+    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('admindata')!));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
+
 
   /************************************************ ADMIN + EMPLOYEE ***************************************************/
   login(data: any): Observable<any> {
     return this.http.post(environment.urlBackend + 'users/sign_in/', data);
+
   }
 
   resetPassword(token: any, email: any): Observable<any> {

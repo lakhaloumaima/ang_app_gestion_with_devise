@@ -21,6 +21,7 @@ import { GenerateRequestComponent } from './employee/generate-request/generate-r
 import { ContactComponent } from './contact/contact.component';
 import { TestComponent } from './test/test.component';
 import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,8 @@ const routes: Routes = [
   { path: 'requests-refused', canActivate: [AuthGuardGuard], component: RequestsRefusedComponent },
   { path: 'generaterequestemployee/:id', canActivate: [AuthGuardGuard], component: GenerateRequestComponent },
   { path: 'profile-admin', canActivate: [AuthGuardGuard], component: ProfileAdminComponent },
+
+  { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatComponent },
 
   /************************* EMPLOYEE ******************************/
   { path: 'dashboard-employee', canActivate: [AuthGuardGuard], component: DashboardEmployeeComponent },
