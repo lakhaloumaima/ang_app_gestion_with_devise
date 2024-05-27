@@ -31,177 +31,235 @@
 	</head>
 	<!--Coded With Love By Mutiullah Samim-->
 	<body>
-		<div class="container-fluid h-100">
-			<div class="row justify-content-center h-100">
-				<div class="col-md-4 col-xl-3 chat"><div
-						class="card mb-sm-3 mb-md-0 contacts_card">
-						<div class="card-header">
-							<div class="input-group">
-								<input type="text" placeholder="Search..." name
-									class="form-control search">
-								<div class="input-group-prepend">
-									<span class="input-group-text search_btn"><i
-											class="fas fa-search"></i></span>
-								</div>
-							</div>
-						</div>
-						<div class="card-body contacts_body">
-							<!-- <ui class="contacts"> -->
-							<li class="active">
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-											class="rounded-circle user_img">
-										<span class="online_icon"></span>
-									</div>
-									<div class="user_info">
-										<span>Khalid</span>
-										<p>Kalid is online</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img
-											src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg"
-											class="rounded-circle user_img">
-										<span class="online_icon offline"></span>
-									</div>
-									<div class="user_info">
-										<span>Taherah Big</span>
-										<p>Taherah left 7 mins ago</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img
-											src="https://i.pinimg.com/originals/ac/b9/90/acb990190ca1ddbb9b20db303375bb58.jpg"
-											class="rounded-circle user_img">
-										<span class="online_icon"></span>
-									</div>
-									<div class="user_info">
-										<span>Sami Rafi</span>
-										<p>Sami is online</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img
-											src="http://profilepicturesdp.com/wp-content/uploads/2018/07/sweet-girl-profile-pictures-9.jpg"
-											class="rounded-circle user_img">
-										<span class="online_icon offline"></span>
-									</div>
-									<div class="user_info">
-										<span>Nargis Hawa</span>
-										<p>Nargis left 30 mins ago</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img
-											src="https://static.turbosquid.com/Preview/001214/650/2V/boy-cartoon-3D-model_D.jpg"
-											class="rounded-circle user_img">
-										<span class="online_icon offline"></span>
-									</div>
-									<div class="user_info">
-										<span>Rashid Samim</span>
-										<p>Rashid left 50 mins ago</p>
-									</div>
-								</div>
-							</li>
-							<!-- </ui> -->
-						</div>
-						<div class="card-footer"></div>
-					</div></div>
-				<div class="col-md-8 col-xl-6 chat">
-					<div class="card">
-						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-										class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Chat with Khalid</span>
-									<p>1767 Messages</p>
-								</div>
-								<div class="video_cam">
-									<span><i class="fas fa-video"></i></span>
-									<span><i class="fas fa-phone"></i></span>
-								</div>
-							</div>
-							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-							<div class="action_menu">
-								<ul>
-									<li><i class="fas fa-user-circle"></i> View profile</li>
-									<li><i class="fas fa-users"></i> Add to close friends</li>
-									<li><i class="fas fa-plus"></i> Add to group</li>
-									<li><i class="fas fa-ban"></i> Block</li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-body msg_card_body">
 
-							<ul *ngFor="let msg of messages" class="message-list">
-								<li (mouseenter)="msg.showTime = true"
-									(mouseleave)="msg.showTime = false" class="message-item">
-									<div *ngIf="msg.sender_id === current_user.id" class="msg_content"
-										[ngClass]="{'sender': msg.sender_id === current_user.id}">
-										{{ msg.message }}
-										<span class="msg_time" *ngIf="msg.showTime">{{ msg.created_at
-											}}</span>
-									</div>
-									<div *ngIf="msg.sender_id !== current_user.id" class="msg_content"
-										[ngClass]="{ 'receiver': msg.sender_id !== current_user.id}">
-										{{ msg.message }}
-										<span class="msg_time" *ngIf="msg.showTime">{{ msg.created_at
-											}}</span>
-									</div>
-								</li>
-							</ul>
-
-							<br>
-							<br>
-						</div>
-						<div class="card-footer">
-							<form (ngSubmit)="createMessage()">
-								<div class="input-group">
-									<div class="input-group-append">
-										<span class="input-group-text attach_btn"><i
-												class="fas fa-paperclip"></i></span>
-									</div>
-									<textarea name="newmessage" class="form-control type_msg"
-										placeholder="Type your message..." [(ngModel)]="newmessage"
-										required></textarea>
-									<div class="input-group-append">
-										<button type="submit"> <span class="input-group-text send_btn"><i
-													class="fas fa-location-arrow"></i></span></button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
+		<div class="container clearfix">
+			<div class="people-list" id="people-list">
+				<div class="search">
+					<input type="text" placeholder="search" />
+					<i class="fa fa-search"></i>
 				</div>
+				<ul class="list">
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Vincent Porter</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Aiden Chavez</div>
+							<div class="status">
+								<i class="fa fa-circle offline"></i> left 7 mins ago
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Mike Thomas</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Erica Hughes</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Ginger Johnston</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Tracy Carpenter</div>
+							<div class="status">
+								<i class="fa fa-circle offline"></i> left 30 mins ago
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Christian Kelly</div>
+							<div class="status">
+								<i class="fa fa-circle offline"></i> left 10 hours ago
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Monica Ward</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Dean Henry</div>
+							<div class="status">
+								<i class="fa fa-circle offline"></i> offline since Oct 28
+							</div>
+						</div>
+					</li>
+
+					<li class="clearfix">
+						<img
+							src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg"
+							alt="avatar" />
+						<div class="about">
+							<div class="name">Peyton Mckinney</div>
+							<div class="status">
+								<i class="fa fa-circle online"></i> online
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
-		</div>
-		<script>
-            $(document).ready(function(){
-                $('#action_menu_btn').click(function(){
-                    $('.action_menu').toggle();
-                });
-            });
-        </script>
+
+			<div class="chat">
+				<div class="chat-header clearfix">
+					<img
+						src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
+						alt="avatar" />
+
+					<div class="chat-about">
+						<div class="chat-with">Chat with Vincent Porter</div>
+						<div class="chat-num-messages">already 1 902 messages</div>
+					</div>
+					<i class="fa fa-star"></i>
+				</div> <!-- end chat-header -->
+
+				<div class="chat-history">
+					<ul *ngFor="let msg of messages">
+
+						<li>
+							<div *ngIf="msg.sender_id !== current_user.id"
+								class="message-data align-left">
+								<span class="message-data-name"><i class="fa fa-circle online"></i>
+									Vincent</span>
+								<span class="message-data-time">{{ msg.created_at }}</span>
+							</div>
+							<div class="message my-message float-left">
+								{{ msg.message }}
+							</div>
+						</li>
+						<br>
+						<br>
+						<br>
+
+
+						<li *ngIf="msg.sender_id === current_user.id" class="clearfix">
+							<div class="message-data align-right">
+								<span class="message-data-name"><i class="fa fa-circle me"></i>  Olia </span>
+								<span class="message-data-time">{{ msg.created_at }} </span> &nbsp;
+								&nbsp;
+							</div>
+							<div class="message other-message float-right">
+								{{ msg.message }}
+							</div>
+						</li>
+
+						<!-- <li>
+							<div class="message-data">
+								<span class="message-data-name"><i class="fa fa-circle online"></i>
+									Vincent</span>
+								<span class="message-data-time">10:31 AM, Today</span>
+							</div>
+							<i class="fa fa-circle online"></i>
+							<i class="fa fa-circle online" style="color: #AED2A6"></i>
+							<i class="fa fa-circle online" style="color:#DAE9DA"></i>
+						</li> -->
+
+					</ul>
+
+				</div> <!-- end chat-history -->
+
+				<div class="chat-message clearfix">
+					<form (ngSubmit)="createMessage()">
+						<textarea name="newmessage" id="newmessage"
+							placeholder="Type your message" rows="3" [(ngModel)]="newmessage"
+							required></textarea>
+
+						<i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+						<i class="fa fa-file-image-o"></i>
+
+						<button type="submit">Send</button>
+					</form>
+				</div> <!-- end chat-message -->
+
+			</div> <!-- end chat -->
+
+		</div> <!-- end container -->
+
+		<script id="message-template" type="text/x-handlebars-template">
+  <li class="clearfix">
+    <div class="message-data align-right">
+      <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+      <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+    </div>
+    <div class="message other-message float-right">
+      {{messageOutput}}
+    </div>
+  </li>
+  
+</script>
+
+		<script id="message-response-template" type="text/x-handlebars-template">
+  <li>
+    <div class="message-data">
+      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+      <span class="message-data-time">{{time}}, Today</span>
+    </div>
+    <div class="message my-message">
+      {{response}}
+    </div>
+  </li>
+</script>
+
 	</body>
 </html>
-
-
-
-
