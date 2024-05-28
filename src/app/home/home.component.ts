@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersServicesService } from '../services/users-services.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,13 +13,13 @@ export class HomeComponent implements OnInit {
   messageErr = ''
   logged_in: boolean = false;
   role: string = '';
-  admindata: any;
+  user: any;
   clientdata: any;
   freelancerdata: any;
 
-  constructor(public userService: UsersService) {
+  constructor(public userService: UsersServicesService) {
 
-    this.admindata = JSON.parse(sessionStorage.getItem('admindata') || '{}');
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
     this.clientdata = JSON.parse(sessionStorage.getItem('clientdata') || '{}');
     this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata') || '{}');
     this.logged_in = JSON.parse(sessionStorage.getItem('logged_in')!);

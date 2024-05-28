@@ -9,11 +9,11 @@ import { UsersServicesService } from 'src/app/services/users-services.service';
 })
 export class NavbarAdminComponent  {
   
-  admindata: any;
+  user: any;
 
   constructor( private usersServicesService: UsersServicesService , private router: Router  ) { 
-    this.admindata = JSON.parse(sessionStorage.getItem('admindata')!);
-    console.log(this.admindata)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user)
     
    }
 

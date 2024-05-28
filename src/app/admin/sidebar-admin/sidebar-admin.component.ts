@@ -8,11 +8,11 @@ import { UsersServicesService } from 'src/app/services/users-services.service';
   styleUrls: ['./sidebar-admin.component.css']
 })
 export class SidebarAdminComponent  {
-  admindata: any;
+  user: any;
 
   constructor( private usersServicesService: UsersServicesService , private router: Router  ) { 
-    this.admindata = JSON.parse(sessionStorage.getItem('admindata')!);
-    console.log(this.admindata)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user)
     
   }
 

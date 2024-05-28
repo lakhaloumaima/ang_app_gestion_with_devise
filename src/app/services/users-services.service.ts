@@ -14,7 +14,7 @@ export class UsersServicesService {
 
   constructor(private http: HttpClient, public router: Router) {
 
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('admindata')!));
+    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('user')!));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 

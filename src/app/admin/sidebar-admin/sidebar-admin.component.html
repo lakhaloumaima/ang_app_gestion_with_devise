@@ -6,14 +6,14 @@
       
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle"  [src]="admindata.avv" alt="" style="width: 40px; height: 40px;">
+                <img class="rounded-circle"  [src]="user.avv" alt="" style="width: 40px; height: 40px;">
                 <div
                     class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                 </div>
             </div>
             <div class="ms-1"> <br>
-                <h6 class="mb-0">{{ admindata.user.email }} </h6>
-                <span>{{admindata.role  }} </span>
+                <h6 class="mb-0">{{ user.user.email }} </h6>
+                <span>{{user.role  }} </span>
             </div>
         </div>
         <div class="navbar-nav w-100">
@@ -32,6 +32,8 @@
                     <a routerLink="/requests-refused" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Refused </a>
                 </div>
             </div>
+            <a routerLink="/chat-admin" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Chat with Employees </a>
+
 
             <div class="nav-item dropdown">
                 <a (click)="logout()" class="nav-link"><i class="fa fa-laptop me-2"></i>Logout </a>
@@ -40,4 +42,6 @@
         </div>
     </nav>
 </div>
+
+
 <!-- Sidebar End -->

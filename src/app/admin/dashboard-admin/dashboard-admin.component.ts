@@ -22,7 +22,7 @@ export class DashboardAdminComponent  {
 
   p: any = 1 ;
 
-  admindata: any;
+  user: any;
 
 
   constructor(private demandesServicesService: DemandesServicesService, private usersServicesService: UsersServicesService, private router: Router) {
@@ -37,8 +37,8 @@ export class DashboardAdminComponent  {
         }
     })
 
-    this.admindata = JSON.parse(sessionStorage.getItem('admindata')!);
-    console.log(this.admindata)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user)
 
     this.usersServicesService.countAllForAdmin().subscribe(result => {
       this.dataArrayy = result

@@ -49,6 +49,7 @@ const routes: Routes = [
   { path: 'profile-admin', canActivate: [AuthGuardGuard], component: ProfileAdminComponent },
 
   { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatComponent },
+  { path: 'chat-admin/:receiver_id', canActivate: [AuthGuardGuard], component: ChatComponent },
 
   /************************* EMPLOYEE ******************************/
   { path: 'dashboard-employee', canActivate: [AuthGuardGuard], component: DashboardEmployeeComponent },

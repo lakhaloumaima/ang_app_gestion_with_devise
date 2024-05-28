@@ -118,7 +118,7 @@ export class LoginComponent  {
     this.usersServicesService.login(data).subscribe(
       response => {
 
-        //   sessionStorage.setItem('admindata', JSON.stringify(response));
+        //   sessionStorage.setItem('user', JSON.stringify(response));
 
         console.log(JSON.parse(response).toString(response));
         console.log(JSON.parse(JSON.stringify(response)));
@@ -135,7 +135,7 @@ export class LoginComponent  {
 
           if (response.status == 200 && response.role == "admin") {
             // if (response.role == 0 )
-            sessionStorage.setItem('admindata', JSON.stringify(response));
+            sessionStorage.setItem('user', JSON.stringify(response));
 
             console.log(response);
             this.route.navigate(['/dashboard-admin']);

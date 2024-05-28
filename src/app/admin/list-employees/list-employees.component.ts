@@ -26,13 +26,13 @@ export class ListEmployeesComponent {
 
   updateemployees: UntypedFormGroup;
 
-  admindata: any;
+  user: any;
 
 
   constructor(private employeesServicesService: UsersServicesService, private router: Router) {
 
-    this.admindata = JSON.parse(sessionStorage.getItem('admindata')!);
-    console.log(this.admindata)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user)
 
     this.employeesServicesService.getAllEmployees().subscribe(data => {
       // debugger

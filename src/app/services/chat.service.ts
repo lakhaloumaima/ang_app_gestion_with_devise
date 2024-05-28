@@ -5,24 +5,25 @@ import { SocketService } from './socket-service.service';
 import { UsersServicesService } from './users-services.service';
 import { HttpClient } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  // admindata:any;
+  // user:any;
   private cable: any;
 
   constructor(private http: HttpClient, private socket: Socket) {
-    // this.admindata = JSON.parse(sessionStorage.getItem('admindata')!);
+    // this.user = JSON.parse(sessionStorage.getItem('user')!);
 
   }
 
-
-  createMessage(message: { message: string }) {
-    return this.http.post<any>('http://localhost:3000/messages', message );
+  createMessage(message: { message: string, receiver_id: number, sender_id: number }): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/messages', { message: message.message, receiver_id: message.receiver_id, sender_id: message.sender_id });
   }
+  
 
   sendMessage(message: string) {
     this.socket.emit('ChatChannel', message);
@@ -47,4 +48,10 @@ export class ChatService {
     return this.http.get<any[]>('http://localhost:3000/messages');
   }
 
+  getMessagesByReceiverId( receiver_id: any , sender_id: any ) {
+    return this.http.get<any[]>('http://localhost:3000/getMessagesByReceiverId/' + receiver_id + "/" + sender_id );
+  }
+  getMessagesBySenderId( receiver_id: any , sender_id: any ) {
+    return this.http.get<any[]>('http://localhost:3000/getMessagesBySenderId/' + sender_id  + "/" +  receiver_id );
+  }
 }
