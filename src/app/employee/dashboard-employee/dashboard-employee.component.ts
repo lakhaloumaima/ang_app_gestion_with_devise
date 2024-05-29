@@ -14,15 +14,15 @@ import Swal from 'sweetalert2';
 })
 export class DashboardEmployeeComponent {
 
-  employeedata: any;
+  user: any;
   imageupdate: UntypedFormGroup;
   image: any;
   upadate: UntypedFormGroup;
 
   constructor(private employeesServicesService: UsersServicesService, private router: Router) {
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('user')!);
-    // console.log(this.employeedata.user.last_name)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    // console.log(this.user.user.last_name)
 
     this.imageupdate = new UntypedFormGroup({ avatar: new UntypedFormControl('', [Validators.required]), });
 
@@ -59,10 +59,10 @@ export class DashboardEmployeeComponent {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
 
-        this.employeesServicesService.updateimageuser(this.employeedata.user.id, imageformadata).subscribe(response => {
+        this.employeesServicesService.updateimageuser(this.user.user.id, imageformadata).subscribe(response => {
 
 
-          sessionStorage.setItem('employeedata', JSON.stringify(response));
+          sessionStorage.setItem('user', JSON.stringify(response));
           window.location.reload();
 
 
@@ -101,19 +101,19 @@ export class DashboardEmployeeComponent {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        this.employeesServicesService.updateinfouser(this.employeedata.id, formData).subscribe(response => {
+        this.employeesServicesService.updateinfouser(this.user.id, formData).subscribe(response => {
 
-          sessionStorage.setItem('employeedata', JSON.stringify(response));
+          sessionStorage.setItem('user', JSON.stringify(response));
           window.location.reload();
        
           console.log(response)
-          let indexId = this.employeedata.findIndex((obj: any) => obj.id == this.employeedata.id)
+          let indexId = this.user.findIndex((obj: any) => obj.id == this.user.id)
 
-          this.employeedata[indexId].email = data.email
-          this.employeedata[indexId].first_name = data.first_name
-          this.employeedata[indexId].last_name = data.last_name
-          this.employeedata[indexId].address = data.address
-          this.employeedata[indexId].phone = data.phone
+          this.user[indexId].email = data.email
+          this.user[indexId].first_name = data.first_name
+          this.user[indexId].last_name = data.last_name
+          this.user[indexId].address = data.address
+          this.user[indexId].phone = data.phone
 
         }, (err: HttpErrorResponse) => {
           console.log(err.message)

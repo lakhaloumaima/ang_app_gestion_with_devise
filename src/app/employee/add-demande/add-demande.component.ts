@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { DemandesServicesService } from 'src/app/services/demandes-services.service';
 import Swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-add-demande',
@@ -14,9 +15,11 @@ import Swal from 'sweetalert2';
 })
 export class AddDemandeComponent {
 
+  selectedFile: File | null = null;
+
   dataArray: any;
 
-  employeedata: any;
+  user: any;
 
   addrequestt: UntypedFormGroup;
 
@@ -24,8 +27,8 @@ export class AddDemandeComponent {
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('employeedata')!);
-    console.log(this.employeedata.id);
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user.id);
 
     this.addrequestt = new UntypedFormGroup({
 
@@ -39,6 +42,10 @@ export class AddDemandeComponent {
 
   }
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   addRequestt(f: any) {
     const formData = new FormData();
 
@@ -46,7 +53,10 @@ export class AddDemandeComponent {
     formData.append('end_date', this.addrequestt.value.end_date);
     formData.append('reason', this.addrequestt.value.reason);
     formData.append('description', this.addrequestt.value.description);
-    formData.append('user_id', this.employeedata.id);
+    formData.append('user_id', this.user.id);
+    if (this.selectedFile) {
+      formData.append('certificate', this.selectedFile, this.selectedFile.name);
+    }
 
     let data = f.value
 
@@ -111,6 +121,33 @@ export class AddDemandeComponent {
 
   }
 
+
+
+  importPdf(requestId: number): void {
+    if (this.selectedFile) {
+      this.demandesServicesService.importPdf(requestId, this.selectedFile).subscribe(
+        response => {
+          console.log( response )
+          Swal.fire({
+            icon: 'success',
+            title: 'Import Successful',
+            text: 'PDF has been uploaded successfully!',
+            showConfirmButton: true,
+            timer: 1500
+          });
+        },
+        (error: HttpErrorResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Import Failed',
+            text: 'Could not upload PDF. Please try again later.',
+            showConfirmButton: true,
+            timer: 1500
+          });
+        }
+      );
+    }
+  }
 
 
 }

@@ -12,14 +12,14 @@
                     <div class="module-inner">
                         <div class="side-bar">
                             <div class="user-info">
-                                <img class="img-profile img-circle img-responsive center-block" [src]="employeedata.avv"
+                                <img class="img-profile img-circle img-responsive center-block" [src]="user.avv"
                                     alt="">
                                 <ul class="meta list list-unstyled">
 
-                                    <li class="email"><a> {{employeedata.user.email}} </a></li>
+                                    <li class="email"><a> {{user.user.email}} </a></li>
                                     <h6> You have balance : <br>
-                                       <p class="btn btn-success rounded-pill m-2"  *ngIf="employeedata.user.solde > 0 " >  {{employeedata.user.solde}} Days !! </p> 
-                                       <p class="btn btn-danger rounded-pill m-2"  *ngIf="employeedata.user.solde < 0 " >  {{employeedata.user.solde}} Days !! </p> 
+                                       <p class="btn btn-success rounded-pill m-2"  *ngIf="user.user.solde > 0 " >  {{user.user.solde}} Days !! </p> 
+                                       <p class="btn btn-danger rounded-pill m-2"  *ngIf="user.user.solde < 0 " >  {{user.user.solde}} Days !! </p> 
                                     </h6>
                                 </ul>
                             </div>
@@ -57,7 +57,7 @@
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="text" class="form-control" formControlName="first_name"
                                                     name="first_name" placeholder="firstname" [defaultValue]=""
-                                                    [(ngModel)]="employeedata.user.first_name" required ngModel>
+                                                    [(ngModel)]="user.user.first_name" required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
@@ -65,16 +65,16 @@
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="text" class="form-control" formControlName="last_name"
                                                     name="last_name" placeholder="lastname" [defaultValue]=""
-                                                    [(ngModel)]="employeedata.user.last_name" required ngModel>
+                                                    [(ngModel)]="user.user.last_name" required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
                                             <label class="col-md-2 col-sm-3 col-xs-12 control-label">Email </label>
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="text" class="form-control"
-                                                    [defaultValue]="this.employeedata.user.email" [defaultValue]=""
+                                                    [defaultValue]="this.user.user.email" [defaultValue]=""
                                                     formControlName="email" name="email" placeholder="email"
-                                                    [(ngModel)]="employeedata.user.email" required ngModel>
+                                                    [(ngModel)]="user.user.email" required ngModel>
                                             </div>
                                         </div><br>
                                         <div class="form-group">
@@ -82,7 +82,7 @@
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="number" class="form-control" class="form-control"
                                                     name="phone" formControlName="phone" placeholder="phone"
-                                                    [defaultValue]="" [(ngModel)]="employeedata.user.phone" required
+                                                    [defaultValue]="" [(ngModel)]="user.user.phone" required
                                                     ngModel placeholder="+216">
                                             </div>
                                         </div> <br>
@@ -91,7 +91,7 @@
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="text" class="form-control" [defaultValue]=""
                                                     formControlName="address" name="address" placeholder="address"
-                                                    [(ngModel)]="employeedata.user.address" required ngModel>
+                                                    [(ngModel)]="user.user.address" required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
@@ -99,7 +99,7 @@
                                             <div class="col-md-10 col-sm-9 col-xs-12">
                                                 <input type="password" class="form-control" [defaultValue]=""
                                                     formControlName="password" name="password" placeholder="password"
-                                                    [(ngModel)]="employeedata.user.password" required ngModel>
+                                                    [(ngModel)]="user.user.password" required ngModel>
                                             </div>
                                         </div> <br>
 

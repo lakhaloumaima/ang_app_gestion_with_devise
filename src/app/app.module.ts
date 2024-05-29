@@ -36,10 +36,11 @@ import { ContactComponent } from './contact/contact.component';
 import { TestComponent } from './test/test.component';
 // import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.component';
-import { ChatComponent } from './chat/chat.component';
 
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ChatAdminComponent } from './admin/chat/chat.component';
+import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
 
 
 
@@ -82,7 +83,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ContactComponent,
     TestComponent,
     ProfileAdminComponent,
-    ChatComponent,
+    ChatAdminComponent ,
+    ChatEmpolyeeComponent ,
 
 
   ],

@@ -141,7 +141,7 @@ export class LoginComponent  {
             this.route.navigate(['/dashboard-admin']);
           }
           else if (response.status == 200 && response.role == "employee") {
-            sessionStorage.setItem('employeedata', JSON.stringify(response));
+            sessionStorage.setItem('user', JSON.stringify(response));
 
             console.log(response);
             this.route.navigate(['/dashboard-employee']);

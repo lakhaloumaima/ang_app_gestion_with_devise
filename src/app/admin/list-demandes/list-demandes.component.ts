@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as saveAs from 'file-saver';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -47,6 +48,20 @@ export class ListDemandesComponent {
       user_id: new UntypedFormControl('', [Validators.required]),
     });
 
+  }
+
+  exportPdf(requestId: number , email:any ): void {
+    this.demandesServicesService.exportPdf(requestId, email ).subscribe(blob => {
+      saveAs(blob, `certificate_${requestId}_${email}.pdf`);
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Not have certificate !',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    });
   }
 
   delete(id: any, i: number) {

@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 export class AuthGuardGuard implements CanActivate {
 
   user: any = null
-  employeedata: any = null
 
   constructor(private router: Router) { }
 
@@ -16,9 +15,9 @@ export class AuthGuardGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.user = sessionStorage.getItem('user');
-    this.employeedata = sessionStorage.getItem('user');
+    this.user = sessionStorage.getItem('user');
 
-    if (this.user != null || this.employeedata != null)
+    if ( this.user != null )
       return true;
     else
       this.router.navigate(['/']);

@@ -8,12 +8,12 @@ import { UsersServicesService } from 'src/app/services/users-services.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent  {
-  employeedata: any;
+  user: any;
 
   constructor( private usersServicesService: UsersServicesService , private router: Router  ) {
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('user')!);
-    console.log(this.employeedata.id)
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+    console.log(this.user.id)
     
   }
 

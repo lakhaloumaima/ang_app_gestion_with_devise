@@ -64,5 +64,32 @@ export class DemandesServicesService {
     return this.http.delete(environment.urlBackend + 'requests/' + id)
   }
 
+  // exportPdf(id: number): Observable<Blob> {
+  //   return this.http.get(environment.urlBackend + 'requests/' + id + '/export_pdf', { responseType: 'blob' });
+  // }
+
+  // importPdf(id: number, file: File): Observable<any> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file, file.name);
+
+  //   return this.http.post(environment.urlBackend + 'requests/' + id + '/import_pdf', formData);
+  // }
+
+  // exportPdf(id: number): Observable<Blob> {
+  //   return this.http.get(`${environment.urlBackend}request/${id}/export_pdf`, { responseType: 'blob' });
+  // }
+
+  importPdf(id: number, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('certificate', file, file.name); // Ensure the key matches the controller's expected parameter
+    return this.http.post(`${environment.urlBackend}request/${id}/import_pdf`, formData);
+  }
+
+
+  exportPdf(requestId: number, email: any ): Observable<Blob> {
+    return this.http.get(`${environment.urlBackend}/request/${requestId}/export_certificate`, {
+      responseType: 'blob'
+    });
+  }
 
 }

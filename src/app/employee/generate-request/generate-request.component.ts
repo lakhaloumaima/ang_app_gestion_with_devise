@@ -19,13 +19,13 @@ export class GenerateRequestComponent {
   messageErr: any;
   requestdetails: any;
   docDefinition: any;
-  employeedata: any;
+  user: any;
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router, private activatedRoute: ActivatedRoute) {
 
     this.requestdetails = JSON.parse(sessionStorage.getItem('requestdetails')!);
 
-    this.employeedata = JSON.parse(sessionStorage.getItem('employeedata')!);
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
 
     this.demandesServicesService.getrequestdata(this.activatedRoute.snapshot.params['id']).subscribe((data: any) => {
       sessionStorage.setItem('requestdetails', JSON.stringify(data));
@@ -72,8 +72,8 @@ export class GenerateRequestComponent {
           columns: [
             [
              
-              { text: "Email : " + this.employeedata.user.email },
-              { text: "Balance (Days) : " + this.employeedata.user.solde },
+              { text: "Email : " + this.user.user.email },
+              { text: "Balance (Days) : " + this.user.user.solde },
             
             ],
             [

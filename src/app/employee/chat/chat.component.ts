@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ChatService } from '../services/chat.service';
-import { UsersServicesService } from '../services/users-services.service';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 import { ActivatedRoute } from '@angular/router';
+import { UsersServicesService } from 'src/app/services/users-services.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatEmpolyeeComponent implements OnInit, OnDestroy {
   message: string = '';
   messages: any[] = [];
   newmessage: string = '';
@@ -44,7 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.fetchMessages();
 
     // Fetch all employees
-    this.employeesServicesService.getAllEmployees().subscribe(
+    this.employeesServicesService.getAllUsers().subscribe(
       data => {
         console.log(data);
         this.dataArray = data;

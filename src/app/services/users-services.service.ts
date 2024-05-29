@@ -62,6 +62,10 @@ export class UsersServicesService {
     return this.http.get(environment.urlBackend + 'employees/')
   }
 
+  getAllUsers() {
+    return this.http.get(environment.urlBackend + 'users/')
+  }
+
   updateEmployee(id: any, newprofile: any) {
     return this.http.patch(environment.urlBackend + 'updateuser/' + id, newprofile)
   }
@@ -74,8 +78,8 @@ export class UsersServicesService {
     return this.http.get(environment.urlBackend + 'countall/')
   }
 
-  getemployeedata(id: any): Observable<any> {
-    return this.http.get(environment.urlBackend + 'getemployeedata/' + id)
+  getuser(id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getuser/' + id)
   }
 
   searchEmployeeByEmail(id: any): Observable<any> {
@@ -83,6 +87,11 @@ export class UsersServicesService {
   }
 
 
+  exportPdf(requestId: number, email: any ): Observable<Blob> {
+    return this.http.get(`${environment.urlBackend}/request/${requestId}/export_certificate`, {
+      responseType: 'blob'
+    });
+  }
 
 
 

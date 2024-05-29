@@ -5,7 +5,7 @@ import { DashboardAdminComponent } from './admin/dashboard-admin/dashboard-admin
 import { ListDemandesComponent } from './admin/list-demandes/list-demandes.component';
 import { ListEmployeesComponent } from './admin/list-employees/list-employees.component';
 import { AddDemandeComponent } from './employee/add-demande/add-demande.component';
-// import { CalendarComponent } from './employee/calendar/calendar.component';
+import { CalendarComponent } from './employee/calendar/calendar.component';
 import { DashboardEmployeeComponent } from './employee/dashboard-employee/dashboard-employee.component';
 
 import { LoginComponent } from './login/login.component';
@@ -21,7 +21,8 @@ import { GenerateRequestComponent } from './employee/generate-request/generate-r
 import { ContactComponent } from './contact/contact.component';
 import { TestComponent } from './test/test.component';
 import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.component';
-import { ChatComponent } from './chat/chat.component';
+import { ChatAdminComponent } from './admin/chat/chat.component';
+import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
 
 
 const routes: Routes = [
@@ -48,16 +49,20 @@ const routes: Routes = [
   { path: 'generaterequestemployee/:id', canActivate: [AuthGuardGuard], component: GenerateRequestComponent },
   { path: 'profile-admin', canActivate: [AuthGuardGuard], component: ProfileAdminComponent },
 
-  { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatComponent },
-  { path: 'chat-admin/:receiver_id', canActivate: [AuthGuardGuard], component: ChatComponent },
+  { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatAdminComponent },
+  { path: 'chat-admin/:receiver_id', canActivate: [AuthGuardGuard], component: ChatAdminComponent },
 
   /************************* EMPLOYEE ******************************/
   { path: 'dashboard-employee', canActivate: [AuthGuardGuard], component: DashboardEmployeeComponent },
   { path: 'add-request', canActivate: [AuthGuardGuard], component: AddDemandeComponent },
   { path: 'employee-list-requests', canActivate: [AuthGuardGuard], component: EmployeeListRequestsComponent },
- // { path: 'calendar', canActivate: [AuthGuardGuard], component: CalendarComponent },
+  { path: 'calendar', canActivate: [AuthGuardGuard], component: CalendarComponent },
+
+ { path: 'chat-empolyee', canActivate: [AuthGuardGuard], component: ChatEmpolyeeComponent },
+ { path: 'chat-empolyee/:receiver_id', canActivate: [AuthGuardGuard], component: ChatEmpolyeeComponent },
 
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
