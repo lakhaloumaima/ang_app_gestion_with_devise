@@ -41,15 +41,17 @@ import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.compo
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatAdminComponent } from './admin/chat/chat.component';
 import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
+import { CalendarComponent } from './employee/calendar/calendar.component';
 
-
+import * as $ from "jquery";
+import * as bootstrap from "bootstrap";
 
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
-// import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
-// import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
-// import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -85,7 +87,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ProfileAdminComponent,
     ChatAdminComponent ,
     ChatEmpolyeeComponent ,
-
+    CalendarComponent
 
   ],
 
@@ -102,7 +104,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
     ChartsModule,
     SocketIoModule.forRoot(config),
-
+    FullCalendarModule
    // Ng2SearchPipeModule ,
 
   //  FullCalendarModule // register FullCalendar with you app

@@ -1,13 +1,66 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="card card-calendar">
-                    <div class="card-content">
-                        <div id="fullCalendar"></div>
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <span *ngIf="dataa.user.role == 'employee' "> <app-sidebar></app-sidebar>
+    </span>
+    <span *ngIf="dataa.user.role == 'admin' ">
+        <app-sidebar-admin></app-sidebar-admin> </span>
+
+    <div class="content">
+        <br>
+
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="card card-calendar">
+                            <div class="card-content">
+                                <full-calendar
+                                    [options]="calendarOptions"></full-calendar>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+<!-- Add this HTML inside your component's template -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="updateRequestForm" (ngSubmit)="updaterequest(updateRequestForm)">
+            <div class="mb-3">
+              <label for="start_date" class="form-label">Start Date</label>
+              <input type="date" class="form-control" id="start_date" formControlName="start_date">
+            </div>
+            <div class="mb-3">
+              <label for="end_date" class="form-label">End Date</label>
+              <input type="date" class="form-control" id="end_date" formControlName="end_date">
+            </div>
+            <div class="mb-3">
+              <label for="reason" class="form-label">Reason</label>
+              <input type="text" class="form-control" id="reason" formControlName="reason">
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="description" formControlName="description">
+            </div>
+            <div class="mb-3">
+              <label for="certificate" class="form-label">Certificate</label>
+              <input type="file" class="form-control" id="certificate" (change)="onFileSelected($event)">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

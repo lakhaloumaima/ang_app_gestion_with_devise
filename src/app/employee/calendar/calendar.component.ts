@@ -1,157 +1,291 @@
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2'
-import PerfectScrollbar from 'perfect-scrollbar';
-
-declare var $: any;
-
-// @Component({
-//     moduleId: module.id,
-//     selector: 'calendar-cmp',
-//     templateUrl: 'calendar.component.html'
-// })
+import Swal from 'sweetalert2';
+import { CalendarOptions } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
+import { DemandesServicesService } from 'src/app/services/demandes-services.service';
+import * as $ from 'jquery';
 
 @Component({
-    selector: 'app-calendar',
-    templateUrl: './calendar.component.html',
-    styleUrls: ['./calendar.component.css']
-  })
+  selector: 'app-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.css']
+})
+export class CalendarComponent implements OnInit {
+  calendarOptions: CalendarOptions;
+  addRequestForm: FormGroup;
+  updateRequestForm: FormGroup;
+  selectedFile: File | null = null;
+  date: any;
+  dataArray: any[] = [];
+  dataa: any;
+  events: any;
+  selectedEvent: any;
 
-export class CalendarComponent implements OnInit{
-  ngOnInit() {
-      const $calendar = $('#fullCalendar');
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private fb: FormBuilder,
+    private demandesServicesService: DemandesServicesService
+  ) {
+    this.dataa = JSON.parse(sessionStorage.getItem('user')!);
 
-      const today = new Date();
-      const y = today.getFullYear();
-      const m = today.getMonth();
-      const d = today.getDate();
+    this.calendarOptions = {
+      plugins: [dayGridPlugin, interactionPlugin],
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,dayGridWeek,dayGridDay'
+      },
+      initialView: 'dayGridMonth',
+      selectable: true,
+      select: this.handleDateSelect.bind(this),
+      events: [],
+      eventClick: this.handleEventClick.bind(this)
+    };
 
-      $calendar.fullCalendar({
-          viewRender: function(view: any, element: any) {
-              // We make sure that we activate the perfect scrollbar when the view isn't on Month
-              if (view.name != 'month') {
-                  var elem = $(element).find('.fc-scroller')[0];
-                  let ps = new PerfectScrollbar(elem);
-              }
-          },
-          header: {
-              left: 'title',
-              center: 'month, agendaWeek, agendaDay',
-              right: 'prev, next, today'
-          },
-          defaultDate: today,
-          selectable: true,
-          selectHelper: true,
-          views: {
-              month: { // name of view
-                  titleFormat: 'MMMM YYYY'
-                  // other view-specific options here
-              },
-              week: {
-                  titleFormat: ' MMMM D YYYY'
-              },
-              day: {
-                  titleFormat: 'D MMM, YYYY'
-              }
-          },
+    this.addRequestForm = this.fb.group({
+      start_date: [''],
+      end_date: [''],
+      reason: [''],
+      description: ['']
+    });
 
-          select: function(start: any, end: any) {
+    this.updateRequestForm = this.fb.group({
+      start_date: [''],
+      end_date: [''],
+      reason: [''],
+      description: ['']
+    });
+  }
 
-              // on select we show the Sweet Alert modal with an input
-              Swal.fire({
-                  title: 'Create an Event',
-                  html: '<div class="form-group">' +
-                          '<input class="form-control" placeholder="Event Title" id="input-field">' +
-                      '</div>',
-                  showCancelButton: true,
-                  customClass:{
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger',
-                  },
-                  buttonsStyling: false
-              }).then(function(result: any) {
-
-                  let eventData;
-                  const event_title = $('#input-field').val();
-
-                  if (event_title) {
-                      eventData = {
-                          title: event_title,
-                          start: start,
-                          end: end
-                      };
-                      $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
-                  }
-
-                  $calendar.fullCalendar('unselect');
-
-              });
-          },
-          editable: true,
-          eventLimit: true, // allow "more" link when too many events
+  ngOnInit(): void {
+    this.updateCalendarEvents();
+  }
 
 
-          // color classes: [ event-blue | event-azure | event-green | event-orange | event-red ]
-          events: [
-              {
-                  title: 'All Day Event',
-                  start: new Date(y, m, 1),
-                  className: 'event-default'
-              },
-              {
-                  id: 999,
-                  title: 'Repeating Event',
-                  start: new Date(y, m, d - 4, 6, 0),
-                  allDay: false,
-                  className: 'event-rose'
-              },
-              {
-                  id: 999,
-                  title: 'Repeating Event',
-                  start: new Date(y, m, d + 3, 6, 0),
-                  allDay: false,
-                  className: 'event-rose'
-              },
-              {
-                  title: 'Meeting',
-                  start: new Date(y, m, d - 1, 10, 30),
-                  allDay: false,
-                  className: 'event-green'
-              },
-              {
-                  title: 'Lunch',
-                  start: new Date(y, m, d + 7, 12, 0),
-                  end: new Date(y, m, d + 7, 14, 0),
-                  allDay: false,
-                  className: 'event-red'
-              },
-              {
-                  title: 'Md-pro Launch',
-                  start: new Date(y, m, d - 2, 12, 0),
-                  allDay: true,
-                  className: 'event-azure'
-              },
-              {
-                  title: 'Birthday Party',
-                  start: new Date(y, m, d + 1, 19, 0),
-                  end: new Date(y, m, d + 1, 22, 30),
-                  allDay: false,
-                  className: 'event-azure'
-              },
-              {
-                  title: 'Click for Creative Tim',
-                  start: new Date(y, m, 21),
-                  end: new Date(y, m, 22),
-                  url: 'https://www.creative-tim.com/',
-                  className: 'event-orange'
-              },
-              {
-                  title: 'Click for Google',
-                  start: new Date(y, m, 21),
-                  end: new Date(y, m, 22),
-                  url: 'https://www.creative-tim.com/',
-                  className: 'event-orange'
-              }
-          ]
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  updateCalendarEvents() {
+    if (this.dataa.role == 'employee') {
+      this.demandesServicesService.getRequestsByID(this.dataa.user.id).subscribe(
+        data => {
+          const events = data.requests.map((request: any) => ({
+            title: request.reason + " for " + request.user.email,
+            start: request.start_date,
+            end: request.end_date,
+            data: request
+          }));
+          this.calendarOptions.events = events;
+        },
+        (err: HttpErrorResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "We don't found this request in our database",
+          });
+        }
+      );
+    } else {
+      this.demandesServicesService.getAllRequests().subscribe(
+        data => {
+          const events = data.requests.map((request: any) => ({
+            title: request.reason + " for " + request.user.email,
+            start: request.start_date,
+            end: request.end_date,
+            data: request
+          }));
+          this.calendarOptions.events = events;
+        },
+        (err: HttpErrorResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "We don't found this request in our database",
+          });
+        }
+      );
+    }
+  }
+
+  handleDateSelect(selectInfo: any) {
+    Swal.fire({
+      title: 'Create an Event',
+      html: `
+        <div class="form-group">
+          <input class="form-control" placeholder="Event Title" id="event-title">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Description" id="event-description">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="Reason" id="event-reason">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="file" id="event-certificate">
+        </div>
+      `,
+      showCancelButton: true,
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: false,
+      preConfirm: () => {
+        const fileInput = document.getElementById('event-certificate') as HTMLInputElement;
+        const selectedFile = fileInput.files?.[0] || null;
+        return {
+          eventTitle: (document.getElementById('event-title') as HTMLInputElement).value,
+          eventDescription: (document.getElementById('event-description') as HTMLInputElement).value,
+          eventReason: (document.getElementById('event-reason') as HTMLInputElement).value,
+          eventCertificate: selectedFile
+        };
+      }
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        const { eventTitle, eventDescription, eventReason, eventCertificate } = result.value;
+
+        if (eventTitle) {
+          const calendarApi = selectInfo.view.calendar;
+          calendarApi.addEvent({
+            title: eventTitle,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+          });
+
+          this.addRequestForm.patchValue({
+            start_date: selectInfo.startStr,
+            end_date: selectInfo.endStr,
+            reason: eventReason,
+            description: eventDescription
+          });
+
+          this.selectedFile = eventCertificate;
+          this.addRequest(this.addRequestForm);
+        }
+        selectInfo.view.calendar.unselect();
+      }
+    });
+  }
+
+  handleEventClick(clickInfo: any) {
+    this.selectedEvent = clickInfo.event.extendedProps.data;
+
+    this.updateRequestForm.patchValue({
+      start_date: this.selectedEvent.start_date,
+      end_date: this.selectedEvent.end_date,
+      reason: this.selectedEvent.reason,
+      description: this.selectedEvent.description
+    });
+
+    $('#exampleModal').modal('show');
+  }
+
+  addRequest(form: FormGroup) {
+    const formData = new FormData();
+
+    formData.append('start_date', form.value.start_date);
+    formData.append('end_date', form.value.end_date);
+    formData.append('reason', form.value.reason);
+    formData.append('description', form.value.description);
+    formData.append('user_id', this.dataa.user.id);
+    if (this.selectedFile) {
+      formData.append('certificate', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.date = moment(Date.now()).format("YYYY-MM-DD");
+    if (form.value.start_date > this.date) {
+      if (form.value.start_date <= form.value.end_date) {
+        this.demandesServicesService.addRequest(formData).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success...',
+            text: 'Saved !',
+            showConfirmButton: true,
+            timer: 1500
+          });
+          this.updateCalendarEvents();
+        }, (err: HttpErrorResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Fields required or not valid !',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Start Date < Current date !',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Start Date must be after current date !',
+        showConfirmButton: false,
+        timer: 1500
       });
+    }
+  }
+
+  updaterequest(f: any): void {
+    const data = f.value;
+    const formData = new FormData();
+    formData.append('start_date', data.start_date);
+    formData.append('end_date', data.end_date);
+    formData.append('reason', data.reason);
+    formData.append('description', data.description);
+    if (this.selectedFile) {
+      formData.append('certificate', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.date = moment(Date.now()).format("YYYY-MM-DD");
+    if (data.start_date > this.date) {
+      if (data.start_date <= data.end_date) {
+        if (this.selectedEvent) {
+          this.demandesServicesService.updateRequest(this.selectedEvent.id, formData).subscribe(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success...',
+              text: 'Request Updated!',
+              showConfirmButton: true,
+              timer: 1500
+            });
+            $('#exampleModal').modal('hide');
+            this.updateCalendarEvents();
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Start Date must be before End Date !',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Start Date must be after current date !',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
   }
 }
