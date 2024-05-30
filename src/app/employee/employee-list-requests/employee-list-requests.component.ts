@@ -25,6 +25,7 @@ export class EmployeeListRequestsComponent implements OnInit {
   dataArrayyy: any;
   date: any;
   selectedFile: File | null = null;
+  reasons: any;
 
   constructor(private demandesServicesService: DemandesServicesService, private usersServicesService: UsersServicesService, private router: Router) {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
@@ -42,12 +43,25 @@ export class EmployeeListRequestsComponent implements OnInit {
     this.updaterequest = new UntypedFormGroup({
       start_date: new UntypedFormControl('', [Validators.required]),
       end_date: new UntypedFormControl('', [Validators.required]),
-      reason: new UntypedFormControl('', [Validators.required]),
+      reason_id: new UntypedFormControl('', [Validators.required]),
       description: new UntypedFormControl('', [Validators.required]),
     });
   }
 
   ngOnInit(): void {
+
+    this.demandesServicesService.getAllReasons().subscribe(data => {
+      this.reasons = data.reasons; // Assuming data contains an array of reasons
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'Failed to fetch reasons list!',
+        showConfirmButton: true,
+        timer: 1500
+      });
+    });
+
     this.demandesServicesService.getRequestsByID(this.user.id).subscribe(data => {
       sessionStorage.setItem('requestdetails', JSON.stringify(data));
       console.log(data);
@@ -144,7 +158,7 @@ export class EmployeeListRequestsComponent implements OnInit {
     const formData = new FormData();
     formData.append('start_date', this.updaterequest.value.start_date);
     formData.append('end_date', this.updaterequest.value.end_date);
-    formData.append('reason', this.updaterequest.value.reason);
+    formData.append('reason_id', this.updaterequest.value.reason);
     formData.append('description', this.updaterequest.value.description);
     if (this.selectedFile) {
       formData.append('certificate', this.selectedFile, this.selectedFile.name);

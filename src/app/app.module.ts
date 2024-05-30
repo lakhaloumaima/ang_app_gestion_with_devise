@@ -42,6 +42,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatAdminComponent } from './admin/chat/chat.component';
 import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
 import { CalendarComponent } from './employee/calendar/calendar.component';
+import { AddReasonComponent } from './admin/add-reason/add-reason.component';
 
 import * as $ from "jquery";
 import * as bootstrap from "bootstrap";
@@ -52,6 +53,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -87,7 +89,9 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
     ProfileAdminComponent,
     ChatAdminComponent ,
     ChatEmpolyeeComponent ,
-    CalendarComponent
+    CalendarComponent,
+    AddReasonComponent,
+    ListReasonsComponent,
 
   ],
 

@@ -1,117 +1,42 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <app-sidebar></app-sidebar>
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp;
     <div class="content">
         <br>
-
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
-
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4"> Add Request </h6>
-                        <form [formGroup]="addrequestt" #f="ngForm"
-                            (ngSubmit)="addRequestt (f); f.reset()">
+                        <h6 class="mb-4">Add Request</h6>
+                        <form [formGroup]="addrequestt" #f="ngForm" (ngSubmit)="addRequestt(f); f.reset()">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1"
-                                    class="form-label">Start date </label>
-                                <input type="date" class="form-control"
-                                    id="exampleInputEmail1"
-                                    aria-describedby="emailHelp"
-                                    formControlName="start_date"
-                                    name="start_date"
-                                    required>
-
+                                <label for="start_date" class="form-label">Start date</label>
+                                <input type="date" class="form-control" id="start_date" formControlName="start_date" name="start_date" required>
                             </div>
-
                             <div class="mb-3">
-                                <label for="exampleInputPassword1"
-                                    class="form-label">End date</label>
-                                <input type="date" formControlName="end_date"
-                                    name="end_date" required
-                                    class="form-control"
-                                    id="exampleInputPassword1">
+                                <label for="end_date" class="form-label">End date</label>
+                                <input type="date" class="form-control" id="end_date" formControlName="end_date" name="end_date" required>
                             </div>
-
                             <div class="mb-3">
-                                <label for="exampleInputPassword1"
-                                    class="form-label"> Reason </label>
-
-                                <select class="form-control"
-                                    id="exampleFormControlSelect1"
-                                    formControlName="reason"
-                                    name="reason">
-
-                                    <option value="Sickness">Sickness </option>
-
-                                    <option value="Vacation days">Vacation days
-                                    </option>
-
-                                    <option value="Maternity Leave">Maternity
-                                        Leave </option>
-
-                                    <option value="Paternity Leave">Paternity
-                                        Leave </option>
-
-                                    <option value="Personal time">Personal time
-                                    </option>
-
-                                    <option
-                                        value="Emergency Child Care Leave">Emergency
-                                        Child Care Leave </option>
-
-                                    <option
-                                        value="Study/Sabbatical">Study/Sabbatical
-                                    </option>
-
-                                    <option
-                                        value="Congé pour victimes de violence familiale/agression">Congé
-                                        pour
-                                        victimes de violence
-                                        familiale/agression</option>
-
-                                    <option value="Convention Leave">Convention
-                                        Leave </option>
-
-                                    <option value="Autres">Autres </option>
-
+                                <label for="reason_id" class="form-label">Reason</label>
+                                <select class="form-control" id="reason_id" formControlName="reason_id" name="reason_id" required>
+                                    <option *ngFor="let reason of reasons" [value]="reason.id">{{ reason.name }}</option>
                                 </select>
-
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1"
-                                    class="form-label">Description </label>
-                                <textarea type="text"
-                                    formControlName="description"
-                                    name="description" required
-                                    class="form-control"
-                                    id="exampleInputPassword1"> </textarea>
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" formControlName="description" name="description" required></textarea>
                             </div>
-                            <br>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1"
-                                    class="form-label">Certificate </label>
-                                <input name="certificate"
-                                    type="file"
-                                    (change)="onFileSelected($event)">
+                                <label for="certificate" class="form-label">Certificate</label>
+                                <input type="file" class="form-control" id="certificate" name="certificate" (change)="onFileSelected($event)">
                             </div>
-                            <br>
-
-                            <button style="margin-left:40%;" type="submit"
-                                class="btn btn-primary"> Send </button>
+                            <button type="submit" class="btn btn-primary" style="margin-left: 40%;">Send</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- Form End -->
-
     </div>
 </div>

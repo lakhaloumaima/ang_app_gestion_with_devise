@@ -13,6 +13,19 @@ export class DemandesServicesService {
 
   }
 
+  /************************************************REASON ******************************************************/
+
+  addReason(data: any): Observable<any> {
+    return this.http.post(environment.urlBackend + 'addReason/', data)
+  }
+
+  getAllReasons(): Observable<any> {
+    return this.http.get(environment.urlBackend + 'reason/')
+  }
+
+  deleteReason(id: any): Observable<any> {
+    return this.http.delete(environment.urlBackend + 'reasons/' + id)
+  }
 
   /************************************************FOR EMPLOYEE ******************************************************/
 

@@ -25,6 +25,7 @@ export class CalendarComponent implements OnInit {
   dataa: any;
   events: any;
   selectedEvent: any;
+  reasons: any[] = []; // Store reasons list
 
   constructor(
     private http: HttpClient,
@@ -51,22 +52,47 @@ export class CalendarComponent implements OnInit {
     this.addRequestForm = this.fb.group({
       start_date: [''],
       end_date: [''],
-      reason: [''],
+      reason_id: [''], // Initialize with empty string
       description: ['']
     });
 
     this.updateRequestForm = this.fb.group({
       start_date: [''],
       end_date: [''],
-      reason: [''],
+      reason_id: [''], // Initialize with empty string
       description: ['']
     });
   }
 
   ngOnInit(): void {
+    this.demandesServicesService.getAllReasons().subscribe(data => {
+      this.reasons = data.reasons; // Assuming data contains an array of reasons
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'Failed to fetch reasons list!',
+        showConfirmButton: true,
+        timer: 1500
+      });
+    });
     this.updateCalendarEvents();
+    this.fetchReasons(); // Fetch reasons list on component initialization
   }
 
+  fetchReasons() {
+    this.demandesServicesService.getAllReasons().subscribe(data => {
+      this.reasons = data.reasons; // Assuming data contains an array of reasons
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error...',
+        text: 'Failed to fetch reasons list!',
+        showConfirmButton: true,
+        timer: 1500
+      });
+    });
+  }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -77,7 +103,7 @@ export class CalendarComponent implements OnInit {
       this.demandesServicesService.getRequestsByID(this.dataa.user.id).subscribe(
         data => {
           const events = data.requests.map((request: any) => ({
-            title: request.reason + " for " + request.user.email,
+            title: request.reason.name + " for " + request.user.email,
             start: request.start_date,
             end: request.end_date,
             data: request
@@ -95,8 +121,9 @@ export class CalendarComponent implements OnInit {
     } else {
       this.demandesServicesService.getAllRequests().subscribe(
         data => {
+          console.log(data)
           const events = data.requests.map((request: any) => ({
-            title: request.reason + " for " + request.user.email,
+            title: request.reason.name + " for " + request.user.email,
             start: request.start_date,
             end: request.end_date,
             data: request
@@ -122,10 +149,13 @@ export class CalendarComponent implements OnInit {
           <input class="form-control" placeholder="Event Title" id="event-title">
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Description" id="event-description">
+          <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Reason" id="event-reason">
+          <select class="form-control" id="event-reason">
+            <option value="" disabled selected>Select a reason</option>
+            ${this.reasons.map(reason => `<option value="${reason.id}">${reason.name}</option>`).join('')}
+          </select>
         </div>
         <div class="form-group">
           <input class="form-control" type="file" id="event-certificate">
@@ -143,7 +173,7 @@ export class CalendarComponent implements OnInit {
         return {
           eventTitle: (document.getElementById('event-title') as HTMLInputElement).value,
           eventDescription: (document.getElementById('event-description') as HTMLInputElement).value,
-          eventReason: (document.getElementById('event-reason') as HTMLInputElement).value,
+          eventReason: (document.getElementById('event-reason') as HTMLSelectElement).value,
           eventCertificate: selectedFile
         };
       }
@@ -163,7 +193,7 @@ export class CalendarComponent implements OnInit {
           this.addRequestForm.patchValue({
             start_date: selectInfo.startStr,
             end_date: selectInfo.endStr,
-            reason: eventReason,
+            reason_id: eventReason,
             description: eventDescription
           });
 
@@ -181,7 +211,7 @@ export class CalendarComponent implements OnInit {
     this.updateRequestForm.patchValue({
       start_date: this.selectedEvent.start_date,
       end_date: this.selectedEvent.end_date,
-      reason: this.selectedEvent.reason,
+      reason_id: this.selectedEvent.reason_id,
       description: this.selectedEvent.description
     });
 
@@ -193,7 +223,7 @@ export class CalendarComponent implements OnInit {
 
     formData.append('start_date', form.value.start_date);
     formData.append('end_date', form.value.end_date);
-    formData.append('reason', form.value.reason);
+    formData.append('reason_id', form.value.reason_id);
     formData.append('description', form.value.description);
     formData.append('user_id', this.dataa.user.id);
     if (this.selectedFile) {
@@ -226,7 +256,7 @@ export class CalendarComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Start Date < Current date !',
+          text: 'Start Date must be before End Date !',
           showConfirmButton: false,
           timer: 1500
         });
@@ -247,7 +277,7 @@ export class CalendarComponent implements OnInit {
     const formData = new FormData();
     formData.append('start_date', data.start_date);
     formData.append('end_date', data.end_date);
-    formData.append('reason', data.reason);
+    formData.append('reason_id', data.reason_id);
     formData.append('description', data.description);
     if (this.selectedFile) {
       formData.append('certificate', this.selectedFile, this.selectedFile.name);

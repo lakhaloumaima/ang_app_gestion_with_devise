@@ -23,6 +23,8 @@ import { TestComponent } from './test/test.component';
 import { ProfileAdminComponent } from './admin/profile-admin/profile-admin.component';
 import { ChatAdminComponent } from './admin/chat/chat.component';
 import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
+import { AddReasonComponent } from './admin/add-reason/add-reason.component';
+import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
 
 
 const routes: Routes = [
@@ -48,6 +50,9 @@ const routes: Routes = [
   { path: 'requests-refused', canActivate: [AuthGuardGuard], component: RequestsRefusedComponent },
   { path: 'generaterequestemployee/:id', canActivate: [AuthGuardGuard], component: GenerateRequestComponent },
   { path: 'profile-admin', canActivate: [AuthGuardGuard], component: ProfileAdminComponent },
+
+  { path: 'add-reason', canActivate: [AuthGuardGuard], component: AddReasonComponent },
+  { path: 'list-reasons', canActivate: [AuthGuardGuard], component: ListReasonsComponent },
 
   { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatAdminComponent },
   { path: 'chat-admin/:receiver_id', canActivate: [AuthGuardGuard], component: ChatAdminComponent },

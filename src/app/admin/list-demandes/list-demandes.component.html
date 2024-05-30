@@ -8,7 +8,7 @@
             <div class="bg-light text-center rounded p-4">
                 <div
                     class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Requests ( {{dataArray.requests.length}} )
+                    <h6 class="mb-0">Requests ( {{dataArray?.requests.length}} )
                     </h6>
                     <form class="d-none d-md-flex ms-4">
                         <input class="form-control border-0" type="search"
@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of dataArray.requests | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
+                                *ngFor="let item of dataArray?.requests | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
 
                                 <td> {{item.user.email}} </td>
                                 <td>{{item.start_date}} </td>
@@ -79,7 +79,7 @@
 
                                 <td>
                                     <button
-                                        (click)="getdata1(item.status , item.motif_refused , item.user_id , item.created_at , item.reason , item.description, item.id)"
+                                        (click)="getdata1(item.status , item.motif_refused , item.user_id , item.created_at , item?.reason.name , item.description, item.id)"
                                         data-toggle="modal"
                                         data-target="#exampleModal1"
                                         class="btn btn-square btn-outline-info"><i
@@ -123,7 +123,7 @@
                                 </td>
 
                             </tr>
-                            <tr *ngIf="dataArray.requests.length==0">
+                            <tr *ngIf="dataArray?.requests.length==0">
                                 <td colspan="8" style="text-align:center;">no
                                     data found</td>
                             </tr>

@@ -1,0 +1,90 @@
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar-admin></app-sidebar-admin>
+
+    <div class="content">
+        <app-navbar-admin></app-navbar-admin>
+
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Reasons ({{ dataArray?.reasons?.length }})</h6>
+                    <form class="d-none d-md-flex ms-4">
+                        <input class="form-control border-0" type="search" placeholder="Search ..." name="name" [(ngModel)]="searchedKeyword">
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Name</th>
+                                <th colspan="3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataArray?.reasons | paginate: { itemsPerPage: 10, currentPage: p }">
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <button (click)="getdata(item.name, item.id)" data-toggle="modal" data-target="#exampleModal1" class="btn btn-square btn-outline-info">
+                                        <i class="fa fa-info" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button (click)="delete(item.id)" class="btn btn-square btn-outline-danger">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="dataArray?.reasons?.length === 0">
+                                <td colspan="8" style="text-align:center;">No data found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-left: 60%;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Details -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name</label>
+                        <input type="text" class="form-control" placeholder="name" [value]="dataReason.name" required name="name" readonly />
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+            </div>
+            <div class="modal-body">
+                <!-- form update start here -->
+                <form [formGroup]="updatereasons" #f="ngForm" (ngSubmit)="updatereason(f)">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name</label>
+                        <input type="text" class="form-control" placeholder="name" formControlName="name" required />
+                    </div>
+                    <br>
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </form>
+                <!-- form update end here -->
+            </div>
+        </div>
+    </div>
+</div>

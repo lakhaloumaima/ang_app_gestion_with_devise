@@ -9,7 +9,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Employees ( {{dataArray.employees.length}} ) </h6>
+                    <h6 class="mb-0">Employees ( {{dataArray?.employees.length}} ) </h6>
                     <form class="d-none d-md-flex ms-4">
                         <input class="form-control border-0" type="search" placeholder="Search ..." name="email"
                             [(ngModel)]="searchedKeyword">
@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of dataArray.employees  | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
+                                *ngFor="let item of dataArray?.employees  | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
                                 <td><input class="form-check-input" type="checkbox"></td>
 
                                 <td> {{item.email}} </td>
@@ -65,7 +65,7 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="dataArray.employees.length==0">
+                            <tr *ngIf="dataArray?.employees.length==0">
                                 <td colspan="7" style="text-align:center;">no data found</td>
                             </tr>
                         </tbody>

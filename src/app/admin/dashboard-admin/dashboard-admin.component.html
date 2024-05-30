@@ -12,7 +12,7 @@
                         <i class="fa fa-user fa-3x text-primary"></i>
                         <div class="ms-3">
                             <p class="mb-2" routerLink="/list-employees">Employees <br><br></p>
-                            <h6 class="mb-0"> {{dataArrayy.data[0]}} </h6>
+                            <h6 class="mb-0"> {{dataArrayy?.data[0]}} </h6>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                         <i class="fa fa-chart-line fa-3x text-primary"></i>
                         <div class="ms-3">
                             <p class="mb-2" routerLink="/requests-inprogress">Requests In Progress</p>
-                            <h6 class="mb-0">{{dataArrayy.data[1]}} </h6>
+                            <h6 class="mb-0">{{dataArrayy?.data[1]}} </h6>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                         <i class="fa fa-chart-bar fa-3x text-primary"></i>
                         <div class="ms-3">
                             <p class="mb-2" routerLink="/requests-accepted">Requests Accepted </p>
-                            <h6 class="mb-0">{{dataArrayy.data[2]}} </h6>
+                            <h6 class="mb-0">{{dataArrayy?.data[2]}} </h6>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         <i class="fa fa-chart-area fa-3x text-primary"></i>
                         <div class="ms-3">
                             <p class="mb-2" routerLink="/requests-refused">Requests Refused</p>
-                            <h6 class="mb-0">{{dataArrayy.data[3]}}</h6>
+                            <h6 class="mb-0">{{dataArrayy?.data[3]}}</h6>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0"> Requests ( {{dataArray.requests.length}} ) </h6>
+                    <h6 class="mb-0"> Requests ( {{dataArray?.requests.length}} ) </h6>
                     <form class="d-none d-md-flex ms-4">
                         <input class="form-control border-0" type="search" placeholder="Search ..." name="email"
                             [(ngModel)]="searchedKeyword">
@@ -80,7 +80,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of dataArray.requests | paginate: { itemsPerPage: 10, currentPage: p }    ; index as i">
+                                *ngFor="let item of dataArray?.requests | paginate: { itemsPerPage: 10, currentPage: p }    ; index as i">
 
                                 <td> {{item.user.email}} </td>
                                 <td>{{item.start_date}} </td>
@@ -95,7 +95,7 @@
                                         {{item.user.solde}} Days</p>
 
                                 </td>
-                                <td>{{item.reason}} </td>
+                                <td>{{item?.reason.name }} </td>
 
 
                                 <td *ngIf="item.status == 'in_progress' "><button type="button"
@@ -109,7 +109,7 @@
 
                             </tr>
 
-                            <tr *ngIf="dataArray.length==0">
+                            <tr *ngIf="dataArray?.length==0">
                                 <td colspan="7" style="text-align:center;">no data found</td>
                             </tr>
                         </tbody>

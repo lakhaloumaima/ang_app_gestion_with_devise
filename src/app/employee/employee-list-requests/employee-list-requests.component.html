@@ -2,224 +2,134 @@
     <app-sidebar></app-sidebar>
 
     <div class="content">
-
         <br><br>
-
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
-                <div
-                    class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Requests (
-                        {{this.dataArray.requests.length}} ) </h6>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Requests ({{this.dataArray?.requests.length}})</h6>
                     <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search"
-                            placeholder="Search ..." name="email"
-                            [(ngModel)]="searchedKeyword">
+                        <input class="form-control border-0" type="search" placeholder="Search ..." name="email" [(ngModel)]="searchedKeyword">
                     </form>
                 </div>
                 <div class="table-responsive">
-                    <table
-                        class="table text-start align-middle table-bordered table-hover mb-0">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark">
-
-                                <th scope="col">Start date </th>
-                                <th scope="col">End date </th>
-                                <th scope="col">Period </th>
-                                <th scope="col">Reason </th>
-                                <th scope="col"> Description </th>
-                                <th scope="col">Certificate </th>
-
+                                <th scope="col">Start date</th>
+                                <th scope="col">End date</th>
+                                <th scope="col">Period</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Certificate</th>
                                 <th scope="col">Status</th>
-
-                                <th scope="col">Motif Refused </th>
-
-                                <th colspan="3">Actions </th>
-
+                                <th scope="col">Motif Refused</th>
+                                <th colspan="3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                *ngFor="let item of dataArray.requests | paginate: { itemsPerPage: 10, currentPage: p }    ; index as i">
-
-                                <td>{{item.start_date}} </td>
-                                <td>{{item.end_date}} </td>
-
-                                <td> {{ item.days }} Days</td>
-                                <td>{{item.reason}} </td>
-                                <td> {{ item.description }}</td>
-                                <div *ngIf="item.certificate.url == null ">
-                                    <input
-                                        type="file"
-                                        (change)="onFileSelected($event)">
-                                    <button class="btn btn-outline-success"
-                                        (click)="importPdf(item.id)">
-                                        <i class="fa fa-download"></i> Import
-                                        PDF
-                                    </button>
-                                </div>
-                                <td *ngIf="item.certificate.url != null ">
-                                    <button
-                                        (click)="exportPdf(item.id, item.user.email )"
-                                        *ngIf="item.certificate"
-                                        class="btn btn-outline-info"><i
-                                            class="fa fa-download"></i> Export
-                                        Certificate</button>
-                                </td>
-
-                                <td
-                                    *ngIf="item.status == 'in_progress' "><button
-                                        type="button"
-                                        class="btn btn-primary rounded-pill m-2">In_Progress</button></td>
-                                <td *ngIf="item.status == 'accepted' "><button
-                                        type="button"
-                                        class="btn btn-success rounded-pill m-2">Accepted</button></td>
-                                <td *ngIf="item.status == 'refused' "><button
-                                        type="button"
-                                        class="btn btn-danger rounded-pill m-2">Refused</button></td>
-
-                                <td>{{item.motif_refused}} </td>
-
+                            <tr *ngFor="let item of dataArray?.requests | paginate: { itemsPerPage: 10, currentPage: p }; index as i">
+                                <td>{{item.start_date}}</td>
+                                <td>{{item.end_date}}</td>
+                                <td>{{item.days}} Days</td>
+                                <td>{{item?.reason.name}}</td>
+                                <td>{{item.description}}</td>
                                 <td>
-                                    <button
-                                        *ngIf="item.status==='in_progress' || item.status==='refused'   "
-                                        (click)="getdata(item.start_date , item.end_date , item.reason , item.description ,item.id)"
-                                        data-toggle="modal"
-                                        data-target="#exampleModal"
-                                        class="btn btn-square btn-outline-warning"><i
-                                            class="fa fa-edit"
-                                            aria-hidden="true"></i>
-                                    </button>
-                                    <button readonly
-                                        style="cursor: not-allowed;" disabled
-                                        *ngIf="item.status==='accepted' "
-                                        class="btn btn-square btn-outline-warning"><i
-                                            class="fa fa-edit"
-                                            aria-hidden="true"></i> </button>
-                                </td>
-
-                                <td>
-                                    <button (click)="delete(item.id , i)"
-                                        *ngIf="item.status==='in_progress' || item.status==='refused'   "
-                                        class="btn btn-square btn-outline-danger"><i
-                                            class="fa fa-trash"
-                                            aria-hidden="true"></i>
-                                    </button>
-                                    <button readonly
-                                        style="cursor: not-allowed;" disabled
-                                        (click)="delete(item.id , i)"
-                                        *ngIf="item.status==='accepted' "
-                                        class="btn btn-square btn-outline-danger"><i
-                                            class="fa fa-trash"
-                                            aria-hidden="true"></i> </button>
+                                    <div *ngIf="!item.certificate.url">
+                                        <input type="file" (change)="onFileSelected($event)">
+                                        <button class="btn btn-outline-success" (click)="importPdf(item.id)">
+                                            <i class="fa fa-download"></i> Import PDF
+                                        </button>
+                                    </div>
+                                    <div *ngIf="item.certificate.url">
+                                        <button (click)="exportPdf(item.id, item.user.email)" class="btn btn-outline-info">
+                                            <i class="fa fa-download"></i> Export Certificate
+                                        </button>
+                                    </div>
                                 </td>
                                 <td>
-                                    <button type="button"
-                                        class="btn btn-square btn-outline-info m-2"
-                                        [routerLink]="['/generaterequestemployee',item.id]">
-
-                                        <i class="fa fa-download"></i></button>
-
+                                    <button *ngIf="item.status === 'in_progress'" class="btn btn-primary rounded-pill m-2">In Progress</button>
+                                    <button *ngIf="item.status === 'accepted'" class="btn btn-success rounded-pill m-2">Accepted</button>
+                                    <button *ngIf="item.status === 'refused'" class="btn btn-danger rounded-pill m-2">Refused</button>
                                 </td>
-
+                                <td>{{item.motif_refused}}</td>
+                                <td>
+                                    <button *ngIf="item.status === 'in_progress' || item.status === 'refused'" (click)="getdata(item.start_date, item.end_date, item.reason.id, item.description, item.id)" data-toggle="modal" data-target="#exampleModal" class="btn btn-square btn-outline-warning">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button *ngIf="item.status === 'accepted'" class="btn btn-square btn-outline-warning" style="cursor: not-allowed;" disabled>
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button *ngIf="item.status === 'in_progress' || item.status === 'refused'" (click)="delete(item.id, i)" class="btn btn-square btn-outline-danger">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <button *ngIf="item.status === 'accepted'" class="btn btn-square btn-outline-danger" style="cursor: not-allowed;" disabled>
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-square btn-outline-info m-2" [routerLink]="['/generaterequestemployee', item.id]">
+                                        <i class="fa fa-download"></i>
+                                    </button>
+                                </td>
                             </tr>
-                            <tr *ngIf="dataArray.requests.length==0">
-                                <td colspan="9" style="text-align:center;">no
-                                    data found</td>
+                            <tr *ngIf="dataArray?.requests.length === 0">
+                                <td colspan="9" style="text-align:center;">No data found</td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <br>
-
         <div class="has-text-centered" style="margin-left: 60%;">
-            <pagination-controls
-                (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
-
         <br>
     </div>
 </div>
 
 <!-- Modal Update -->
-<div class="modal fade" id="exampleModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update</h5>
-
             </div>
             <div class="modal-body">
                 <!-- form update start here -->
-                <form [formGroup]="updaterequest" #f="ngForm"
-                    (ngSubmit)="updaterequests(f)">
-                    <!-- firstName validation start here -->
+                <form [formGroup]="updaterequest" #f="ngForm" (ngSubmit)="updaterequests(f)">
+                    <!-- Start Date -->
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Start Date
-                        </label>
-                        <input type="date" class="form-control"
-                            placeholder="start_date"
-                            [(ngModel)]="dataRequest.start_date"
-                            name="start_date" required
-                            formControlName="start_date"
-                            ngModel minlength="2" />
+                        <label for="start_date">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" formControlName="start_date" [(ngModel)]="dataRequest.start_date" required />
                     </div>
+                    <!-- End Date -->
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">End Date </label>
-                        <input type="date" class="form-control"
-                            placeholder="last name" name="end_date"
-                            [defaultValue] [(ngModel)]="dataRequest.end_date"
-                            required name="end_date"
-                            formControlName="end_date" minlength="2"
-                            maxlength="20" ngModel />
+                        <label for="end_date">End Date</label>
+                        <input type="date" class="form-control" id="end_date" formControlName="end_date" [(ngModel)]="dataRequest.end_date" required />
                     </div>
+                    <!-- Reason -->
                     <div class="form-group">
-
-                        <label for="exampleFormControlInput1">Reason </label>
-                        <select class="form-control"
-                            id="exampleFormControlSelect1"
-                            formControlName="reason"
-                            name="reason" [(ngModel)]="dataRequest.reason">
-
-                            <option value="Sickness">Sickness </option>
-                            <option value="Holiday">Holiday </option>
-                            <option value="Accouchement">Accouchement </option>
-
-                            <option value="Autres">Autres </option>
-
+                        <label for="reason_id">Reason</label>
+                        <select class="form-control" id="reason_id" formControlName="reason_id"  [(ngModel)]="dataRequest.reason" required>
+                            <option *ngFor="let reason of reasons" [value]="reason.id">{{ reason.name }}</option>
                         </select>
                     </div>
-
+                    <!-- Description -->
                     <div class="form-group">
-                        <label for="exampleFormControlInput1"> Description
-                        </label>
-                        <textarea type="text" class="form-control"
-                            placeholder="description .. " name="description"
-                            [(ngModel)]="dataRequest.description"
-                            name="description"
-                            formControlName="description" ngModel> </textarea>
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" formControlName="description" [(ngModel)]="dataRequest.description" required></textarea>
                     </div>
-
-                    <br>
-
+                    <!-- Certificate -->
                     <div class="form-group">
-                        <label for="exampleFormControlInput1"> Certificate
-                        </label> &nbsp; &nbsp;
-                        <input name="certificate"
-                            type="file"
-                            (change)="onFileSelected($event)">
+                        <label for="certificate">Certificate</label>
+                        <input type="file" class="form-control" id="certificate" (change)="onFileSelected($event)">
                     </div>
-
                     <br>
-
-                    <button type="submit"
-                        class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
-
                 <!-- form update end here -->
             </div>
         </div>
