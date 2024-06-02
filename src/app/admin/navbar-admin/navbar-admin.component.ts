@@ -25,7 +25,7 @@ export class NavbarAdminComponent  {
     this.usersServicesService.logout();
     console.log("log out" )
     sessionStorage.clear() 
-    this.router.navigate(['/']);
+    window.location.href =  'http://localhost:4200';
    
   }
 

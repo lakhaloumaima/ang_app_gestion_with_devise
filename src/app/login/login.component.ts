@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { User } from '../models/user';
@@ -11,158 +10,76 @@ import { UsersServicesService } from '../services/users-services.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent  {
-
-  messageError: any
+export class LoginComponent {
+  messageError: any;
 
   user: User = {
     email: '',
     password: '',
-  }
+  };
 
-  constructor(private usersServicesService: UsersServicesService, private route: Router) { 
-    sessionStorage.clear() 
+  constructor(private usersServicesService: UsersServicesService, private router: Router) {
+    // sessionStorage.clear();
   }
-
 
   login() {
-
     const data = {
-      user:
-      {
+      user: {
         email: this.user.email,
         password: this.user.password,
       }
-
     };
 
     this.usersServicesService.login(data).subscribe(
       response => {
-     
         if (response.status == 401) {
-
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'User Not Found Or invalide Credentialns'
-          })
+            text: 'User Not Found Or Invalid Credentials'
+          });
         } else {
+          const returnUrl = response.redirect_url;
+          const subdomain = this.extractSubdomain(returnUrl);
+          console.log( window.location.hostname )
+          sessionStorage.setItem('user', JSON.stringify(response));
 
+          // window.location.href = `http://${subdomain}.localhost:4200/dashboard-${response.role}`;
 
-          if (response.user.email_confirmed == true) {
-            if (response.role == "admin") {
+          if (response.role == "admin" ) {
 
-              sessionStorage.setItem('user', JSON.stringify(response));
-              console.log(response);
-              this.route.navigate(['/dashboard-admin']);
-
-            }
-            else if (response.role == "employee") {
-
-              sessionStorage.setItem('user', JSON.stringify(response));
-              console.log(response);
-              this.route.navigate(['/dashboard-employee']);
-
-            }
-            else {
-
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Email or Password is Incorrect!'
-              })
-
-            }
-          } else {
-
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Account created but not confirmed ! , Check Your Email !'
-            })
-
-          }
-
-        }
-
-      }, (err: HttpErrorResponse) => this.messageError = err.error.error  );
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  login2() {
-
-    const data = {
-      user:
-      {
-        email: this.user.email,
-        password: this.user.password,
-      }
-
-    };
-
-    this.usersServicesService.login(data).subscribe(
-      response => {
-
-        //   sessionStorage.setItem('user', JSON.stringify(response));
-
-        console.log(JSON.parse(response).toString(response));
-        console.log(JSON.parse(JSON.stringify(response)));
-
-        if (response.status == 401) {
-
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'User Not Found Or invalide Credentialns'
-          })
-        } else {
-
-
-          if (response.status == 200 && response.role == "admin") {
-            // if (response.role == 0 )
             sessionStorage.setItem('user', JSON.stringify(response));
+            window.location.href = `http://${subdomain}.localhost:4200/dashboard-admin`;
 
-            console.log(response);
-            this.route.navigate(['/dashboard-admin']);
           }
-          else if (response.status == 200 && response.role == "employee") {
+          else if (response.role == "employee" && subdomain === response.subdomain) {
             sessionStorage.setItem('user', JSON.stringify(response));
-
-            console.log(response);
-            this.route.navigate(['/dashboard-employee']);
+            window.location.href = `http://${subdomain}.localhost:4200/dashboard-employee`;
           }
-
-
           else {
-
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Account created but not confirmed ! , check Your Email'
-            })
+              text: 'Invalid Subdomain or Role'
+            });
           }
-
         }
-
-      }, (err: HttpErrorResponse) => this.messageError = err.error.error);
-
+      },
+      (err: HttpErrorResponse) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.error.message
+        });
+      }
+    );
   }
 
-
-
+  private extractSubdomain(url: string): string {
+    // Remove the protocol and split the URL by dots
+    const parts = url.replace(/^https?:\/\//, '').split('.');
+    
+    // The first part will be the subdomain
+    return parts[0];
+  }
 }

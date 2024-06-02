@@ -20,7 +20,7 @@ export class SidebarAdminComponent  {
   
     this.usersServicesService.logout();
     sessionStorage.clear() 
-    this.router.navigate(['/']);
+    window.location.href =  'http://localhost:4200';
    
   }
 
