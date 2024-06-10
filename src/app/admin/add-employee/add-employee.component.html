@@ -14,7 +14,8 @@
                         <div class="card-header">Profile Picture</div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="assets/img/logo.png" alt="">
+                            <img class="img-account-profile rounded-circle mb-2"
+                                src="assets/img/logo.png" alt>
                             <!-- Profile picture help block-->
 
                             <!-- Profile picture upload button-->
@@ -26,22 +27,83 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4"> Add Employee </h6>
-                        <form #f="ngForm" [formGroup]="registerr" (ngSubmit)="register(f)">
+                        <form #f="ngForm" [formGroup]="registerr"
+                            (ngSubmit)="register(f)">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email"
-                                    aria-describedby="emailHelp" name="email" ngModel required>
+                                <label for="exampleInputEmail1"
+                                    class="form-label">Email address</label>
+                                <input type="email" class="form-control"
+                                    id="exampleInputEmail1"
+                                    formControlName="email"
+                                    aria-describedby="emailHelp" name="email"
+                                    ngModel required>
 
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" name="password" ngModel  required formControlName="password" 
-                                    class="form-control" id="exampleInputPassword1">
+                                <label
+                                    class="form-label">First
+                                    Name</label>
+                                    <input type="text" class="form-control"
+                                        formControlName="first_name"
+                                        name="first_name"
+                                        placeholder="firstname" [defaultValue]
+                                        required ngModel>
                             </div>
-                            <div class="alert alert-danger" *ngIf="messageError">{{messageError}}</div>
+                            <div class="mb-3">
+                                <label
+                                    class="form-label">Last
+                                    Name</label>
+                                    <input type="text" class="form-control"
+                                        formControlName="last_name"
+                                        name="last_name" placeholder="lastname"
+                                        [defaultValue]
+                                        required ngModel>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    class="form-label">CIN
+                                </label>
+                                    <input type="text" class="form-control"
+                                        [defaultValue]
+                                        formControlName="cin" name="cin"
+                                        placeholder="cin"
+                                        required ngModel>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    class="form-label">Phone
+                                </label>
+                                    <input type="number" class="form-control"
+                                        class="form-control"
+                                        name="phone" formControlName="phone"
+                                        placeholder="phone"
+                                        [defaultValue] required
+                                        ngModel placeholder="+216">
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    class="form-label">Address
+                                </label>
+                                    <input type="text" class="form-control"
+                                        [defaultValue]
+                                        formControlName="address" name="address"
+                                        placeholder="address"
+                                        required ngModel>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1"
+                                    class="form-label">Password</label>
+                                <input type="password" name="password" ngModel
+                                    required formControlName="password"
+                                    class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="messageError">{{messageError}}</div>
                             <br>
 
-                            <button style="margin-left:87%;" type="submit" class="btn btn-primary"> Add </button>
+                            <button style="margin-left:87%;" type="submit"
+                                class="btn btn-primary"> Add </button>
                         </form>
                     </div>
                 </div>

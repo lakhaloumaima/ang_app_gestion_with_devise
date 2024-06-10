@@ -33,8 +33,8 @@ export class DashboardEmployeeComponent {
       email: new UntypedFormControl('', [Validators.required]),
       phone: new UntypedFormControl('', [Validators.required]),
       address: new UntypedFormControl('', [Validators.required]),
-      //  avatar: new FormControl('', [Validators.required]),
-        password: new UntypedFormControl('', [Validators.required]),
+      cin: new UntypedFormControl('', [Validators.required]),
+      password: new UntypedFormControl('', [Validators.required]),
     });
 
 
@@ -91,6 +91,7 @@ export class DashboardEmployeeComponent {
     formData.append('address', this.upadate.value.address);
     formData.append('phone', this.upadate.value.phone);
     formData.append('password', this.upadate.value.password);
+    formData.append('cin', this.upadate.value.cin);
 
     Swal.fire({
       title: 'Do you want to save the changes?',

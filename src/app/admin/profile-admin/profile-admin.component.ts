@@ -27,6 +27,8 @@ export class ProfileAdminComponent {
 
       first_name: new UntypedFormControl('', [Validators.required]),
       last_name: new UntypedFormControl('', [Validators.required]),
+      cin: new UntypedFormControl('', [Validators.required]),
+
       email: new UntypedFormControl('', [Validators.required]),
       phone: new UntypedFormControl('', [Validators.required]),
       address: new UntypedFormControl('', [Validators.required]),
@@ -83,6 +85,8 @@ export class ProfileAdminComponent {
     //formData.append('avatar', this.image );
     formData.append('first_name', this.upadate.value.first_name);
     formData.append('last_name', this.upadate.value.last_name);
+    formData.append('cin', this.upadate.value.cin);
+
     formData.append('email', this.upadate.value.email);
     formData.append('address', this.upadate.value.address);
     formData.append('phone', this.upadate.value.phone);
