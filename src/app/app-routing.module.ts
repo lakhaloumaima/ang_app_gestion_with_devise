@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
 
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset/:token', component: ResetPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
 
   { path: 'test', component: TestComponent },
 

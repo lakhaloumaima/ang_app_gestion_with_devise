@@ -42,7 +42,7 @@ export class ResetPasswordComponent {
 
     });
     Swal.fire('Password Updated Avec Succes !', '', 'success')
-    this.route.navigate(['/']);
+    // this.route.navigate(['/dashboard-admin']);
   }
   
 }

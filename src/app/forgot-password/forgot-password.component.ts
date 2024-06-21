@@ -30,12 +30,16 @@ export class ForgotPasswordComponent {
     formData.append('email', this.resetemaillink.value.email);
     let data = f.value
 
-    this.usersServicesService.sendResetLink(formData).subscribe(() => {
+    this.usersServicesService.sendResetLink(formData).subscribe((response: any) => {
 
-      // console.log(formData)
+      if ( response.status == 'ok' ) {
+        Swal.fire('Reset Link Sent Avec Succes !', '', 'success')
+      }
 
-      Swal.fire('Reset Link Sent Avec Succes !', '', 'success')
+      else {
+        Swal.fire('Reset Link Not Sent !', '', 'error')
 
+      }
 
     }, (err: HttpErrorResponse) => {
       this.messageErr = err.error

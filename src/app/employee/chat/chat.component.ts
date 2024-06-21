@@ -6,13 +6,14 @@ import { Socket } from 'ngx-socket-io';
 import { ActivatedRoute } from '@angular/router';
 import { UsersServicesService } from 'src/app/services/users-services.service';
 import { ChatService } from 'src/app/services/chat.service';
+import { createConsumer } from '@rails/actioncable';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatEmpolyeeComponent implements OnInit, OnDestroy {
+export class ChatEmpolyeeComponent implements OnInit {
   message: string = '';
   messages: any[] = [];
   newmessage: string = '';
@@ -23,6 +24,7 @@ export class ChatEmpolyeeComponent implements OnInit, OnDestroy {
   routeSubscription: any;
   socketSubscription: any;
   count: any;
+  cable: any;
 
   constructor(
     private employeesServicesService: UsersServicesService, 
@@ -55,6 +57,17 @@ export class ChatEmpolyeeComponent implements OnInit, OnDestroy {
       }
     );
 
+     // Connect to Action Cable when the component initializes
+     this.cable = createConsumer('ws://localhost:3000/cable');
+     this.cable.subscriptions.create('ChatChannel', {
+       received: (data: any) => {
+         console.log('Message received from server:', data);
+         // Add the new message to the messages array
+         // debugger
+         this.messages.push({ ...data.message, showTime: false });
+       }
+     });
+
     // Subscribe to changes in route parameters
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
       this.receiver_id = params['receiver_id'];
@@ -68,15 +81,15 @@ export class ChatEmpolyeeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    // Unsubscribe from route and socket subscriptions to avoid memory leaks
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
-    if (this.socketSubscription) {
-      this.socketSubscription.unsubscribe();
-    }
-  }
+  // ngOnDestroy(): void {
+  //   // Unsubscribe from route and socket subscriptions to avoid memory leaks
+  //   if (this.routeSubscription) {
+  //     this.routeSubscription.unsubscribe();
+  //   }
+  //   if (this.socketSubscription) {
+  //     this.socketSubscription.unsubscribe();
+  //   }
+  // }
 
   // Method to fetch messages based on receiver_id
   fetchMessages(): void {

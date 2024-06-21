@@ -87,11 +87,12 @@ export class RequestsInprogressComponent {
     end_date: '',
     user_id: '',
     reason:'' ,
-    motif_refused : ''
+    motif_refused : '',
+    email: ''
 
   }
 
-  getdata(status: string,  start_date: string, end_date: string, reason: string , motif_refused:any, user_id :any , id: any) {
+  getdata(status: string,  start_date: string, end_date: string, reason: string , motif_refused:any, user_id :any , id: any, email: any) {
  
     this.dataRequest.status = status
 
@@ -101,6 +102,8 @@ export class RequestsInprogressComponent {
     this.dataRequest.motif_refused = motif_refused
     this.dataRequest.id = id
     this.dataRequest.user_id = user_id
+    this.dataRequest.email = email
+
 
     console.log(this.dataRequest)
 
