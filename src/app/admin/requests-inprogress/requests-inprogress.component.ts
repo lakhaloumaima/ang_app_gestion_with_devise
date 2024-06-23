@@ -25,18 +25,20 @@ export class RequestsInprogressComponent {
   searchedKeyword: any ;
 
   p : any = 1 ;
+  user: any;
 
 
   constructor(private demandesServicesService:DemandesServicesService,private router:Router) {
-    
-    this.demandesServicesService.getrequestinprogressbyemployee().subscribe(data=>{
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+
+    this.demandesServicesService.getrequestinprogressbyemployee(this.user.user.company_id).subscribe(data=>{
       // debugger
     //  sessionStorage.setItem( 'requestdetails', JSON.stringify( data ) );
 
-      console.log(data) 
-      this.dataArray=data 
+      console.log(data)
+      this.dataArray=data
      , (err:HttpErrorResponse)=>{
-      this.messageErr="We dont't found this demande in our database"} 
+      this.messageErr="We dont't found this demande in our database"}
     }) 
     
     this.updaterequests = new UntypedFormGroup({

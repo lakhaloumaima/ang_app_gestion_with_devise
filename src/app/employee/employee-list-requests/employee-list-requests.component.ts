@@ -29,11 +29,10 @@ export class EmployeeListRequestsComponent implements OnInit {
 
   constructor(private demandesServicesService: DemandesServicesService, private usersServicesService: UsersServicesService, private router: Router) {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
-    console.log(this.user.id)
 
     this.requestdetails = JSON.parse(sessionStorage.getItem('requestdetails')!);
 
-    this.usersServicesService.countAllForAdmin().subscribe(result => {
+    this.usersServicesService.countAllForAdmin(this.user.user.company_id).subscribe(result => {
       this.dataArrayy = result;
       console.log(this.dataArrayy);
     }, (err: HttpErrorResponse) => {

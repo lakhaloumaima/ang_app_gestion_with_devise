@@ -26,7 +26,8 @@ export class RegisterComponent {
     };
     this.company = {
       name: '',
-      subdomain: ''
+      subdomain: '',
+      solde: ''
     }
   }
 
@@ -37,7 +38,9 @@ export class RegisterComponent {
         password: this.user.password,
         company: {
           name: this.company.name, // Ensure to use 'name' instead of 'companyName'
-          subdomain: this.company.subdomain
+          subdomain: this.company.subdomain,
+          solde: this.company.solde
+
         }
       }
     };

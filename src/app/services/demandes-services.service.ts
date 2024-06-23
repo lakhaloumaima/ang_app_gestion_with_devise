@@ -51,24 +51,28 @@ export class DemandesServicesService {
 
   /************************************************FOR ADMIN ******************************************************/
 
-  getAllRequests(): Observable<any> {
-    return this.http.get(environment.urlBackend + 'requests/')
+  getAllRequests(company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'requests/' + company_id )
+  }
+
+  getAllRequestsByCompany(company_id: any ): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getAllRequestsByCompany/' + company_id )
   }
 
   updateRequest(id: any, data: any): Observable<any> {
     return this.http.patch(environment.urlBackend + 'requests/' + id, data)
   }
 
-  getrequestinprogressbyemployee(): Observable<any> {
-    return this.http.get(environment.urlBackend + 'getrequestinprogressbyemployee/')
+  getrequestinprogressbyemployee(company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getrequestinprogressbyemployee/' + company_id )
   }
 
-  getrequestacceptedbyemployee(): Observable<any> {
-    return this.http.get(environment.urlBackend + 'getrequestacceptedbyemployee/')
+  getrequestacceptedbyemployee(company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getrequestacceptedbyemployee/' + company_id)
   }
 
-  getrequestrefusedbyemployee(): Observable<any> {
-    return this.http.get(environment.urlBackend + 'getrequestrefusedbyemployee/')
+  getrequestrefusedbyemployee(company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getrequestrefusedbyemployee/' + company_id)
   }
 
   /************************************************FOR ADMIN AND EMPLOYEE ******************************************/

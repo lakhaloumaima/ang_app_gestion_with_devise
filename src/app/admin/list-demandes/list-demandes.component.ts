@@ -25,11 +25,14 @@ export class ListDemandesComponent {
   updaterequests: UntypedFormGroup;
 
   requestdetails: any;
+  user: any;
 
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
 
-    this.demandesServicesService.getAllRequests().subscribe(data => {
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+
+    this.demandesServicesService.getAllRequests(this.user.user.company_id).subscribe(data => {
 
       console.log(data)
       this.dataArray = data

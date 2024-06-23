@@ -56,6 +56,10 @@ export class LoginComponent {
             sessionStorage.setItem('user', JSON.stringify(response));
             window.location.href = `http://${subdomain}.localhost:4200/dashboard-employee`;
           }
+          else if (response.role == "rh" && subdomain === response.subdomain) {
+            sessionStorage.setItem('user', JSON.stringify(response));
+            window.location.href = `http://${subdomain}.localhost:4200/dashboard-rh`;
+          }
           else {
             Swal.fire({
               icon: 'error',

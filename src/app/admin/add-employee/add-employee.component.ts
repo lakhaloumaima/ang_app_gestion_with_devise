@@ -47,7 +47,7 @@ export class AddEmployeeComponent implements OnInit {
  
     formData.append('email', this.registerr.value.email);
     formData.append('password', this.registerr.value.password);
-    formData.append('role', 'employee' );
+    formData.append('role', this.registerr.value.role );
     formData.append('company_id', this.current_user.user.company_id );
 
     formData.append('phone', this.registerr.value.phone);

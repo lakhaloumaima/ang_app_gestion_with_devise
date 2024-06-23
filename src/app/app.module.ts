@@ -54,6 +54,7 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // must go before pl
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
+import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -92,6 +93,7 @@ import { ListReasonsComponent } from './admin/list-reasons/list-reasons.componen
     CalendarComponent,
     AddReasonComponent,
     ListReasonsComponent,
+    DashboardRhComponent
 
   ],
 
@@ -109,7 +111,7 @@ import { ListReasonsComponent } from './admin/list-reasons/list-reasons.componen
     ChartsModule,
     SocketIoModule.forRoot(config),
     FullCalendarModule
-   // Ng2SearchPipeModule ,
+    // Ng2SearchPipeModule ,
 
   //  FullCalendarModule // register FullCalendar with you app
 

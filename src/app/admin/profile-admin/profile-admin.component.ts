@@ -121,7 +121,7 @@ export class ProfileAdminComponent {
           console.log(err.message)
 
         })
-        this.router.navigate(['/dashboard-employee']);
+        // this.router.navigate(['/dashboard-employee']);
         Swal.fire('Saved !', '', 'success')
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved ', '', 'info')

@@ -6,13 +6,12 @@ import { UsersServicesService } from 'src/app/services/users-services.service';
 import Swal from 'sweetalert2';
 
 import * as moment from 'moment';
-
 @Component({
-  selector: 'app-dashboard-admin',
-  templateUrl: './dashboard-admin.component.html',
-  styleUrls: ['./dashboard-admin.component.css']
+  selector: 'app-dashboard-rh',
+  templateUrl: './dashboard-rh.component.html',
+  styleUrl: './dashboard-rh.component.css'
 })
-export class DashboardAdminComponent  {
+export class DashboardRhComponent {
 
   dataArray: any;
   dataArrayy: any;
@@ -30,7 +29,7 @@ export class DashboardAdminComponent  {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
 
     this.demandesServicesService.getAllRequestsByCompany(this.user.user.company_id).subscribe(data => {
-
+  
       console.log(data)
       this.dataArray = data
 
@@ -38,6 +37,7 @@ export class DashboardAdminComponent  {
           this.messageErr = "We dont't found this request in our database"
         }
     })
+
 
 
     this.usersServicesService.countAllForAdmin(this.user.user.company_id).subscribe(result => {
@@ -53,4 +53,3 @@ export class DashboardAdminComponent  {
   };
 
 }
-

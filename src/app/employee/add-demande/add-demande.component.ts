@@ -4,6 +4,7 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { DemandesServicesService } from 'src/app/services/demandes-services.service';
+import { UsersServicesService } from 'src/app/services/users-services.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,21 +19,33 @@ export class AddDemandeComponent implements OnInit {
   addrequestt: UntypedFormGroup;
   date: any;
   reasons: any[] = []; // Store reasons list
+  messageErr: any;
 
-  constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
+  constructor(private employeesServicesService: UsersServicesService, private demandesServicesService: DemandesServicesService, private router: Router) {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
-    console.log(this.user.id);
 
     this.addrequestt = new UntypedFormGroup({
       start_date: new UntypedFormControl('', [Validators.required]),
       end_date: new UntypedFormControl('', [Validators.required]),
       reason_id: new UntypedFormControl('', [Validators.required]),
-      description: new UntypedFormControl('', [Validators.required])
+      description: new UntypedFormControl('', [Validators.required]),
+      user_id: new UntypedFormControl('', [Validators.required])
+
     });
   }
 
   ngOnInit() {
     this.fetchReasons(); // Fetch reasons list on component initialization
+
+    this.employeesServicesService.getAllEmployeesByCompany(this.user.user.company_id).subscribe(data => {
+      // debugger
+      console.log(data)
+      this.dataArray = data
+        , (err: HttpErrorResponse) => {
+          this.messageErr = "We dont't found this employee in our database"
+        }
+    })
+
   }
 
   fetchReasons() {
@@ -59,7 +72,13 @@ export class AddDemandeComponent implements OnInit {
     formData.append('end_date', this.addrequestt.value.end_date);
     formData.append('reason_id', this.addrequestt.value.reason_id);
     formData.append('description', this.addrequestt.value.description);
-    formData.append('user_id', this.user.id);
+    if ( this.user.user.role == "admin" ) {
+      formData.append('user_id', this.addrequestt.value.user_id);
+
+    }
+    else {
+      formData.append('user_id', this.user.id);
+    }
 
     if (this.selectedFile) {
       formData.append('certificate', this.selectedFile, this.selectedFile.name);
@@ -79,7 +98,7 @@ export class AddDemandeComponent implements OnInit {
             showConfirmButton: true,
             timer: 1500
           });
-          this.router.navigate(['/employee-list-requests']);
+          // this.router.navigate(['/employee-list-requests']);
         }, (err: HttpErrorResponse) => {
           Swal.fire({
             icon: 'error',

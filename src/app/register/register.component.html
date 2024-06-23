@@ -18,6 +18,10 @@
             [(ngModel)]="company.subdomain"
             placeholder="Subdomain">
 
+        <input class="un" type="text" align="center" name="company[solde]"
+            [(ngModel)]="company.solde"
+            placeholder="Solde Of Absence Company">
+
         <div class="alert alert-danger" *ngIf="messageError">
             {{messageError}}
         </div>

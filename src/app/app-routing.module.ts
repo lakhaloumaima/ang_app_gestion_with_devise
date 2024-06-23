@@ -25,6 +25,7 @@ import { ChatAdminComponent } from './admin/chat/chat.component';
 import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
 import { AddReasonComponent } from './admin/add-reason/add-reason.component';
 import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
+import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,8 @@ const routes: Routes = [
 
   { path: 'test', component: TestComponent },
 
+  /************************* RH ******************************/
+  { path: 'dashboard-rh', canActivate: [AuthGuardGuard], component: DashboardRhComponent },
 
   /************************* ADMIN ******************************/
   { path: 'dashboard-admin', canActivate: [AuthGuardGuard], component: DashboardAdminComponent },

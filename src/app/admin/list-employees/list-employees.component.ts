@@ -14,27 +14,29 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   templateUrl: './list-employees.component.html',
   styleUrls: ['./list-employees.component.css']
 })
-export class ListEmployeesComponent {
+export class ListEmployeesComponent implements OnInit {
 
   dataArray: any;
   
   messageErr: any;
 
-  searchedKeyword: any;
+  searchedKeyword: any='';
 
   p: any = 1;
 
   updateemployees: UntypedFormGroup;
 
   user: any;
+  roleFilter: string = ''; // Initialize role filter
 
 
-  constructor(private employeesServicesService: UsersServicesService, private router: Router) {
+
+  constructor( private employeesServicesService: UsersServicesService, private router: Router) {
 
     this.user = JSON.parse(sessionStorage.getItem('user')!);
     console.log(this.user)
 
-    this.employeesServicesService.getAllEmployees().subscribe(data => {
+    this.employeesServicesService.getAllEmployeesByCompany(this.user.user.company_id).subscribe(data => {
       // debugger
       console.log(data)
       this.dataArray = data
@@ -42,6 +44,17 @@ export class ListEmployeesComponent {
           this.messageErr = "We dont't found this employee in our database"
         }
     })
+
+    // this.employeesServicesService.getEmployeesByRole(this.roleFilter).subscribe(
+    //   (data) => {
+    //     this.dataArray = data; // Assuming data is returned as an array
+    //     this.dataArray = this.dataArray.employees; // Update filtered employees
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching employees:', error);
+    //     // Handle error
+    //   }
+    // );
 
     this.updateemployees = new UntypedFormGroup({
       email: new UntypedFormControl('', [Validators.required]),
@@ -59,6 +72,61 @@ export class ListEmployeesComponent {
     });
     */
   
+  }
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees(): void {
+    this.employeesServicesService.getAllEmployeesByCompany(this.user.user.company_id).subscribe(
+      (data) => {
+        this.dataArray = data; // Update the employees array
+      },
+      (err: HttpErrorResponse) => {
+        console.error('Error fetching employees:', err);
+        this.messageErr = "We didn't find any employees in our database.";
+      }
+    );
+  }
+
+
+  // search() {
+  //   if (!this.dataArray || !this.dataArray.employees) {
+  //     return []; // Handle if dataArray or dataArray.employees is undefined
+  //   }
+    
+  //   return this.filterPipe.transform(this.dataArray.employees, this.searchedKeyword);
+  // }
+
+  // search(): void {
+  //   // Check if searchedKeyword is not null or undefined before using trim()
+  //   if (this.searchedKeyword && this.searchedKeyword.trim() !== '') {
+  //     // Filter employees based on email containing searchedKeyword
+  //     debugger
+  //     this.dataArray = this.dataArray.employees.filter((employee: any) =>
+  //       employee.email.toLowerCase().includes(this.searchedKeyword.toLowerCase())
+  //     );
+  //   } else {
+  //     debugger
+  //     this.loadEmployees(); // Reload all employees if search keyword is empty or null
+  //   }
+  // }
+
+
+  applyRoleFilter(role: any): void {
+    if (role === '') {
+      this.loadEmployees(); // Load all employees if role filter is empty
+    } else {
+      this.employeesServicesService.getEmployeesByRole(role, this.user.user.company_id).subscribe(
+        (data) => {
+          this.dataArray = data; // Update employees based on role
+        },
+        (err: HttpErrorResponse) => {
+          console.error(`Error fetching ${role} employees:`, err);
+          // Handle error
+        }
+      );
+    }
   }
 
 /*

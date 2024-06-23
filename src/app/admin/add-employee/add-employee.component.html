@@ -30,6 +30,14 @@
                         <form #f="ngForm" [formGroup]="registerr"
                             (ngSubmit)="register(f)">
                             <div class="mb-3">
+                                <label class="form-label">Role</label>
+                                <select class="form-control" formControlName="role" name="role" required ngModel>
+                                    <option value="" disabled selected>Select role</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="rh">RH</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="exampleInputEmail1"
                                     class="form-label">Email address</label>
                                 <input type="email" class="form-control"
