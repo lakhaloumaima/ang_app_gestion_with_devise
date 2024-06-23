@@ -5,6 +5,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 import { ActivatedRoute } from '@angular/router';
+import { createConsumer } from '@rails/actioncable';
 
 @Component({
   selector: 'app-chat',
@@ -22,6 +23,10 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
   routeSubscription: any;
   socketSubscription: any;
   count: any;
+  current_userr: any
+  userId: any
+  cable: any;
+
 
   constructor(
     private employeesServicesService: UsersServicesService, 
@@ -41,7 +46,27 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Connect to Action Cable when the component initializes
+    this.cable = createConsumer('ws://localhost:3000/cable');
+    this.cable.subscriptions.create('ChatChannel', {
+      received: (data: any) => {
+        console.log('Message received from server:', data);
+        // Add the new message to the messages array
+        // debugger
+        this.messages.push({ ...data.message, showTime: false });
+      }
+    });
+    
+
     this.fetchMessages();
+
+    this.userId = this.activatedRoute.snapshot.paramMap.get('receiver_id');
+    if (this.userId) {
+      this.employeesServicesService.getUserById(this.userId).subscribe((user: any) => {
+        this.current_userr = user;
+        console.log( this.current_userr )
+      });
+    }
 
     // Fetch all employees
     this.employeesServicesService.getAllUsers().subscribe(

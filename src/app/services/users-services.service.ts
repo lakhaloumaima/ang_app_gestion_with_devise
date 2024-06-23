@@ -62,6 +62,24 @@ export class UsersServicesService {
     return this.http.get(environment.urlBackend + 'employees/')
   }
 
+  getAllEmployeesByCompany(company_id: any) {
+    return this.http.get(environment.urlBackend + 'getAllEmployeesByCompany/' + company_id )
+  }
+
+
+  getAllUsersByCompany(company_id: any) {
+    return this.http.get(environment.urlBackend + 'getAllUsersByCompany/' + company_id )
+  }
+
+  getUserById(id: any) {
+    return this.http.get(environment.urlBackend + 'getUserById/' + id )
+  }
+
+  // Fetch employees filtered by role
+  getEmployeesByRole(role: any, company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getUsersByRole/' + role + "/" + company_id );
+  }
+
   getAllUsers() {
     return this.http.get(environment.urlBackend + 'users/')
   }
@@ -74,8 +92,8 @@ export class UsersServicesService {
     return this.http.delete(environment.urlBackend + 'employees/' + id)
   }
 
-  countAllForAdmin(): Observable<any> {
-    return this.http.get(environment.urlBackend + 'countall/')
+  countAllForAdmin(company_id: any ): Observable<any> {
+    return this.http.get(environment.urlBackend + 'countall/' + company_id )
   }
 
   getuser(id: any): Observable<any> {

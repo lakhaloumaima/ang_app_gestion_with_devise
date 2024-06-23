@@ -1,44 +1,26 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <app-sidebar-admin></app-sidebar-admin>
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp;
+
     <div class="content">
-        <br>
+        <app-navbar-admin></app-navbar-admin>
 
-        <!-- Form Start -->
+        <!-- Dashboard Stats Start -->
         <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-
+            <div class="row justify-content-center">
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4"> Add Reason </h6>
-                        <form [formGroup]="addReasonn" #f="ngForm"
-                            (ngSubmit)="addReason (f); f.reset()">
-
+                        <h6 class="mb-4">Add Reason</h6>
+                        <form [formGroup]="addReasonn" #f="ngForm" (ngSubmit)="addReason(f); f.reset()">
                             <div class="mb-3">
-                                <label for="exampleInputPassword1"
-                                    class="form-label">Name </label>
-                                <input type="text"
-                                    formControlName="name"
-                                    name="name" required
-                                    class="form-control" >
+                                <label for="exampleInputPassword1" class="form-label">Name</label>
+                                <input type="text" formControlName="name" name="name" required class="form-control">
                             </div>
-                            <br>
-                            <br>
-
-                            <button style="margin-left:40%;" type="submit"
-                                class="btn btn-primary"> Send </button>
+                            <button type="submit" class="btn btn-primary d-block mx-auto">Send</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- Form End -->
-
     </div>
 </div>

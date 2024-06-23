@@ -25,10 +25,13 @@ export class RequestsRefusedComponent {
   searchedKeyword: any;
 
   p: any = 1;
+  user: any;
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
 
-    this.demandesServicesService.getrequestrefusedbyemployee().subscribe(data => {
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+
+    this.demandesServicesService.getrequestrefusedbyemployee(this.user.user.company_id).subscribe(data => {
 
       console.log(data)
       this.dataArray = data

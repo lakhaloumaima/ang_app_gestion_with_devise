@@ -1,28 +1,22 @@
-
-
-
 <div class="main">
-    <p class="sign" align="center">Sign in</p>
-    <form  class="form1">
-
-        <input class="un " type="text" align="center" name="email" [(ngModel)]="user.email"
-            placeholder="name@example.com">
-
-        <input class="pass" type="password" align="center" name="password" 
-            [(ngModel)]="user.password" placeholder="Password">
-
+    <div class="card">
+        <p class="sign" align="center">Sign In</p>
+        <form class="form1">
+            <div class="form-group">
+                <input class="un" type="text" align="center" name="email" [(ngModel)]="user.email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+                <input class="pass" type="password" align="center" name="password" [(ngModel)]="user.password" placeholder="Password" required>
+            </div>
             <div class="alert alert-danger" *ngIf="messageError">
                 {{messageError}}
             </div>
-            
-        <button class="submit" align="center" (click)="login()" >Sign in</button>
-
-        <p class="forgot" align="center"><a routerLink="/forgot-password">Forgot Password?</a>
-            <a routerLink="/contact"> Contact Admin  </a> <br>
-            <a routerLink="/register">Sign up </a>
-        </p>
-
-       
-
-    </form>
+            <button class="submit" align="center" (click)="login()">Sign In</button>
+            <p class="forgot" align="center">
+                <a routerLink="/forgot-password">Forgot Password?</a><br>
+                <a routerLink="/contact">Contact Admin</a><br>
+                <a routerLink="/register">Sign up</a>
+            </p>
+        </form>
+    </div>
 </div>

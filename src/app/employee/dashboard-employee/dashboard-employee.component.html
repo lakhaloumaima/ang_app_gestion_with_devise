@@ -2,24 +2,33 @@
     <app-sidebar></app-sidebar>
 
     <div class="content">
-
-
-
+        <!-- Member List -->
 
         <div class="container">
             <div class="view-account">
+
                 <section class="module">
+                    
                     <div class="module-inner">
                         <div class="side-bar">
                             <div class="user-info">
-                                <img class="img-profile img-circle img-responsive center-block" [src]="user.avv"
-                                    alt="">
+                                <img
+                                    class="img-profile img-circle img-responsive center-block"
+                                    [src]="user.avv"
+                                    alt>
                                 <ul class="meta list list-unstyled">
 
-                                    <li class="email"><a> {{user.user.email}} </a></li>
-                                    <h6> You have balance : <br>
-                                       <p class="btn btn-success rounded-pill m-2"  *ngIf="user.user.solde > 0 " >  {{user.user.solde}} Days !! </p> 
-                                       <p class="btn btn-danger rounded-pill m-2"  *ngIf="user.user.solde < 0 " >  {{user.user.solde}} Days !! </p> 
+                                    <li class="email"><a> {{user.user.email}}
+                                        </a></li>
+                                    <h6> You have balance : <br> <br>
+                                        <p
+                                            class="btn btn-success rounded-pill m-2"
+                                            *ngIf="user.user.solde > 0 ">
+                                            {{user.user.solde}} Days !! </p>
+                                        <p
+                                            class="btn btn-danger rounded-pill m-2"
+                                            *ngIf="user.user.solde < 0 ">
+                                            {{user.user.solde}} Days !! </p>
                                     </h6>
                                 </ul>
                             </div>
@@ -33,12 +42,17 @@
 
                                     <div class="form-group avatar">
 
-                                        <form [formGroup]="imageupdate" #f="ngForm" (ngSubmit)="updateimage(f)">
+                                        <form [formGroup]="imageupdate"
+                                            #f="ngForm"
+                                            (ngSubmit)="updateimage(f)">
 
-
-                                            <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                                                <input type="file" (change)="fileChange($event)" name="avatar"
-                                                    [defaultValue]="" formControlName="avatar"
+                                            <div
+                                                class="form-inline col-md-10 col-sm-9 col-xs-12">
+                                                <input type="file"
+                                                    (change)="fileChange($event)"
+                                                    name="avatar"
+                                                    [defaultValue]
+                                                    formControlName="avatar"
                                                     class="file-uploader pull-left">
                                                 <button type="submit"
                                                     class="btn btn-sm btn-default-alt pull-left">Update
@@ -50,71 +64,130 @@
                                     &nbsp; &nbsp;
                                     <h2 class="title">Profile Details </h2>
 
-                                    <form [formGroup]="upadate" #f="ngForm" (ngSubmit)="updateinfouser(f)">
+                                    <form [formGroup]="upadate" #f="ngForm"
+                                        (ngSubmit)="updateinfouser(f)">
 
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">First Name</label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control" formControlName="first_name"
-                                                    name="first_name" placeholder="firstname" [defaultValue]=""
-                                                    [(ngModel)]="user.user.first_name" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">First
+                                                Name</label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    formControlName="first_name"
+                                                    name="first_name"
+                                                    placeholder="firstname"
+                                                    [defaultValue]
+                                                    [(ngModel)]="user.user.first_name"
+                                                    required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Last Name</label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control" formControlName="last_name"
-                                                    name="last_name" placeholder="lastname" [defaultValue]=""
-                                                    [(ngModel)]="user.user.last_name" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">Last
+                                                Name</label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    formControlName="last_name"
+                                                    name="last_name"
+                                                    placeholder="lastname"
+                                                    [defaultValue]
+                                                    [(ngModel)]="user.user.last_name"
+                                                    required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">CIN </label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control" formControlName="cin"
-                                                    name="cin" placeholder="cin" [defaultValue]=""
-                                                    [(ngModel)]="user.user.cin" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">CIN
+                                            </label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    formControlName="cin"
+                                                    name="cin" placeholder="cin"
+                                                    [defaultValue]
+                                                    [(ngModel)]="user.user.cin"
+                                                    required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Email </label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control"
-                                                    [defaultValue]="this.user.user.email" [defaultValue]=""
-                                                    formControlName="email" name="email" placeholder="email"
-                                                    [(ngModel)]="user.user.email" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">Email
+                                            </label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    [defaultValue]="this.user.user.email"
+                                                    [defaultValue]
+                                                    formControlName="email"
+                                                    name="email"
+                                                    placeholder="email"
+                                                    [(ngModel)]="user.user.email"
+                                                    required ngModel>
                                             </div>
                                         </div><br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Phone </label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="number" class="form-control" class="form-control"
-                                                    name="phone" formControlName="phone" placeholder="phone"
-                                                    [defaultValue]="" [(ngModel)]="user.user.phone" required
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">Phone
+                                            </label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="number"
+                                                    class="form-control"
+                                                    class="form-control"
+                                                    name="phone"
+                                                    formControlName="phone"
+                                                    placeholder="phone"
+                                                    [defaultValue]
+                                                    [(ngModel)]="user.user.phone"
+                                                    required
                                                     ngModel placeholder="+216">
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Address </label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="text" class="form-control" [defaultValue]=""
-                                                    formControlName="address" name="address" placeholder="address"
-                                                    [(ngModel)]="user.user.address" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">Address
+                                            </label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="text"
+                                                    class="form-control"
+                                                    [defaultValue]
+                                                    formControlName="address"
+                                                    name="address"
+                                                    placeholder="address"
+                                                    [(ngModel)]="user.user.address"
+                                                    required ngModel>
                                             </div>
                                         </div> <br>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Password </label>
-                                            <div class="col-md-10 col-sm-9 col-xs-12">
-                                                <input type="password" class="form-control" [defaultValue]=""
-                                                    formControlName="password" name="password" placeholder="password"
-                                                    [(ngModel)]="user.user.password" required ngModel>
+                                            <label
+                                                class="col-md-2 col-sm-3 col-xs-12 control-label">Password
+                                            </label>
+                                            <div
+                                                class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="password"
+                                                    class="form-control"
+                                                    [defaultValue]
+                                                    formControlName="password"
+                                                    name="password"
+                                                    placeholder="password"
+                                                    [(ngModel)]="user.user.password"
+                                                    required ngModel>
                                             </div>
                                         </div> <br>
 
                                         <div class="form-group">
                                             <div style="text-align: center;"
                                                 class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                                <input class="btn btn-primary" type="submit" value="Update Profile">
+                                                <input class="btn btn-primary"
+                                                    type="submit"
+                                                    value="Update Profile">
                                             </div>
                                         </div>
 
@@ -125,6 +198,39 @@
                                 <br>
 
                             </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Members</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled team-members">
+                                <li *ngFor="let item of dataArrayyy.employees">
+                                    <div class="row" *ngIf="item.id != user.user.id" >
+                                        <div class="col-md-2 col-2">
+                                            <div class="avatar">
+                                                <img class="rounded-circle me-lg-2"
+                                                    [src]="item.avatar_url" alt
+                                                    style="width: 40px; height: 40px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            {{ item.email }}
+                                        </div>
+                                        <div class="col-md-3 col-3 text-right">
+                                            <button
+                                                class="btn btn-sm btn-outline-success btn-round btn-icon">
+                                                <a
+                                                    [routerLink]="['/chat-empolyee', item.id]"><i
+                                                        class="fa fa-envelope"></i></a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </section>

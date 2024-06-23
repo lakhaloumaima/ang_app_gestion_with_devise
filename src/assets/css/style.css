@@ -136,9 +136,9 @@
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
+    color: green;
     background: #FFFFFF;
-    border-color: var(--primary);
+    border-color: green;
 }
 
 .sidebar .navbar .navbar-nav .nav-link i {
@@ -185,7 +185,7 @@
 
 .content .navbar .navbar-nav .nav-link:hover,
 .content .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
+    color: green;
 }
 
 .content .navbar .sidebar-toggler,

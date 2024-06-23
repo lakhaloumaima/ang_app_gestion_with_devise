@@ -13,21 +13,21 @@ import { Company } from '../models/company';
 })
 export class RegisterComponent {
 
-  messageError: any;
+  messageError: string | null = null;
+  validationErrors: { [key: string]: string[] } = {};
   user: User;
   company: Company;
-
 
   constructor(private usersServicesService: UsersServicesService, private router: Router) {
     this.user = {
       email: '',
-      password: '',
-
+      password: ''
     };
     this.company = {
       name: '',
-      subdomain: ''
-    }
+      subdomain: '',
+      solde: ''
+    };
   }
 
   register() {
@@ -36,8 +36,9 @@ export class RegisterComponent {
         email: this.user.email,
         password: this.user.password,
         company: {
-          name: this.company.name, // Ensure to use 'name' instead of 'companyName'
-          subdomain: this.company.subdomain
+          name: this.company.name,
+          subdomain: this.company.subdomain,
+          solde: this.company.solde
         }
       }
     };
@@ -45,23 +46,27 @@ export class RegisterComponent {
     this.usersServicesService.registerAdmin(data).subscribe(
       response => {
         console.log(response);
-        if (response.status == 401) {
+        if (response.status === 401) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'User Not Found Or invalide Credentials'
+            text: 'User Not Found Or Invalid Credentials'
           });
         } else {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log(response);
             this.router.navigate(['/']);
           } else {
-            Swal.fire('Whooa !', 'Account succeffully created !', 'success')
-
+            Swal.fire('Whooa !', 'Account successfully created !', 'success');
           }
         }
       },
-      (err: HttpErrorResponse) => this.messageError = err.error.error
+      (err: HttpErrorResponse) => {
+        this.messageError = err.error.error;
+        if (err.status === 422 && err.error.errors) {
+          this.validationErrors = err.error.errors;
+        }
+      }
     );
   }
 }

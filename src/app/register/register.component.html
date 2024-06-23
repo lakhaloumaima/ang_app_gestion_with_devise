@@ -1,34 +1,54 @@
 <div class="main">
-    <p class="sign" align="center">Sign up</p>
-    <form class="form1">
-
-        <input class="un " type="text" align="center" name="email"
-            [(ngModel)]="user.email"
-            placeholder="name@example.com">
-
-        <input class="pass" type="password" align="center" name="password"
-            [(ngModel)]="user.password" placeholder="Password">
-
-        <!-- Update the input field names to match the backend structure -->
-        <input class="un" type="text" align="center" name="company[name]"
-            [(ngModel)]="company.name"
-            placeholder="Company Name">
-
-        <input class="un" type="text" align="center" name="company[subdomain]"
-            [(ngModel)]="company.subdomain"
-            placeholder="Subdomain">
-
-        <div class="alert alert-danger" *ngIf="messageError">
-            {{messageError}}
+    <div class="card">
+      <p class="sign" align="center">Sign up</p>
+      <form class="form1" (ngSubmit)="register()">
+  
+        <div class="form-group">
+          <input class="un" type="text" align="center" name="email" [(ngModel)]="user.email" placeholder="name@example.com">
+          <div *ngIf="validationErrors['user.email']" class="alert alert-danger">
+            <div *ngFor="let error of validationErrors['user.email']">{{ error }}</div>
+          </div>
         </div>
-
-        <button class="submit" align="center" (click)="register()">Sign
-            up</button>
-
-        <p class="forgot" align="center"><a routerLink="/forgot-password">Forgot
-                Password?</a></p>
-
-        <p align="center"><a routerLink="/">Sign in </a></p>
-
-    </form>
-</div>
+  
+        <div class="form-group">
+          <input class="pass" type="password" align="center" name="password" [(ngModel)]="user.password" placeholder="Password">
+          <div *ngIf="validationErrors['user.password']" class="alert alert-danger">
+            <div *ngFor="let error of validationErrors['user.password']">{{ error }}</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <input class="un" type="text" align="center" name="company[name]" [(ngModel)]="company.name" placeholder="Company Name">
+          <div *ngIf="validationErrors['user.company.name']" class="alert alert-danger">
+            <div *ngFor="let error of validationErrors['user.company.name']">{{ error }}</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <input class="un" type="text" align="center" name="company[subdomain]" [(ngModel)]="company.subdomain" placeholder="Subdomain">
+          <div *ngIf="validationErrors['user.company.subdomain']" class="alert alert-danger">
+            <div *ngFor="let error of validationErrors['user.company.subdomain']">{{ error }}</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <input class="un" type="text" align="center" name="company[solde]" [(ngModel)]="company.solde" placeholder="Solde Of Absence Company">
+          <div *ngIf="validationErrors['user.company.solde']" class="alert alert-danger">
+            <div *ngFor="let error of validationErrors['user.company.solde']">{{ error }}</div>
+          </div>
+        </div>
+  
+        <div *ngIf="messageError" class="alert alert-danger">
+          {{ messageError }}
+        </div>
+  
+        <button class="submit" align="center" type="submit">Sign up</button>
+  
+        <p class="forgot" align="center">
+          <a routerLink="/forgot-password">Forgot Password?</a> <br>
+          <a routerLink="/">Sign in</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  

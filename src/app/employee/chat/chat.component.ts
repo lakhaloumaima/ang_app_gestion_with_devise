@@ -25,6 +25,8 @@ export class ChatEmpolyeeComponent implements OnInit {
   socketSubscription: any;
   count: any;
   cable: any;
+  userId: any
+  current_userr: any
 
   constructor(
     private employeesServicesService: UsersServicesService, 
@@ -45,6 +47,14 @@ export class ChatEmpolyeeComponent implements OnInit {
     }
 
     this.fetchMessages();
+
+    this.userId = this.activatedRoute.snapshot.paramMap.get('receiver_id');
+    if (this.userId) {
+      this.employeesServicesService.getUserById(this.userId).subscribe((user: any) => {
+        this.current_userr = user;
+        console.log( this.current_userr )
+      });
+    }
 
     // Fetch all employees
     this.employeesServicesService.getAllUsers().subscribe(

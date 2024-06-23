@@ -581,3 +581,96 @@ body{
         display: inline-block
     }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .container-xxl {
+        position: relative;
+        background-color: #fff;
+        display: flex;
+        padding: 0;
+      }
+      
+      .app-sidebar {
+        /* Adjust sidebar styles as needed */
+      }
+      
+      .content {
+        flex: 1; /* Expand to fill available space */
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      
+      .view-account {
+        margin-bottom: 20px;
+      }
+      
+      .card {
+        margin-bottom: 20px;
+      }
+      
+      .module {
+        display: flex;
+      }
+      
+      .module-inner {
+        display: flex;
+        flex: 1;
+      }
+      
+      .side-bar {
+        flex: 0 0 auto; /* Fixed width sidebar */
+        margin-right: 20px;
+      }
+      
+      .user-info {
+        /* Adjust user info styles */
+      }
+      
+      .content-panel {
+        flex: 1; /* Flexible content panel */
+      }
+      
+      .form-horizontal {
+        /* Adjust form styles as needed */
+      }
+      
+      fieldset.fieldset {
+        /* Adjust fieldset styles as needed */
+      }
+      
+      .avatar {
+        /* Adjust avatar styles as needed */
+      }
+      
+      .chat-container {
+        flex: 1; /* Fill remaining space */
+        margin-left: 20px; /* Adjust spacing */
+      }
+      
+      @media (max-width: 768px) {
+        .module {
+          flex-direction: column;
+        }
+      
+        .chat-container {
+          margin-left: 0; /* Adjust for smaller screens */
+        }
+      }
+      

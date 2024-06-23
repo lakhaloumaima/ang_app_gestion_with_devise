@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { User } from 'src/app/models/user';
 import { DemandesServicesService } from 'src/app/services/demandes-services.service';
 import { UsersServicesService } from 'src/app/services/users-services.service';
 import Swal from 'sweetalert2';
@@ -18,11 +19,20 @@ export class DashboardEmployeeComponent {
   imageupdate: UntypedFormGroup;
   image: any;
   upadate: UntypedFormGroup;
+  dataArrayyy: any;
+  messageErr: any;
 
   constructor(private employeesServicesService: UsersServicesService, private router: Router) {
 
     this.user = JSON.parse(sessionStorage.getItem('user')!);
     // console.log(this.user.user.last_name)
+    this.employeesServicesService.getAllEmployeesByCompany(this.user.user.company_id).subscribe(data => {
+      console.log(data)
+      this.dataArrayyy = data
+        , (err: HttpErrorResponse) => {
+          this.messageErr = "We dont't found this employee in our database"
+        }
+    })
 
     this.imageupdate = new UntypedFormGroup({ avatar: new UntypedFormControl('', [Validators.required]), });
 

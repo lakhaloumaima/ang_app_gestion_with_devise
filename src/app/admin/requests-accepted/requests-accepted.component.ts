@@ -23,12 +23,14 @@ export class RequestsAcceptedComponent  {
   searchedKeyword: any ;
 
   p : any = 1 ;
+  user: any;
 
 
   constructor(private demandesServicesService:DemandesServicesService,private router:Router) {
 
-    
-    this.demandesServicesService.getrequestacceptedbyemployee().subscribe(data=>{
+    this.user = JSON.parse(sessionStorage.getItem('user')!);
+
+    this.demandesServicesService.getrequestacceptedbyemployee(this.user.user.company_id).subscribe(data=>{
       // debugger
     //  sessionStorage.setItem( 'requestdetails', JSON.stringify( data ) );
 

@@ -1,14 +1,29 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
-    <app-sidebar></app-sidebar>
+    <span *ngIf="user.user.role == 'admin' || user.user.role == 'rh'  ">
+        <app-sidebar-admin></app-sidebar-admin>
+    </span>
+    <span *ngIf="user.user.role == 'employee' ">
+        <app-sidebar></app-sidebar>
+    </span>
     <div class="content">
+        <span *ngIf="user.user.role == 'admin' || user.user.role == 'rh'  " >
+            <app-navbar-admin></app-navbar-admin>
+        </span>
         <br>
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-sm-12 col-xl-6">
+            <div class="row ">
+                <div class="col-sm-12 col-xl-6 mx-auto"> <!-- Added mx-auto class here -->
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Add Request</h6>
                         <form [formGroup]="addrequestt" #f="ngForm" (ngSubmit)="addRequestt(f); f.reset()">
+                            <div class="mb-3" *ngIf="user.user.role == 'admin' || user.user.role == 'rh' ">
+                                <label for="user_id" class="form-label">User</label>
+                                <select class="form-control custom-select" id="user_id" formControlName="user_id" name="user_id" required>
+                                    <option value="" disabled selected>Select User</option>
+                                    <option *ngFor="let user of dataArray.employees" [value]="user.id">{{ user.email }}</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="start_date" class="form-label">Start date</label>
                                 <input type="date" class="form-control" id="start_date" formControlName="start_date" name="start_date" required>
@@ -19,7 +34,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="reason_id" class="form-label">Reason</label>
-                                <select class="form-control" id="reason_id" formControlName="reason_id" name="reason_id" required>
+                                <select class="form-control custom-select" id="reason_id" formControlName="reason_id" name="reason_id" required>
+                                    <option value="" disabled selected>Select Reason</option>
                                     <option *ngFor="let reason of reasons" [value]="reason.id">{{ reason.name }}</option>
                                 </select>
                             </div>
@@ -31,7 +47,7 @@
                                 <label for="certificate" class="form-label">Certificate</label>
                                 <input type="file" class="form-control" id="certificate" name="certificate" (change)="onFileSelected($event)">
                             </div>
-                            <button type="submit" class="btn btn-primary" style="margin-left: 40%;">Send</button>
+                            <button type="submit" class="btn btn-primary d-block mx-auto">Send</button> <!-- Centered the button -->
                         </form>
                     </div>
                 </div>
