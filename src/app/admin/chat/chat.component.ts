@@ -53,20 +53,14 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
         console.log('Message received from server:', data);
         // Add the new message to the messages array
         // debugger
-        this.messages.push({ ...data.message, showTime: false });
+        this.addMessageToBeginning({ ...data.message.message });
+
+        this.messages.push({ ...data.message });
       }
     });
     
 
     this.fetchMessages();
-
-    this.userId = this.activatedRoute.snapshot.paramMap.get('receiver_id');
-    if (this.userId) {
-      this.employeesServicesService.getUserById(this.userId).subscribe((user: any) => {
-        this.current_userr = user;
-        console.log( this.current_userr )
-      });
-    }
 
     // Fetch all employees
     this.employeesServicesService.getAllUsers().subscribe(
@@ -86,9 +80,22 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
       this.fetchMessages(); // Fetch messages when receiver_id changes
     });
 
+    this.userId = this.activatedRoute.snapshot.paramMap.get('receiver_id');
+    if (this.userId) {
+      this.employeesServicesService.getUserById(this.userId).subscribe((user: any) => {
+        this.current_userr = user;
+        console.log( this.current_userr )
+      });
+    }
+
+    this.employeesServicesService.getUserById(this.userId).subscribe((user: any) => {
+      this.current_userr = user;
+      console.log(this.current_userr); // Check console to ensure user object is correctly fetched
+    });
+
     // Subscribe to real-time messages
     this.socketSubscription = this.socket.fromEvent('message').subscribe((message: any) => {
-      this.addMessageToBeginning({ ...message, showTime: false });
+      this.addMessageToBeginning({ ...message });
     });
   }
 
@@ -116,7 +123,7 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
               // Sort messages by created_at timestamp
               allMessages.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime() );
               // Filter out duplicates
-              const uniqueMessages = this.getUniqueMessages(allMessages.map(msg => ({ ...msg, showTime: false })));
+              const uniqueMessages = this.getUniqueMessages(allMessages.map(msg => ({ ...msg })));
               this.messages = uniqueMessages;
               this.count = this.messages.length
               console.log( this.messages )

@@ -113,7 +113,7 @@
                     <!-- Reason -->
                     <div class="form-group">
                         <label for="reason_id">Reason</label>
-                        <select class="form-control" id="reason_id" formControlName="reason_id"  [(ngModel)]="dataRequest.reason" required>
+                        <select class="form-control" id="reason_id" formControlName="reason_id" [(ngModel)]="dataRequest.reason_id" required>
                             <option *ngFor="let reason of reasons" [value]="reason.id">{{ reason.name }}</option>
                         </select>
                     </div>

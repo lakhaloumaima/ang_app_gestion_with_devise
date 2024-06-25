@@ -51,6 +51,7 @@ export class EmployeeListRequestsComponent implements OnInit {
 
     this.demandesServicesService.getAllReasons().subscribe(data => {
       this.reasons = data.reasons; // Assuming data contains an array of reasons
+      console.log( this.reasons )
     }, (err: HttpErrorResponse) => {
       Swal.fire({
         icon: 'error',
@@ -86,6 +87,7 @@ export class EmployeeListRequestsComponent implements OnInit {
             showConfirmButton: true,
             timer: 1500
           });
+          window.location.reload()
         },
         (error: HttpErrorResponse) => {
           Swal.fire({
@@ -139,14 +141,14 @@ export class EmployeeListRequestsComponent implements OnInit {
     id: '',
     start_date: '',
     end_date: '',
-    reason: '',
+    reason_id: '',
     description: ''
   }
 
-  getdata(start_date: string, end_date: string, reason: string, description: string, id: any): void {
+  getdata(start_date: string, end_date: string, reason_id: string, description: string, id: any): void {
     this.dataRequest.start_date = start_date;
     this.dataRequest.end_date = end_date;
-    this.dataRequest.reason = reason;
+    this.dataRequest.reason_id = reason_id;
     this.dataRequest.description = description;
     this.dataRequest.id = id;
     console.log(this.dataRequest);
@@ -157,7 +159,7 @@ export class EmployeeListRequestsComponent implements OnInit {
     const formData = new FormData();
     formData.append('start_date', this.updaterequest.value.start_date);
     formData.append('end_date', this.updaterequest.value.end_date);
-    formData.append('reason_id', this.updaterequest.value.reason);
+    formData.append('reason_id', this.updaterequest.value.reason_id);
     formData.append('description', this.updaterequest.value.description);
     if (this.selectedFile) {
       formData.append('certificate', this.selectedFile, this.selectedFile.name);

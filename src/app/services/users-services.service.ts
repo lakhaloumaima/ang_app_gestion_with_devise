@@ -62,10 +62,13 @@ export class UsersServicesService {
     return this.http.get(environment.urlBackend + 'employees/')
   }
 
+  getAllUsersByCompanyConfirmed(company_id: any) {
+    return this.http.get(environment.urlBackend + 'getAllUsersByCompanyConfirmed/' + company_id )
+  }
+
   getAllEmployeesByCompany(company_id: any) {
     return this.http.get(environment.urlBackend + 'getAllEmployeesByCompany/' + company_id )
   }
-
 
   getAllUsersByCompany(company_id: any) {
     return this.http.get(environment.urlBackend + 'getAllUsersByCompany/' + company_id )

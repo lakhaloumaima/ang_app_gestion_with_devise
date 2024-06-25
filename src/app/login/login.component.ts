@@ -49,16 +49,23 @@ export class LoginComponent {
           if (response.role == "admin" ) {
 
             sessionStorage.setItem('user', JSON.stringify(response));
-            window.location.href = `http://${subdomain}.localhost:4200/dashboard-admin`;
+            // window.location.href = `http://${subdomain}.localhost:4200/dashboard-admin`;
+
+            window.location.href = `http://localhost:4200/dashboard-admin`;
+
 
           }
           else if (response.role == "employee" && subdomain === response.subdomain) {
             sessionStorage.setItem('user', JSON.stringify(response));
-            window.location.href = `http://${subdomain}.localhost:4200/dashboard-employee`;
+            // window.location.href = `http://${subdomain}.localhost:4200/dashboard-employee`;
+            window.location.href = `http://localhost:4200/dashboard-employee`;
+
           }
           else if (response.role == "rh" && subdomain === response.subdomain) {
             sessionStorage.setItem('user', JSON.stringify(response));
-            window.location.href = `http://${subdomain}.localhost:4200/dashboard-rh`;
+            // window.location.href = `http://${subdomain}.localhost:4200/dashboard-rh`;
+            window.location.href = `http://localhost:4200/dashboard-rh`;
+
           }
           else {
             Swal.fire({
