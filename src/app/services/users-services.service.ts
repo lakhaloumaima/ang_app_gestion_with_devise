@@ -19,6 +19,10 @@ export class UsersServicesService {
   }
 
 
+  getNotifications(id: any): Observable<any[]> {
+    return this.http.get<any[]>(environment.urlBackend + "notifications/" + id );
+  }
+
   /************************************************ ADMIN + EMPLOYEE ***************************************************/
   login(data: any): Observable<any> {
     return this.http.post(environment.urlBackend + 'users/sign_in/', data);

@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { DemandesServicesService } from 'src/app/services/demandes-services.service';
 import { UsersServicesService } from 'src/app/services/users-services.service';
 import Swal from 'sweetalert2';
+import { createConsumer } from '@rails/actioncable';
 
 @Component({
   selector: 'app-add-demande',
@@ -20,6 +21,8 @@ export class AddDemandeComponent implements OnInit {
   date: any;
   reasons: any[] = []; // Store reasons list
   messageErr: any;
+  cable: any;
+  notifications: any
 
   constructor(private employeesServicesService: UsersServicesService, private demandesServicesService: DemandesServicesService, private router: Router) {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
@@ -44,6 +47,18 @@ export class AddDemandeComponent implements OnInit {
         , (err: HttpErrorResponse) => {
           this.messageErr = "We dont't found this employee in our database"
         }
+    })
+
+    // Connect to Action Cable when the component initializes
+    this.cable = createConsumer('ws://localhost:3000/cable');
+    this.cable.subscriptions.create('NotificationChannel', {
+      received: (data: any) => {
+        console.log('Notification received from server:', data);
+        // Add the new message to the messages array
+        // debugger
+
+        this.notifications.push({ ...data.notification });
+      }
     })
 
   }

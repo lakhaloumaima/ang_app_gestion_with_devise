@@ -24,6 +24,7 @@ export class DashboardAdminComponent  {
   p: any = 1 ;
 
   user: any;
+  notifications: any;
 
 
   constructor(private demandesServicesService: DemandesServicesService, private usersServicesService: UsersServicesService, private router: Router) {
@@ -37,6 +38,17 @@ export class DashboardAdminComponent  {
           this.messageErr = "We dont't found this employee in our database"
         }
     })
+
+    this.usersServicesService.getNotifications(this.user.user.id).subscribe(
+      notifications => {
+        this.notifications = notifications;
+        console.log( this.notifications )
+      },
+      error => {
+        console.error('Error loading notifications:', error);
+      }
+    );
+
     this.demandesServicesService.getAllRequestsByCompany(this.user.user.company_id).subscribe(data => {
 
       console.log(data)

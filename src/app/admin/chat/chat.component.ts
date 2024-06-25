@@ -58,7 +58,7 @@ export class ChatAdminComponent implements OnInit, OnDestroy {
         this.messages.push({ ...data.message });
       }
     });
-    
+
 
     this.fetchMessages();
 
