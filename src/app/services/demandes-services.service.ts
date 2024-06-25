@@ -24,8 +24,13 @@ export class DemandesServicesService {
   }
 
   deleteReason(id: any): Observable<any> {
-    return this.http.delete(environment.urlBackend + 'reasons/' + id)
+    return this.http.delete(environment.urlBackend + 'reason/' + id)
   }
+
+  updateReason(id: number, data: any): Observable<any> {
+    return this.http.put(environment.urlBackend + 'reason/' + id, data)
+  }
+
 
   /************************************************FOR EMPLOYEE ******************************************************/
 

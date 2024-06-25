@@ -1,145 +1,235 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <app-sidebar-admin></app-sidebar-admin>
-  
+
     <div class="content">
-      <app-navbar-admin></app-navbar-admin>
-  
-      <!-- Recent Sales Start -->
-      <div class="container-fluid pt-4 px-4">
-        <div class="bg-light text-center rounded p-4">
-          <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Users ({{ dataArray?.employees?.length || 0 }})</h6>
-            <form class="d-none d-md-flex ms-4" >
-                <input class="form-control border-0" type="search" placeholder="Search ..." name="email" [(ngModel)]="searchedKeyword">
-            </form>
-            <div class="btn-group" role="group" aria-label="Role Filter">
-              <button type="button" class="btn btn-outline-dark" name="employee" (click)="applyRoleFilter('employee')">Employee</button>
-              <button type="button" class="btn btn-outline-dark" name="rh" (click)="applyRoleFilter('rh')">RH</button>
-              <button type="button" class="btn btn-outline-dark" name="" (click)="applyRoleFilter('')">Clear Filter</button>
+        <app-navbar-admin></app-navbar-admin>
+
+        <!-- Users Management Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div
+                    class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Users ({{ dataArray?.employees?.length || 0
+                        }})</h6>
+                    <form class="d-none d-md-flex ms-4">
+                        <input class="form-control border-0" type="search"
+                            placeholder="Search ..." name="email"
+                            [(ngModel)]="searchedKeyword">
+                    </form>
+                    <div class="btn-group" role="group"
+                        aria-label="Role Filter">
+                        <button type="button" class="btn btn-outline-success"
+                            name="employee"
+                            (click)="applyRoleFilter('employee')">Employee</button>
+                        <button type="button" class="btn btn-outline-success"
+                            name="rh"
+                            (click)="applyRoleFilter('rh')">RH</button>
+                        <button type="button" class="btn btn-outline-success"
+                            name (click)="applyRoleFilter('')">Clear
+                            Filter</button>
+                    </div>
+                </div>
+
+                <div align="left" *ngIf="user.user.role === 'admin'">
+                    <button class="btn btn-outline-success"
+                        routerLink="/add-employee">
+                        <i class="bi bi-plus"></i> Add User
+                    </button>
+                </div>
+                <br>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table
+                            class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-success">
+                                    <th scope="col"><input
+                                            class="form-check-input"
+                                            type="checkbox"></th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Email confirmed</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Company name</th>
+                                    <th scope="col">Balance</th>
+
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of dataArray?.employees | paginate: { itemsPerPage: 10, currentPage: p }; index as i">
+                                    <td><input class="form-check-input"
+                                            type="checkbox"></td>
+                                    <td>{{ item?.email }}</td>
+                                    <td>
+                                        <button *ngIf="item.email_confirmed"
+                                            type="button"
+                                            class="btn btn-success rounded-pill m-2">True</button>
+                                        <button *ngIf="!item.email_confirmed"
+                                            type="button"
+                                            class="btn btn-danger rounded-pill m-2">False</button>
+                                    </td>
+                                    <td>{{ item.last_name }}</td>
+                                    <td>{{ item.first_name }}</td>
+                                    <td>{{ item.address }}</td>
+                                    <td>{{ item.company?.name }}</td>
+
+                                    <td>
+                                        <p class="btn btn-outline-success m-2" *ngIf="item.solde > 0">{{ item.solde }} Days</p>
+                                                <p class="btn btn-danger rounded-pill m-2" *ngIf="item.solde < 0">{{ item.solde }} Days</p>
+                                    </td>
+
+                                    <td *ngIf="user.user.role != 'rh'">
+                                        <button data-toggle="modal"
+                                            data-target="#exampleModal"
+                                            type="button"
+                                            (click)="getdata(item.email, item.last_name, item.first_name, item.address, item.phone, item.id)"
+                                            class="btn btn-warning rounded-pill m-2">Update</button>
+                                    </td>
+
+                                    <td *ngIf="user.user.role != 'rh'">
+                                        <button (click)="delete(item.id, i)"
+                                            type="button"
+                                            class="btn btn-danger rounded-pill m-2">Delete</button>
+                                    </td>
+
+                                    <td *ngIf="user.user.role === 'rh'">
+                                        <button data-toggle="modal"
+                                            data-target="#exampleModal"
+                                            type="button"
+                                            (click)="getdata(item.email, item.last_name, item.first_name, item.address, item.phone, item.id)"
+                                            class="btn btn-warning rounded-pill m-2"
+                                            disabled>Update</button>
+                                    </td>
+
+                                    <td *ngIf="user.user.role === 'rh'">
+                                        <button (click)="delete(item.id, i)"
+                                            type="button"
+                                            class="btn btn-danger rounded-pill m-2"
+                                            disabled>Delete</button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="dataArray?.length === 0">
+                                    <td colspan="7"
+                                        style="text-align: center;">No data
+                                        found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div align="left" *ngIf="user.user.role === 'admin' " >
-            <button class="btn btn-outline-dark" routerLink="/add-employee"> <i class="bi bi-plus"></i> Add User </button>&nbsp;&nbsp;
-          </div><br>
-          <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-              <thead>
-                <tr class="text-dark">
-                  <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Email confirmed</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Company name</th>
+            <!-- Users Management End -->
 
-                  <th colspan="3">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of dataArray?.employees | paginate: { itemsPerPage: 10, currentPage: p }; index as i">
-                  <td><input class="form-check-input" type="checkbox"></td>
-                  <td>{{ item?.email }}</td>
-                  <td *ngIf="item.email_confirmed" class="text-success"><button type="button" class="btn btn-success rounded-pill m-2">True</button></td>
-                  <td *ngIf="!item.email_confirmed" class="text-danger"><button type="button" class="btn btn-danger rounded-pill m-2">False</button></td>
-                  <td>{{ item.last_name }}</td>
-                  <td>{{ item.first_name }}</td>
-                  <td>{{ item.address }}</td>
-                  <td>{{ item.company.name }}</td>
+            <!-- Pagination -->
+            <div style="margin-left: 60%;">
+                <pagination-controls
+                    (pageChange)="p = $event"></pagination-controls>
+            </div>
 
-                  <td>
-                    <button type="button" data-toggle="modal" data-target="#exampleModal1" (click)="getdata2(item.email, item.solde, item.id)" class="btn btn-outline-info m-2">Solde</button>
-                  </td>
-                  <td *ngIf="user.user.role != 'rh' " >
-                    <button data-toggle="modal" data-target="#exampleModal" type="button" (click)="getdata(item.email, item.last_name, item.first_name, item.address, item.phone, item.id)" class="btn btn-outline-warning m-2">Update</button>
-                  </td>
-                  <td *ngIf="user.user.role != 'rh' " >
-                    <button (click)="delete(item.id, i)" type="button" class="btn btn-outline-danger m-2">Delete</button>
-                  </td>
-
-                  <td *ngIf="user.user.role === 'rh' ">
-                    <button data-toggle="modal" data-target="#exampleModal" type="button" (click)="getdata(item.email, item.last_name, item.first_name, item.address, item.phone, item.id)" class="btn btn-outline-warning m-2" disabled >Update</button>
-                  </td>
-                  <td *ngIf="user.user.role === 'rh' " >
-                    <button (click)="delete(item.id, i)" type="button" class="btn btn-outline-danger m-2" disabled >Delete</button>
-                  </td>
-
-                </tr>
-                <tr *ngIf="dataArray?.length === 0">
-                  <td colspan="7" style="text-align: center;">No data found</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
-      <!-- Recent Sales End -->
-  
-      <div style="margin-left: 60%;">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
     </div>
-  </div>
-  
-  <!-- Modal Solde -->
-  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <br>
-        <div class="modal-body" style="text-align: center;">
-          <h6>{{ dataEmployee.email }}</h6>
-          <h6>
-            Balance:
-            <p class="btn btn-success rounded-pill m-2" *ngIf="dataEmployee.solde > 0">{{ dataEmployee.solde }} Days !!</p>
-            <p class="btn btn-danger rounded-pill m-2" *ngIf="dataEmployee.solde < 0">{{ dataEmployee.solde }} Days !!</p>
-          </h6>
+
+    <!-- Modal Solde -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <br>
+                <div class="modal-body" style="text-align: center;">
+                    <h6>{{ dataEmployee.email }}</h6>
+                    <h6>
+                        Balance:
+                        <p class="btn btn-success rounded-pill m-2"
+                            *ngIf="dataEmployee.solde > 0">{{ dataEmployee.solde
+                            }} Days !!</p>
+                        <p class="btn btn-danger rounded-pill m-2"
+                            *ngIf="dataEmployee.solde < 0">{{ dataEmployee.solde
+                            }} Days !!</p>
+                    </h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <!-- Modal Update -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+
+    <!-- Modal Update -->
+    <div class="modal fade" id="exampleModal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="updateemployees" #f="ngForm"
+                        (ngSubmit)="updateemployee(f)">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Email</label>
+                            <input type="text" class="form-control"
+                                placeholder="Email"
+                                [(ngModel)]="dataEmployee.email" name="email"
+                                required formControlName="email"
+                                minlength="2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Last
+                                Name</label>
+                            <input type="text" class="form-control"
+                                placeholder="Last Name" name="last_name"
+                                [(ngModel)]="dataEmployee.last_name" required
+                                formControlName="last_name" minlength="2"
+                                maxlength="20" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">First
+                                Name</label>
+                            <input type="text" class="form-control"
+                                placeholder="First Name" name="first_name"
+                                [(ngModel)]="dataEmployee.first_name" required
+                                formControlName="first_name" minlength="2"
+                                maxlength="20" />
+                        </div>
+                        <div class="form-group">
+                            <label
+                                for="exampleFormControlInput1">Address</label>
+                            <input type="text" class="form-control"
+                                placeholder="Address"
+                                [(ngModel)]="dataEmployee.address"
+                                name="address" required
+                                formControlName="address" minlength="2"
+                                maxlength="20" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Phone</label>
+                            <input type="number" min="0"
+                                oninput="validity.valid||(value='');"
+                                class="form-control" placeholder="+216"
+                                [(ngModel)]="dataEmployee.phone" name="phone"
+                                required formControlName="phone" minlength="2"
+                                maxlength="20" />
+                        </div>
+                        <div class="form-group">
+                            <label
+                                for="exampleFormControlInput1">Password</label>
+                            <input type="password" class="form-control"
+                                placeholder="Password"
+                                [(ngModel)]="dataEmployee.password"
+                                name="password" required
+                                formControlName="password" />
+                        </div>
+                        <br>
+                        <button type="submit"
+                            class="btn btn-success">Update</button>
+                    </form>
+                    <!-- Form update ends here -->
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form [formGroup]="updateemployees" #f="ngForm" (ngSubmit)="updateemployee(f)">
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Email</label>
-              <input type="text" class="form-control" placeholder="Email" [(ngModel)]="dataEmployee.email" name="email" required formControlName="email" minlength="2" />
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Last Name</label>
-              <input type="text" class="form-control" placeholder="Last Name" name="last_name" [(ngModel)]="dataEmployee.last_name" required formControlName="last_name" minlength="2" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">First Name</label>
-              <input type="text" class="form-control" placeholder="First Name" name="first_name" [(ngModel)]="dataEmployee.first_name" required formControlName="first_name" minlength="2" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Address</label>
-              <input type="text" class="form-control" placeholder="Address" [(ngModel)]="dataEmployee.address" name="address" required formControlName="address" minlength="2" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Phone</label>
-              <input type="number" min="0" oninput="validity.valid||(value='');" class="form-control" placeholder="+216" [(ngModel)]="dataEmployee.phone" name="phone" required formControlName="phone" minlength="2" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Password</label>
-              <input type="password" class="form-control" placeholder="Password" [(ngModel)]="dataEmployee.password" name="password" required formControlName="password" />
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
-          <!-- Form update ends here -->
-        </div>
-      </div>
     </div>
-  </div>
-  

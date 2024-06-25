@@ -21,29 +21,40 @@
                         class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark">
+                                <th scope="col">Status</th>
 
                                 <th scope="col">Email </th>
                                 <th scope="col">Start date </th>
                                 <th scope="col">End date </th>
-                                <th scope="col">Period </th>
 
                                 <th scope="col">Balance </th>
+                                <th scope="col">Reason </th>
+
                                 <th scope="col">Certificate </th>
 
-                                <th scope="col">Status</th>
+                                <th *ngIf="user.user.role == 'rh' " colspan="1">Actions</th>
 
-                                <th colspan="3">Actions</th>
+                                <th *ngIf="user.user.role != 'rh' " colspan="3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
                                 *ngFor="let item of dataArray?.requests | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
+                                <td
+                                *ngIf="item.status == 'in_progress' "><button
+                                    type="button"
+                                    class="btn btn-primary rounded-pill m-2"><i class="fa fa-hourglass-half me-2"></i></button></td>
+                            <td *ngIf="item.status == 'accepted' "><button
+                                    type="button"
+                                    class="btn btn-success rounded-pill m-2"><i class="fa fa-check-circle me-2"></i></button></td>
+                            <td *ngIf="item.status == 'refused' "><button
+                                    type="button"
+                                    class="btn btn-danger rounded-pill m-2"><i class="fa fa-times-circle me-2"></i></button></td>
 
                                 <td> {{item.user.email}} </td>
                                 <td>{{item.start_date}} </td>
                                 <td>{{item.end_date}} </td>
 
-                                <td>{{item.days }} Days</td>
 
                                 <td>
                                     <p
@@ -56,60 +67,49 @@
                                         {{item.user.solde}} Days</p>
 
                                 </td>
+                                <td>{{item.reason.name }}</td>
 
-                                <td>
-                                    <button
-                                        (click)="exportPdf(item.id, item.user.email )"
-                                        *ngIf="item.certificate"
-                                        class="btn btn-outline-info"><i
-                                            class="fa fa-download"></i> Export
-                                        Certificate</button>
-                                </td>
 
-                                <td
-                                    *ngIf="item.status == 'in_progress' "><button
-                                        type="button"
-                                        class="btn btn-primary rounded-pill m-2">In_Progress</button></td>
-                                <td *ngIf="item.status == 'accepted' "><button
-                                        type="button"
-                                        class="btn btn-success rounded-pill m-2">Accepted</button></td>
-                                <td *ngIf="item.status == 'refused' "><button
-                                        type="button"
-                                        class="btn btn-danger rounded-pill m-2">Refused</button></td>
+                                <td> <button
+                                    *ngIf="item.reason.name == 'sickness' && item.certificate "
+                                    (click)="exportPdf(item.id, item.user.email )"
+                                    class="btn btn-primary rounded-pill m-2"><i
+                                        class="fa fa-download"></i> Export
+                                    Certificate</button> </td>
 
-                                <td>
+                                <td  >
                                     <button
                                         (click)="getdata1(item.status , item.motif_refused , item.user_id , item.created_at , item?.reason.name , item.description, item.id)"
                                         data-toggle="modal"
                                         data-target="#exampleModal1"
-                                        class="btn btn-square btn-outline-info"><i
+                                        class="btn btn-info rounded-pill m-2"><i
                                             class="fa fa-info"
                                             aria-hidden="true"></i>
                                     </button>
 
                                 </td>
-                                <td>
+                                <td *ngIf="user.user.role != 'rh' " >
                                     <button
                                         *ngIf="item.status==='in_progress' || item.status==='refused'   "
                                         (click)="getdata(item.status , item.motif_refused , item.user_id , item.id)"
                                         data-toggle="modal"
                                         data-target="#exampleModal"
-                                        class="btn btn-square btn-outline-warning"><i
+                                        class="btn btn-warning rounded-pill m-2"><i
                                             class="fa fa-edit"
                                             aria-hidden="true"></i>
                                     </button>
                                     <button readonly
                                         style="cursor: not-allowed;" disabled
                                         *ngIf="item.status==='accepted' "
-                                        class="btn btn-square btn-outline-warning"><i
+                                        class="btn btn-warning rounded-pill m-2"><i
                                             class="fa fa-edit"
                                             aria-hidden="true"></i> </button>
                                 </td>
 
-                                <td>
+                                <td  *ngIf="user.user.role != 'rh' " >
                                     <button (click)="delete(item.id , i)"
                                         *ngIf="item.status==='in_progress' || item.status==='refused'   "
-                                        class="btn btn-square btn-outline-danger"><i
+                                        class="btn btn-danger rounded-pill m-2"><i
                                             class="fa fa-trash"
                                             aria-hidden="true"></i>
                                     </button>
@@ -117,7 +117,7 @@
                                         style="cursor: not-allowed;" disabled
                                         (click)="delete(item.id , i)"
                                         *ngIf="item.status==='accepted' "
-                                        class="btn btn-square btn-outline-danger"><i
+                                        class="btn btn-danger rounded-pill m-2"><i
                                             class="fa fa-trash"
                                             aria-hidden="true"></i> </button>
                                 </td>
@@ -157,7 +157,7 @@
                         <input type="text" class="form-control"
                             placeholder="user_id"
                             [defaultValue]="dataRequest.user_id" required
-                            name="user_id" readonly />
+                            name="user_id" readonly hidden />
                     </div>
                     <br>
 
@@ -250,7 +250,7 @@
                             id="exampleFormControlSelect1"
                             [(ngModel)]="dataRequest.status"
                             formControlName="status" name="status" ngModel>
-                            <option value="in_progress">In progress </option>
+                            <option value="in_progress"><i class="fa fa-hourglass-half me-2"></i> </option>
                             <option value="accepted">accepted </option>
                             <option value="refused">refused </option>
                         </select>

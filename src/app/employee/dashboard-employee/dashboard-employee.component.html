@@ -22,11 +22,11 @@
                                         </a></li>
                                     <h6> You have balance : <br> <br>
                                         <p
-                                            class="btn btn-success rounded-pill m-2"
+                                        class="btn btn-outline-success m-2"
                                             *ngIf="user.user.solde > 0 ">
                                             {{user.user.solde}} Days !! </p>
                                         <p
-                                            class="btn btn-danger rounded-pill m-2"
+                                        class="btn btn-outline-danger m-2"
                                             *ngIf="user.user.solde < 0 ">
                                             {{user.user.solde}} Days !! </p>
                                     </h6>
@@ -55,14 +55,14 @@
                                                     formControlName="avatar"
                                                     class="file-uploader pull-left">
                                                 <button type="submit"
-                                                    class="btn btn-sm btn-default-alt pull-left">Update
+                                                class="btn btn-success">Update
                                                     Image</button>
 
                                             </div>
                                         </form>
                                     </div>
                                     &nbsp; &nbsp;
-                                    <h2 class="title">Profile Details </h2>
+                                    <h2 class="title text-success">Profile Details </h2>
 
                                     <form [formGroup]="upadate" #f="ngForm"
                                         (ngSubmit)="updateinfouser(f)">
@@ -185,7 +185,7 @@
                                         <div class="form-group">
                                             <div style="text-align: center;"
                                                 class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                                <input class="btn btn-primary"
+                                                <input class="btn btn-success"
                                                     type="submit"
                                                     value="Update Profile">
                                             </div>
@@ -203,8 +203,8 @@
                     <br>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Members</h4>
+                        <div class="card-header bg-success">
+                            <h4 class="card-title  text-white">Members</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled team-members">

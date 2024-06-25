@@ -9,7 +9,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Requests | Refused ( {{dataArray?.requests.length}} ) </h6>
+                    <h6 class="mb-0">Requests | <i class="fa fa-times-circle me-2"></i> ( {{dataArray?.requests.length}} ) </h6>
                     <form class="d-none d-md-flex ms-4">
                         <input class="form-control border-0" type="search" placeholder="Search ..." name="email"
                             [(ngModel)]="searchedKeyword">
@@ -44,11 +44,11 @@
 
                                 <td> <button data-toggle="modal" data-target="#exampleModal" type="button"
                                         (click)="getdata(item.status , item.start_date , item.end_date , item?.reason.name, item.motif_refused , item.user.id ,item.id)"
-                                        class="btn btn-outline-warning m-2"><i class="fa fa-edit"> </i></button>
+                                        class="btn btn-warning rounded-pill m-2"><i class="fa fa-edit"> </i></button>
                                 </td>
                                 <td>
                                     <button (click)="delete(item.id , i)" type="button"
-                                        class="btn btn-outline-danger m-2"><i class="fa fa-trash"></i></button>
+                                        class="btn btn-danger rounded-pill m-2"><i class="fa fa-trash"></i></button>
                                 </td>
 
                             </tr>
@@ -75,7 +75,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header  bg-success">
                 <h5 class="modal-title" id="exampleModalLabel">Update</h5>
             </div>
             <div class="modal-body">
@@ -95,9 +95,9 @@
 
                         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="dataRequest.status"
                             required formControlName="status" name="status">
-                            <option value="in_progress">In progress </option>
-                            <option value="accepted">accepted </option>
-                            <option value="refused">refused </option>
+                            <option value="in_progress">In Progress </option>
+                            <option value="accepted">Accepted </option>
+                            <option value="refused">Refused </option>
                         </select>
 
                     </div>
@@ -115,7 +115,7 @@
 
                  
 
-                    <button class="btn btn-primary">Update</button>
+                    <button class="btn btn-success">Update</button>
                 </form>
 
                 <!-- form update end here -->

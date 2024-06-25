@@ -22,9 +22,13 @@ export class AddDemandeComponent implements OnInit {
   reasons: any[] = []; // Store reasons list
   messageErr: any;
   cable: any;
-  notifications: any
+  notifications: any[] = [];
 
-  constructor(private employeesServicesService: UsersServicesService, private demandesServicesService: DemandesServicesService, private router: Router) {
+  constructor(
+    private employeesServicesService: UsersServicesService,
+    private demandesServicesService: DemandesServicesService,
+    private router: Router
+  ) {
     this.user = JSON.parse(sessionStorage.getItem('user')!);
 
     this.addrequestt = new UntypedFormGroup({
@@ -33,34 +37,27 @@ export class AddDemandeComponent implements OnInit {
       reason_id: new UntypedFormControl('', [Validators.required]),
       description: new UntypedFormControl('', [Validators.required]),
       user_id: new UntypedFormControl('', [Validators.required])
-
     });
   }
 
   ngOnInit() {
     this.fetchReasons(); // Fetch reasons list on component initialization
 
-    this.employeesServicesService.getAllEmployeesByCompany(this.user.user.company_id).subscribe(data => {
-      // debugger
-      console.log(data)
-      this.dataArray = data
-        , (err: HttpErrorResponse) => {
-          this.messageErr = "We dont't found this employee in our database"
-        }
-    })
+    this.employeesServicesService.getAllEmployeesByCompanyWithoutAdmin(this.user.user.company_id).subscribe(data => {
+      console.log(data);
+      this.dataArray = data;
+    }, (err: HttpErrorResponse) => {
+      this.messageErr = "We don't found this employee in our database";
+    });
 
     // Connect to Action Cable when the component initializes
     this.cable = createConsumer('ws://localhost:3000/cable');
     this.cable.subscriptions.create('NotificationChannel', {
       received: (data: any) => {
         console.log('Notification received from server:', data);
-        // Add the new message to the messages array
-        // debugger
-
         this.notifications.push({ ...data.notification });
       }
-    })
-
+    });
   }
 
   fetchReasons() {
@@ -87,11 +84,9 @@ export class AddDemandeComponent implements OnInit {
     formData.append('end_date', this.addrequestt.value.end_date);
     formData.append('reason_id', this.addrequestt.value.reason_id);
     formData.append('description', this.addrequestt.value.description);
-    if ( this.user.user.role == "admin" ) {
+    if (this.user.user.role == "admin") {
       formData.append('user_id', this.addrequestt.value.user_id);
-
-    }
-    else {
+    } else {
       formData.append('user_id', this.user.id);
     }
 
@@ -113,7 +108,7 @@ export class AddDemandeComponent implements OnInit {
             showConfirmButton: true,
             timer: 1500
           });
-          // this.router.navigate(['/employee-list-requests']);
+          this.resetForm(); // Reset the form on success
         }, (err: HttpErrorResponse) => {
           Swal.fire({
             icon: 'error',
@@ -143,4 +138,20 @@ export class AddDemandeComponent implements OnInit {
       });
     }
   }
+
+  resetForm() {
+    this.addrequestt.reset(); // Reset the form to its initial state
+    this.selectedFile = null; // Clear the selected file
+  }
+
+  isCertificateRequired(): boolean {
+    const selectedReasonId = this.addrequestt.value.reason_id;
+    
+    // Find the reason object from this.reasons based on selectedReasonId
+    const selectedReason = this.reasons.find(reason => reason.id === selectedReasonId);
+    
+    // Check if selectedReason is not null and its name is 'sickness' or 'maladie'
+    return !!selectedReason && (selectedReason.name === 'sickness' || selectedReason.name === 'maladie');
+  }
+
 }

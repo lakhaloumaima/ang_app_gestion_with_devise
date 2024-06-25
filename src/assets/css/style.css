@@ -127,7 +127,7 @@
 /*** Navbar ***/
 .sidebar .navbar .navbar-nav .nav-link {
     padding: 7px 20px;
-    color: var(--dark);
+    color: white;
     font-weight: 500;
     border-left: 3px solid var(--light);
     border-radius: 0 30px 30px 0;
@@ -137,7 +137,7 @@
 .sidebar .navbar .navbar-nav .nav-link:hover,
 .sidebar .navbar .navbar-nav .nav-link.active {
     color: green;
-    background: #FFFFFF;
+    background: white;
     border-color: green;
 }
 
@@ -147,7 +147,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #FFFFFF;
+    background: green;
     border-radius: 40px;
 }
 
@@ -179,7 +179,7 @@
 .content .navbar .navbar-nav .nav-link {
     margin-left: 25px;
     padding: 12px 0;
-    color: var(--dark);
+    color: white;
     outline: none;
 }
 
@@ -195,7 +195,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #FFFFFF;
     border-radius: 40px;
 }
 

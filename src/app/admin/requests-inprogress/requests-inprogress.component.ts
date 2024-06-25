@@ -9,6 +9,9 @@ import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
+import * as saveAs from 'file-saver';
+
+
 @Component({
   selector: 'app-requests-inprogress',
   templateUrl: './requests-inprogress.component.html',
@@ -26,6 +29,7 @@ export class RequestsInprogressComponent {
 
   p : any = 1 ;
   user: any;
+  hasSicknessReason: any;
 
 
   constructor(private demandesServicesService:DemandesServicesService,private router:Router) {
@@ -50,6 +54,20 @@ export class RequestsInprogressComponent {
 
   }
 
+
+  exportPdf(requestId: number , email:any ): void {
+    this.demandesServicesService.exportPdf(requestId, email ).subscribe(blob => {
+      saveAs(blob, `certificate_${requestId}_${email}.pdf`);
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Not have certificate !',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    });
+  }
 
   delete(id: any, i: number) {
     Swal.fire({
@@ -145,5 +163,10 @@ export class RequestsInprogressComponent {
 
   }
 
+  checkForSicknessReason() {
+    if (this.dataArray?.requests) {
+        this.hasSicknessReason = this.dataArray.requests.some((request: any) => request.reason === 'sickness');
+    }
+}
 
 }

@@ -1,0 +1,89 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Sidebar Styles */
+app-sidebar-admin {
+    background-color: #e8f5e9; /* Light green */
+}
+
+/* Navbar Styles */
+app-navbar-admin {
+    background-color: #388e3c; /* Dark green */
+    color: #fff;
+}
+
+/* Content Styles */
+.content {
+    background-color: #f1f8e9; /* Very light green */
+}
+
+/* Table Styles */
+.table th {
+    background-color: #81c784; /* Medium green */
+    color: #fff;
+}
+
+.table td {
+    background-color: #a5d6a7; /* Light green */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #c8e6c9; /* Hover light green */
+}
+
+/* Buttons */
+.btn-square.btn-outline-success {
+    color: #388e3c;
+    border-color: #388e3c;
+}
+
+.btn-square.btn-outline-success:hover {
+    background-color: #388e3c;
+    color: #fff;
+}
+
+.btn-square.btn-outline-danger {
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.btn-square.btn-outline-danger:hover {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+/* Modal Styles */
+.modal-header.bg-success {
+    background-color: #388e3c;
+}
+
+.modal-header.bg-success .modal-title,
+.modal-header.bg-success .btn-close {
+    color: #fff;
+}
+
+/* Form Styles */
+.form-control.border-success {
+    border-color: #388e3c;
+}
+
+.form-label.text-success {
+    color: #388e3c;
+}
+
+.btn.btn-success {
+    background-color: #388e3c;
+    border-color: #388e3c;
+}
+
+.btn.btn-success:hover {
+    background-color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+/* Pagination Controls */
+pagination-controls {
+    color: #388e3c;
+}

@@ -8,65 +8,59 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-reason',
   templateUrl: './add-reason.component.html',
-  styleUrl: './add-reason.component.css'
+  styleUrls: ['./add-reason.component.css'] // Changed styleUrl to styleUrls
 })
 export class AddReasonComponent implements OnInit {
 
-  selectedFile: File | null = null;
-
-  dataArray: any;
-
-  user: any;
-
   addReasonn: UntypedFormGroup;
 
-  date: any;
-
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
-
     this.addReasonn = new UntypedFormGroup({
       name: new UntypedFormControl('', [Validators.required]),
     });
-
-   }
-
-  ngOnInit(): void {
   }
 
-  addReason(f: any) {
-    const formData = new FormData();
+  ngOnInit(): void { }
 
-    formData.append('name', this.addReasonn.value.name);
-
-    let data = f.value
-
-    console.log(data)
-
-    this.demandesServicesService.addReason(formData).subscribe(() => {
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Success...',
-        text: 'Saved !',
-
-        showConfirmButton: true,
-        timer: 1500
-      })
-
-    }, (err: HttpErrorResponse) => {
-
+  addReason() {
+    if (this.addReasonn.invalid) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'champs required or not valid !',
+        text: 'Please fill out the required fields!',
+        showConfirmButton: true,
+        timer: 1500
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', this.addReasonn.value.name);
+
+    this.demandesServicesService.addReason(formData).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success...',
+        text: 'Saved!',
+        showConfirmButton: true,
+        timer: 1500
+      });
+      this.resetForm();  // Reset the form on success
+
+    }, (err: HttpErrorResponse) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Field required or not valid!',
         position: 'top-end',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
     });
-
-
   }
 
+  resetForm() {
+    this.addReasonn.reset();  // Reset the form to its initial state
+  }
 
 }

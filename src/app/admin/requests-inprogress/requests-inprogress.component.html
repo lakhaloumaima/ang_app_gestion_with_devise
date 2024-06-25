@@ -4,19 +4,23 @@
     <div class="content">
         <app-navbar-admin></app-navbar-admin>
 
-
         <!-- Recent Sales Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Requests | In progress ( {{dataArray?.requests.length}} ) </h6>
+                <div
+                    class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Requests | <i
+                            class="fa fa-hourglass-half me-2"></i> (
+                        {{dataArray?.requests.length}} ) </h6>
                     <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search ..." name="email"
+                        <input class="form-control border-0" type="search"
+                            placeholder="Search ..." name="email"
                             [(ngModel)]="searchedKeyword">
                     </form>
                 </div>
                 <div class="table-responsive">
-                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <table
+                        class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark">
 
@@ -25,8 +29,9 @@
                                 <th scope="col">End date </th>
 
                                 <th scope="col">Reason </th>
+                                <th scope="col">Certificate </th>
+
                                 <th scope="col">Balance </th>
-                               
                                 <th colspan="2">Actions</th>
                             </tr>
                         </thead>
@@ -38,28 +43,44 @@
                                 <td>{{item.start_date}} </td>
                                 <td>{{item.end_date}} </td>
 
-
                                 <td>{{item?.reason.name }} </td>
+                                <td> <button
+                                        *ngIf="item.reason.name == 'sickness' && item.certificate "
+                                        (click)="exportPdf(item.id, item.user.email )"
+                                        class="btn btn-primary rounded-pill m-2"><i
+                                            class="fa fa-download"></i> Export
+                                        Certificate</button> </td>
+
                                 <td>
-                                    <p class="btn btn-outline-success rounded-pill m-1" *ngIf="item.user.solde > 0 ">
+                                    <p
+                                        class="btn btn-outline-success rounded-pill m-1"
+                                        *ngIf="item.user.solde > 0 ">
                                         {{item.user.solde}} Days</p>
-                                    <p class="btn btn-outline-danger rounded-pill m-1" *ngIf="item.user.solde < 0 ">
+                                    <p
+                                        class="btn btn-outline-danger rounded-pill m-1"
+                                        *ngIf="item.user.solde < 0 ">
                                         {{item.user.solde}} Days</p>
 
                                 </td>
 
-                                <td> <button data-toggle="modal" data-target="#exampleModal" type="button"
+                                <td> <button data-toggle="modal"
+                                        data-target="#exampleModal"
+                                        type="button"
                                         (click)="getdata(item.status , item.start_date , item.end_date , item?.reason.name, item.motif_refused , item.user.id ,item.id, item.user.email)"
-                                        class="btn btn-outline-warning m-2"><i class="fa fa-edit"> </i></button>
+                                        class="btn btn-warning rounded-pill m-2"><i
+                                            class="fa fa-edit"> </i></button>
                                 </td>
                                 <td>
-                                    <button (click)="delete(item.id , i)" type="button"
-                                        class="btn btn-outline-danger m-2"><i class="fa fa-trash"></i></button>
+                                    <button (click)="delete(item.id , i)"
+                                        type="button"
+                                        class="btn btn-danger rounded-pill m-2"><i
+                                            class="fa fa-trash"></i></button>
                                 </td>
 
                             </tr>
                             <tr *ngIf="dataArray?.requests.length==0">
-                                <td colspan="8" style="text-align:center;">no data found</td>
+                                <td colspan="8" style="text-align:center;">no
+                                    data found</td>
                             </tr>
 
                         </tbody>
@@ -70,39 +91,49 @@
         <!-- Recent Sales End -->
         <br>
         <div style="margin-left: 60%;">
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls
+                (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
 
 </div>
 
 <!-- Modal Update -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Request for User : {{dataRequest.email}} </h5>
+            <div class="modal-header bg-success ">
+                <h5 class="modal-title" id="exampleModalLabel">Update Request
+                    for User : {{dataRequest.email}} </h5>
             </div>
             <div class="modal-body">
                 <!-- form update start here -->
-                <form [formGroup]="updaterequests" #f="ngForm" (ngSubmit)="updaterequest(f)">
+                <form [formGroup]="updaterequests" #f="ngForm"
+                    (ngSubmit)="updaterequest(f)">
 
                     <div class="form-group">
-                        <label for="exampleFormControlInput1" hidden > User ID </label>
-                        <input type="text" class="form-control" placeholder="user_id"
-                            [defaultValue]="dataRequest.user_id" required name="user_id" formControlName="user_id"
-                            [(ngModel)]="dataRequest.user_id" minlength="2" maxlength="20" ngModel readonly hidden />
+                        <label for="exampleFormControlInput1" hidden> User ID
+                        </label>
+                        <input type="text" class="form-control"
+                            placeholder="user_id"
+                            [defaultValue]="dataRequest.user_id" required
+                            name="user_id" formControlName="user_id"
+                            [(ngModel)]="dataRequest.user_id" minlength="2"
+                            maxlength="20" ngModel readonly hidden />
                     </div>
                     <br>
 
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Status </label>
 
-                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="dataRequest.status"
+                        <select class="form-control"
+                            id="exampleFormControlSelect1"
+                            [(ngModel)]="dataRequest.status"
                             required formControlName="status" name="status">
-                            <option value="in_progress">In progress </option>
-                            <option value="accepted">accepted </option>
-                            <option value="refused">refused </option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="accepted">Accepted </option>
+                            <option value="refused">Refused </option>
                         </select>
 
                     </div>
@@ -110,16 +141,19 @@
                     <br>
 
                     <div class="form-group">
-                        <label for="exampleFormControlInput1"> Motif Refused </label>
-                        <input type="text" class="form-control" placeholder="motif_refused"
-                            [defaultValue]="dataRequest.motif_refused" required name="motif_refused"
-                            formControlName="motif_refused" minlength="2" maxlength="20" ngModel />
+                        <label for="exampleFormControlInput1"> Motif Refused
+                        </label>
+                        <input type="text" class="form-control"
+                            placeholder="motif_refused"
+                            [defaultValue]="dataRequest.motif_refused" required
+                            name="motif_refused"
+                            formControlName="motif_refused" minlength="2"
+                            maxlength="20" ngModel />
                     </div>
 
                     <br>
 
-                
-                    <button class="btn btn-primary">Update</button>
+                    <button class="btn btn-success">Update</button>
                 </form>
 
                 <!-- form update end here -->

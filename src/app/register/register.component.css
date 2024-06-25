@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #e8f5e9;
+    background-color: #f1f8e9; /* Very light green */
     margin: 0;
     padding: 0;
 }
@@ -10,6 +10,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #f1f8e9; /* Very light green */
+
 }
 
 .card {
@@ -96,3 +98,5 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+

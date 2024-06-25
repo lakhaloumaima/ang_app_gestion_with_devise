@@ -1,21 +1,24 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <app-sidebar-admin></app-sidebar-admin>
 
-    <div class="content">
+    <div class="content flex-fill">
         <app-navbar-admin></app-navbar-admin>
 
         <!-- Dashboard Stats Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">Add Reason</h6>
-                        <form [formGroup]="addReasonn" #f="ngForm" (ngSubmit)="addReason(f); f.reset()">
+                    <div class="card bg-light rounded h-100 p-4">
+                        <h5 class="mb-4 text-success">Add Reason</h5>
+                        <form [formGroup]="addReasonn" (ngSubmit)="addReason()">
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Name</label>
-                                <input type="text" formControlName="name" name="name" required class="form-control">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" formControlName="name" name="name" required class="form-control border-success" [ngClass]="{'is-invalid': addReasonn.get('name')?.touched && addReasonn.get('name')?.invalid}">
+                                <div *ngIf="addReasonn.get('name')?.touched && addReasonn.get('name')?.invalid" class="invalid-feedback">
+                                    Name is required.
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary d-block mx-auto">Send</button>
+                            <button type="submit" class="btn btn-success d-block mx-auto">Send</button>
                         </form>
                     </div>
                 </div>

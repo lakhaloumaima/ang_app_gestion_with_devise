@@ -1,0 +1,55 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f1f8e9; /* Very light green */
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f1f8e9; /* Very light green */
+
+}
+
+/* General Styles */
+.text-dark-green {
+    color: #388e3c; /* Dark green */
+}
+
+.bg-light-green {
+    background-color: #e8f5e9; /* Light green */
+}
+
+.btn-dark-green {
+    background-color: #388e3c; /* Dark green */
+    color: #fff;
+}
+
+.btn-dark-green:hover {
+    background-color: #2e7d32; /* Slightly darker green */
+    color: #fff;
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: #4caf50; /* Medium green */
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25); /* Medium green shadow */
+}
+
+.form-floating>.form-control:focus~label {
+    color: #4caf50; /* Medium green */
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #388e3c; /* Dark green */
+    border-color: #388e3c; /* Dark green */
+}
+
+.btn-primary:hover {
+    background-color: #2e7d32; /* Slightly darker green */
+    border-color: #2e7d32; /* Slightly darker green */
+}

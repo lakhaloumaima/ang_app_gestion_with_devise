@@ -16,7 +16,7 @@ export class ListReasonsComponent implements OnInit {
   searchedKeyword: any;
   p: any = 1;
   updatereasons: UntypedFormGroup;
-  dataReason: any = { id: '', name: '' };
+  dataReason: any = { id: '', name: '' }; // Initialize empty object
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
     this.updatereasons = new UntypedFormGroup({
@@ -33,7 +33,7 @@ export class ListReasonsComponent implements OnInit {
       this.dataArray = data;
       sessionStorage.setItem('reasondetails', JSON.stringify(data));
     }, (err: HttpErrorResponse) => {
-      this.messageErr = "We don't found this request in our database";
+      this.messageErr = "We didn't find this request in our database";
     });
   }
 
@@ -57,24 +57,24 @@ export class ListReasonsComponent implements OnInit {
   }
 
   getdata(name: string, id: any) {
-    this.dataReason.name = name;
-    this.dataReason.id = id;
+    this.dataReason = { name: name, id: id }; // Assign values to dataReason object
   }
 
   updatereason(f: any) {
-    let data = f.value;
-    this.demandesServicesService.updateRequest(this.dataReason.id, data).subscribe(response => {
-      Swal.fire('Whooa!', 'Request Successfully updated!', 'success');
-      this.fetchAllReasons();
-    }, (err: HttpErrorResponse) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Fields required or not valid!',
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    });
+    if (f.valid) {
+      let data = { name: f.value.name }; // Adjust with your form fields
+      this.demandesServicesService.updateReason(this.dataReason.id, data).subscribe(
+        (response: any) => {
+          Swal.fire('Success', 'Reason updated successfully!', 'success');
+          this.fetchAllReasons(); // Refresh data after update
+          window.location.reload();
+        },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', 'Failed to update reason!', 'error');
+        }
+      );
+    } else {
+      Swal.fire('Error', 'Please fill out all required fields!', 'error');
+    }
   }
 }

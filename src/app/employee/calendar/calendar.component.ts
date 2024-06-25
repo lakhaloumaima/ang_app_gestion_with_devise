@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.employeesServicesService.getAllEmployeesByCompany(this.dataa.user.company_id).subscribe(
+     this.employeesServicesService.getAllEmployeesByCompanyWithoutAdmin(this.dataa.user.company_id).subscribe(
       (data: any) => { // Specify the type here
         this.dataArray = data.employees; // Now TypeScript knows 'data' has 'employees'
         console.log( this.dataArray)

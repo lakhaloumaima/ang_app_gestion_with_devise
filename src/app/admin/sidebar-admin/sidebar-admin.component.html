@@ -1,59 +1,80 @@
-
 <!-- Sidebar Start -->
-<div class="sidebar pe-4 pb-3">
-   
-    <nav class="navbar bg-light navbar-light">
-      
-        <div class="d-flex align-items-center ms-4 mb-4">
-            <!-- <div class="position-relative">
-                <img class="rounded-circle"  [src]="user.avv" alt="" style="width: 40px; height: 40px;">
-                <div
-                    class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
-                </div>
-            </div> -->
-            <div class="ms-1"> <br>
-                <!-- <h6 class="mb-0">{{ user.user.email }} </h6> -->
-                <img class="rounded-circle" src="../../../assets/img/logo_app.png" height="95px" width="140px"  >
-                <!-- <span>{{user.role  }} </span> -->
-            </div>
-        </div>
+<div class="sidebar bg-dark text-white pt-2 pe-4 pb-3">
+    <!-- Logo -->
+    <div class="ms-4 mb-4 d-flex align-items-center">
+        <img class="rounded-circle" src="../../../assets/img/logo_app.png"
+            alt="Logo" height="80px" width="auto">
+    </div>
+    <!-- Navigation Menu -->
+    <nav class="navbar">
         <div class="navbar-nav w-100">
-            <a routerLink="/dashboard-admin" *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a routerLink="/dashboard-rh" *ngIf="user.user.role == 'rh' " class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-
-            <a routerLink="/add-employee"  *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Add User </a>
-            <a routerLink="/list-employees" *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-table me-2"></i>List of Users </a>
-
-            <a routerLink="/add-reason" *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Add Reason </a>
-            <a routerLink="/list-reasons" *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-table me-2"></i>List of reasons </a>
-            <a routerLink="/add-request" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Add Request </a>
-
-            <a routerLink="/list-requests" *ngIf="user.user.role == 'admin' " class="nav-item nav-link"><i class="fa fa-table me-2"></i>List of requests</a>
-
-            <div class="nav-item dropdown"  >
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <i class="fa fa-chart-bar me-2"></i>Requests </a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a routerLink="/requests-inprogress" class="nav-item nav-link"><i class="fa fa-table me-2"></i>In Progress </a>
-                    <a routerLink="/requests-accepted" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Accepted </a>
-                    <a routerLink="/requests-refused" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Refused </a>
-                </div>
-            </div>
-
-            <a routerLink="/calendar" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>
-                Calendar
+            <!-- Dashboard Links -->
+            <a routerLink="/dashboard-admin" *ngIf="user.user.role === 'admin'"
+                class="nav-item nav-link">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+            </a>
+            <a routerLink="/dashboard-rh" *ngIf="user.user.role === 'rh'"
+                class="nav-item nav-link">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
             </a>
 
-            <!-- <a routerLink="/chat-admin" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Chat </a> -->
+            <!-- Users Management Links -->
+            <a routerLink="/add-employee" *ngIf="user.user.role === 'admin'"
+                class="nav-item nav-link">
+                <i class="fa fa-user-plus me-2"></i>Add User
+            </a>
+            <a routerLink="/list-employees" *ngIf="user.user.role === 'admin'"
+                class="nav-item nav-link">
+                <i class="fa fa-users me-2"></i>List of Users
+            </a>
 
+            <!-- Reasons Management Links -->
+            <a routerLink="/add-reason" *ngIf="user.user.role === 'admin'"
+                class="nav-item nav-link">
+                <i class="fa fa-key me-2"></i>Add Reason
+            </a>
 
+            <a routerLink="/list-reasons" *ngIf="user.user.role === 'admin'"
+                class="nav-item nav-link">
+                <i class="fa fa-list me-2"></i>List of Reasons
+            </a>
+            <a routerLink="/add-request" class="nav-item nav-link"><i
+                    class="fa fa-keyboard me-2"></i>Add Request </a>
+
+            <a routerLink="/list-requests" *ngIf="user.user.role === 'admin' || user.user.role === 'rh' "
+                class="nav-item nav-link">
+                <i class="fa fa-list me-2"></i>List of Requests
+            </a>
+            <!-- Requests Management Links -->
             <div class="nav-item dropdown">
-                <a (click)="logout()" class="nav-link"><i class="fa fa-sign-out-alt me-2"></i>Logout </a>
+                <a href="#" class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown">
+                    <i class="fa fa-tasks me-2"></i>Requests
+                </a>
+                <div class="dropdown-menu bg-success">
+                    <a routerLink="/requests-inprogress"
+                        class="dropdown-item"><i
+                            class="fa fa-hourglass-half me-2"></i>In
+                        Progress</a>
+                    <a routerLink="/requests-accepted" class="dropdown-item"><i
+                            class="fa fa-check-circle me-2"></i>Accepted</a>
+                    <a routerLink="/requests-refused" class="dropdown-item"><i
+                            class="fa fa-times-circle me-2"></i>Refused</a>
+                </div>
+            </div>
 
+            <!-- Calendar Link -->
+            <a routerLink="/calendar" class="nav-item nav-link">
+                <i class="fa fa-calendar me-2"></i>Calendar
+            </a>
+
+            <!-- Logout Link -->
+            <div class="nav-item">
+                <a (click)="logout()" class="nav-link">
+                    <i class="fa fa-sign-out-alt me-2"></i>Logout
+                </a>
             </div>
         </div>
     </nav>
 </div>
-
-
 <!-- Sidebar End -->

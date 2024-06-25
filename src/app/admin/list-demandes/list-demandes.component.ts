@@ -26,6 +26,7 @@ export class ListDemandesComponent {
 
   requestdetails: any;
   user: any;
+  hasSicknessReason: any;
 
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
@@ -170,6 +171,12 @@ export class ListDemandesComponent {
 
 
   }
+
+  checkForSicknessReason() {
+    if (this.dataArray?.requests) {
+        this.hasSicknessReason = this.dataArray.requests.some((request: any) => request.reason === 'sikness');
+    }
+}
 
 
 

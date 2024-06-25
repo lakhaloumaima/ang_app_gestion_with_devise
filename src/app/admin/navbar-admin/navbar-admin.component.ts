@@ -27,22 +27,22 @@ export class NavbarAdminComponent  {
       }
     });
 
-    this.usersServicesService.getNotifications(this.user.user.id).subscribe(
-      notifications => {
-        this.notifications = notifications; // Initialize notifications
-        console.log('Initial notifications:', this.notifications);
-      },
-      error => {
-        console.error('Error loading notifications:', error);
-      }
-    );
+    // this.usersServicesService.getNotifications(this.user.user.id).subscribe(
+    //   notifications => {
+    //     this.notifications = notifications; // Initialize notifications
+    //     console.log('Initial notifications:', this.notifications);
+    //   },
+    //   error => {
+    //     console.error('Error loading notifications:', error);
+    //   }
+    // );
 
     this.usersServicesService.getNotifications(this.user.user.id).subscribe(
       data => {
-        this.notifications = data;
-        this.notifications.unshift(data ); // Add new notification to the beginning of the array
+        // this.notifications.unshift(data ); // Add new notification to the beginning of the array
 
         console.log( this.notifications )
+        this.notifications = data;
       },
       error => {
         console.error('Error loading notifications:', error);

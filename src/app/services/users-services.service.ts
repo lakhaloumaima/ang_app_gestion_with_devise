@@ -74,6 +74,10 @@ export class UsersServicesService {
     return this.http.get(environment.urlBackend + 'getAllEmployeesByCompany/' + company_id )
   }
 
+  getAllEmployeesByCompanyWithoutAdmin(company_id: any) {
+    return this.http.get(environment.urlBackend + 'getAllEmployeesByCompanyWithoutAdmin/' + company_id )
+  }
+
   getAllUsersByCompany(company_id: any) {
     return this.http.get(environment.urlBackend + 'getAllUsersByCompany/' + company_id )
   }
