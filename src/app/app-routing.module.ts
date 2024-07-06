@@ -26,6 +26,7 @@ import { ChatEmpolyeeComponent } from './employee/chat/chat.component';
 import { AddReasonComponent } from './admin/add-reason/add-reason.component';
 import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
 import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
+import { TaskComponent } from './task/task.component';
 
 
 const routes: Routes = [
@@ -56,6 +57,8 @@ const routes: Routes = [
 
   { path: 'add-reason', canActivate: [AuthGuardGuard], component: AddReasonComponent },
   { path: 'list-reasons', canActivate: [AuthGuardGuard], component: ListReasonsComponent },
+
+  { path: 'requests-card', canActivate: [AuthGuardGuard], component: TaskComponent },
 
   { path: 'chat-admin', canActivate: [AuthGuardGuard], component: ChatAdminComponent },
   { path: 'chat-admin/:receiver_id', canActivate: [AuthGuardGuard], component: ChatAdminComponent },

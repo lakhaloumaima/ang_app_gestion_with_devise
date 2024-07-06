@@ -19,6 +19,15 @@ export class DemandesServicesService {
     return this.http.post(environment.urlBackend + 'addReason/', data)
   }
 
+  // Fetch employees filtered by role
+  getRequestsByStatus(status: any, company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getRequestsByStatus/' + status + "/" + company_id );
+  }
+
+  getRequestsByIDByStatus(user_id: any, status: any, company_id: any): Observable<any> {
+    return this.http.get(environment.urlBackend + 'getRequestsByIDByStatus/' + status + "/" + company_id + "/" + user_id );
+  }
+
   getAllReasons(): Observable<any> {
     return this.http.get(environment.urlBackend + 'reason/')
   }
@@ -60,12 +69,20 @@ export class DemandesServicesService {
     return this.http.get(environment.urlBackend + 'requests/' + company_id )
   }
 
+  getRequestsByUserIdAndDate(userId: string, date: string): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.urlBackend}/requests?user_id=${userId}&date=${date}`);
+}
+
   getAllRequestsByCompany(company_id: any ): Observable<any> {
     return this.http.get(environment.urlBackend + 'getAllRequestsByCompany/' + company_id )
   }
 
   updateRequest(id: any, data: any): Observable<any> {
     return this.http.patch(environment.urlBackend + 'requests/' + id, data)
+  }
+
+  updateRequestStatus(id: number, status: string): Observable<any> {
+    return this.http.patch<any>(`${environment.urlBackend}updateRequestStatus/${id}`, { status });
   }
 
   getrequestinprogressbyemployee(company_id: any): Observable<any> {

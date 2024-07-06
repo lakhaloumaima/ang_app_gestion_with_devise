@@ -1,148 +1,112 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <app-sidebar></app-sidebar>
-
     <div class="content">
-
-
-        <div class="container"><br>
-
-            <div style="text-align: right;">
-                <button class="btn btn-success" (click)="download()"> Download <i class="fas fa-download"></i> </button>
-            </div>
-            <br>
-            <div class="main-body">
-                <div class="row">
-
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <h4 style="color: green ;"> Employee Details : </h4>
-                                <hr>
-                                <div class="mt-3">
-
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6> Email : </h6>
-                                        </div>
-                                        <p class="col-sm-9"
-                                            *ngIf="user.user.email && user.user.email !== 'null' ">
-                                            {{user.user.email}} </p>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h6> Balance : </h6>
-                                        </div>
-                                        <p class="col-sm-7"
-                                            *ngIf="user.user.solde && user.user.solde !== 'null' ">
-                                            {{user.user.solde}} Days </p>
-                                    </div>
-                                    <hr>
-
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8">
-                        <div class="card" *ngFor="let item of dataArray">
-                            <div class="card-body">
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <h4 style="color: green ;"> Request Details : </h4> <br> <br>
-                                            <hr>
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Request status </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.status}}
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Start_date </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.start_date}}
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">End_date </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.end_date}}
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Period </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.days}} Days
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Reason </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item?.reason.name }}
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Description </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.description != 'null' ? item.description : ''}}                                         </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Motif_refused </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.motif_refused}}
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Sended at </h6>
-                                            </div>
-                                            <p class="col-sm-5">
-                                                {{item.created_at | date: 'medium'}}
-                                            </p>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
+      <div class="container">
         <br>
+        <div style="text-align: right;">
+          <button class="btn btn-success" (click)="download()"> Download <i class="fas fa-download"></i> </button>
+        </div>
+        <br>
+        <div class="main-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card">
+                <div class="card-body">
+                  <h4 style="color: green;">Employee Details:</h4>
+                  <hr>
+                  <div class="mt-3">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6>Email:</h6>
+                      </div>
+                      <p class="col-sm-9" *ngIf="user.user.email && user.user.email !== 'null'">{{user.user.email}}</p>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <h6>Balance:</h6>
+                      </div>
+                      <p class="col-sm-7" *ngIf="user.user.solde && user.user.solde !== 'null'">{{user.user.solde}} Days</p>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-8">
+              <div class="card" *ngFor="let item of dataArray">
+                <div class="card-body">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <h4 style="color: green;">Request Details:</h4>
+                        <br>
+                        <br>
+                        <hr>
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Request status</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.status}}</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Start_date</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.start_date}}</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">End_date</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.end_date}}</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Period</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.days}} Days</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Reason</h6>
+                        </div>
+                        <p class="col-sm-5">{{item?.reason.name}}</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Description</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.description != 'null' ? item.description : ''}}</p>
+                      </div>
+                      <hr *ngIf="item.status == 'refused'">
+                      <div class="row" *ngIf="item.status == 'refused'">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Motif_refused</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.motif_refused}}</p>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Sended at</h6>
+                        </div>
+                        <p class="col-sm-5">{{item.created_at | date: 'medium'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
     </div>
-</div>
+  </div>
+  

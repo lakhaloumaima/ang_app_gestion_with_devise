@@ -55,6 +55,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { ListReasonsComponent } from './admin/list-reasons/list-reasons.component';
 import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
+import { CdkDrag, CdkDropList, CdkDropListGroup, DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskComponent } from './task/task.component';
 
 // FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 //   dayGridPlugin,
@@ -93,7 +95,8 @@ import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
     CalendarComponent,
     AddReasonComponent,
     ListReasonsComponent,
-    DashboardRhComponent
+    DashboardRhComponent,
+    TaskComponent
 
   ],
 
@@ -110,7 +113,8 @@ import { DashboardRhComponent } from './rh/dashboard-rh/dashboard-rh.component';
 
     ChartsModule,
     SocketIoModule.forRoot(config),
-    FullCalendarModule
+    FullCalendarModule,
+    DragDropModule
     // Ng2SearchPipeModule ,
 
   //  FullCalendarModule // register FullCalendar with you app

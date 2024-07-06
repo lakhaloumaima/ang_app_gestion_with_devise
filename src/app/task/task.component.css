@@ -1,0 +1,60 @@
+/* Style for the main container */
+.container-xxl {
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  /* Style for the kanban board */
+  .kanban-board {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Style for each column */
+  .column {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    width: 45%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header style for column title */
+  .column h2 {
+    color: #28a745;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the task container */
+  .task-container {
+    background-color: #ffffff;
+    border: 2px dashed #28a745;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 200px;
+  }
+  
+  /* Style for individual tasks */
+  .task {
+    background-color: #d4edda;
+    border: 1px solid #28a745;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for empty task message */
+  .empty-task {
+    color: #6c757d;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Additional style for text */
+  .task p {
+    margin: 0;
+    color: #155724;
+  }
+  

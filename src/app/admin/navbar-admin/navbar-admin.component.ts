@@ -41,7 +41,7 @@ export class NavbarAdminComponent  {
       data => {
         // this.notifications.unshift(data ); // Add new notification to the beginning of the array
 
-        console.log( this.notifications )
+        console.log( data )
         this.notifications = data;
       },
       error => {

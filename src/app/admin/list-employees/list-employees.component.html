@@ -78,8 +78,13 @@
                                     <td>{{ item.company?.name }}</td>
 
                                     <td>
-                                        <p class="btn btn-outline-success m-2" *ngIf="item.solde > 0">{{ item.solde }} Days</p>
-                                                <p class="btn btn-danger rounded-pill m-2" *ngIf="item.solde < 0">{{ item.solde }} Days</p>
+                                        <p class="btn btn-outline-success m-2"
+                                            *ngIf="item.solde > 0">{{ item.solde
+                                            }} Days</p>
+                                        <p
+                                            class="btn btn-danger rounded-pill m-2"
+                                            *ngIf="item.solde < 0">{{ item.solde
+                                            }} Days</p>
                                     </td>
 
                                     <td *ngIf="user.user.role != 'rh'">

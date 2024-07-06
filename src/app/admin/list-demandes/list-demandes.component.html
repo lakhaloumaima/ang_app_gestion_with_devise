@@ -8,13 +8,28 @@
             <div class="bg-light text-center rounded p-4">
                 <div
                     class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Requests ( {{dataArray?.requests.length}} )
-                    </h6>
+                    <h6 class="mb-0">Requests ({{ dataArray?.requests?.length || 0
+                        }})</h6>
                     <form class="d-none d-md-flex ms-4">
                         <input class="form-control border-0" type="search"
                             placeholder="Search ..." name="email"
                             [(ngModel)]="searchedKeyword">
                     </form>
+                    <div class="btn-group" role="group"
+                        aria-label="Role Filter">
+                        <button type="button" class="btn btn-outline-success"
+                            name="employee"
+                            (click)="applyStatusFilter('in_progress')">In Progress</button>
+                        <button type="button" class="btn btn-outline-success"
+                            name="rh"
+                            (click)="applyStatusFilter('accepted')">Accepted</button>
+                        <button type="button" class="btn btn-outline-success"
+                            name (click)="applyStatusFilter('refused')">
+                            Refused</button>
+                            <button type="button" class="btn btn-outline-success"
+                            name (click)="applyStatusFilter('')">Clear
+                            Filter</button>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table
@@ -22,112 +37,118 @@
                         <thead>
                             <tr class="text-dark">
                                 <th scope="col">Status</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Start date</th>
+                                <th scope="col">End date</th>
+                                <th scope="col">Period </th>
 
-                                <th scope="col">Email </th>
-                                <th scope="col">Start date </th>
-                                <th scope="col">End date </th>
-
-                                <th scope="col">Balance </th>
-                                <th scope="col">Reason </th>
-
-                                <th scope="col">Certificate </th>
-
-                                <th *ngIf="user.user.role == 'rh' " colspan="1">Actions</th>
-
-                                <th *ngIf="user.user.role != 'rh' " colspan="3">Actions</th>
+                                <th scope="col">Balance</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Certificate</th>
+                                <th *ngIf="user.user.role == 'rh'"
+                                    colspan="1">Actions</th>
+                                <th *ngIf="user.user.role != 'rh'"
+                                    colspan="3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of dataArray?.requests | paginate: { itemsPerPage: 10 , currentPage: p }    ; index as i">
-                                <td
-                                *ngIf="item.status == 'in_progress' "><button
-                                    type="button"
-                                    class="btn btn-primary rounded-pill m-2"><i class="fa fa-hourglass-half me-2"></i></button></td>
-                            <td *ngIf="item.status == 'accepted' "><button
-                                    type="button"
-                                    class="btn btn-success rounded-pill m-2"><i class="fa fa-check-circle me-2"></i></button></td>
-                            <td *ngIf="item.status == 'refused' "><button
-                                    type="button"
-                                    class="btn btn-danger rounded-pill m-2"><i class="fa fa-times-circle me-2"></i></button></td>
-
-                                <td> {{item.user.email}} </td>
-                                <td>{{item.start_date}} </td>
-                                <td>{{item.end_date}} </td>
-
+                                *ngFor="let item of dataArray.requests | paginate: { itemsPerPage: 10 , currentPage: p } ; index as i">
+                                <td *ngIf="item.status == 'in_progress'">
+                                    <button type="button"
+                                        class="btn btn-primary rounded-pill m-2">
+                                        <i
+                                            class="fa fa-hourglass-half me-2"></i>
+                                    </button>
+                                </td>
+                                <td *ngIf="item.status == 'accepted'">
+                                    <button type="button"
+                                        class="btn btn-success rounded-pill m-2">
+                                        <i class="fa fa-check-circle me-2"></i>
+                                    </button>
+                                </td>
+                                <td *ngIf="item.status == 'refused'">
+                                    <button type="button"
+                                        class="btn btn-danger rounded-pill m-2">
+                                        <i class="fa fa-times-circle me-2"></i>
+                                    </button>
+                                </td>
+                                <td>{{item.user.email}}</td>
+                                <td>{{item.start_date}}</td>
+                                <td>{{item.end_date}}</td>
+                                <td>{{item.days}}</td>
 
                                 <td>
                                     <p
                                         class="btn btn-outline-success rounded-pill m-1"
-                                        *ngIf="item.user.solde > 0 ">
-                                        {{item.user.solde}} Days</p>
+                                        *ngIf="item.user.solde > 0">
+                                        {{item.user.solde}} Days
+                                    </p>
                                     <p
                                         class="btn btn-outline-danger rounded-pill m-1"
-                                        *ngIf="item.user.solde < 0 ">
-                                        {{item.user.solde}} Days</p>
-
+                                        *ngIf="item.user.solde < 0">
+                                        {{item.user.solde}} Days
+                                    </p>
                                 </td>
-                                <td>{{item.reason.name }}</td>
-
-
-                                <td> <button
-                                    *ngIf="item.reason.name == 'sickness' && item.certificate "
-                                    (click)="exportPdf(item.id, item.user.email )"
-                                    class="btn btn-primary rounded-pill m-2"><i
-                                        class="fa fa-download"></i> Export
-                                    Certificate</button> </td>
-
-                                <td  >
+                                <td>{{item.reason.name}}</td>
+                                <td>
                                     <button
-                                        (click)="getdata1(item.status , item.motif_refused , item.user_id , item.created_at , item?.reason.name , item.description, item.id)"
+                                        *ngIf="item.reason.name == 'sickness' && item.certificate"
+                                        (click)="exportPdf(item.id, item.user.email)"
+                                        class="btn btn-primary rounded-pill m-2">
+                                        <i class="fa fa-download"></i> Export
+                                        Certificate
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        (click)="getdata1(item.status, item.motif_refused, item.user_id, item.created_at, item?.reason.name, item.description, item.id)"
                                         data-toggle="modal"
                                         data-target="#exampleModal1"
-                                        class="btn btn-info rounded-pill m-2"><i
-                                            class="fa fa-info"
+                                        class="btn btn-info rounded-pill m-2">
+                                        <i class="fa fa-info"
                                             aria-hidden="true"></i>
                                     </button>
-
                                 </td>
-                                <td *ngIf="user.user.role != 'rh' " >
+                                <td *ngIf="user.user.role != 'rh'">
                                     <button
-                                        *ngIf="item.status==='in_progress' || item.status==='refused'   "
-                                        (click)="getdata(item.status , item.motif_refused , item.user_id , item.id)"
+                                        *ngIf="item.status === 'in_progress' || item.status === 'refused'"
+                                        (click)="getdata(item.status, item.motif_refused, item.user_id, item.id)"
                                         data-toggle="modal"
                                         data-target="#exampleModal"
-                                        class="btn btn-warning rounded-pill m-2"><i
-                                            class="fa fa-edit"
+                                        class="btn btn-warning rounded-pill m-2">
+                                        <i class="fa fa-edit"
                                             aria-hidden="true"></i>
                                     </button>
                                     <button readonly
                                         style="cursor: not-allowed;" disabled
-                                        *ngIf="item.status==='accepted' "
-                                        class="btn btn-warning rounded-pill m-2"><i
-                                            class="fa fa-edit"
-                                            aria-hidden="true"></i> </button>
+                                        *ngIf="item.status === 'accepted'"
+                                        class="btn btn-warning rounded-pill m-2">
+                                        <i class="fa fa-edit"
+                                            aria-hidden="true"></i>
+                                    </button>
                                 </td>
-
-                                <td  *ngIf="user.user.role != 'rh' " >
-                                    <button (click)="delete(item.id , i)"
-                                        *ngIf="item.status==='in_progress' || item.status==='refused'   "
-                                        class="btn btn-danger rounded-pill m-2"><i
-                                            class="fa fa-trash"
+                                <td *ngIf="user.user.role != 'rh'">
+                                    <button (click)="delete(item.id, i)"
+                                        *ngIf="item.status === 'in_progress' || item.status === 'refused'"
+                                        class="btn btn-danger rounded-pill m-2">
+                                        <i class="fa fa-trash"
                                             aria-hidden="true"></i>
                                     </button>
                                     <button readonly
                                         style="cursor: not-allowed;" disabled
-                                        (click)="delete(item.id , i)"
-                                        *ngIf="item.status==='accepted' "
-                                        class="btn btn-danger rounded-pill m-2"><i
-                                            class="fa fa-trash"
-                                            aria-hidden="true"></i> </button>
+                                        (click)="delete(item.id, i)"
+                                        *ngIf="item.status === 'accepted'"
+                                        class="btn btn-danger rounded-pill m-2">
+                                        <i class="fa fa-trash"
+                                            aria-hidden="true"></i>
+                                    </button>
                                 </td>
-
                             </tr>
-                            <tr *ngIf="dataArray?.requests.length==0">
-                                <td colspan="8" style="text-align:center;">no
+                            <tr *ngIf="dataArray.requests.length === 0">
+                                <td colspan="8" style="text-align:center;">No
                                     data found</td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -139,7 +160,6 @@
                 (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
-
 </div>
 
 <!-- Modal Details -->
@@ -147,12 +167,9 @@
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-body">
-
                 <form>
-
-                    <div class="form-group" hidden >
+                    <div class="form-group" hidden>
                         <label for="exampleFormControlInput1"> User ID </label>
                         <input type="text" class="form-control"
                             placeholder="user_id"
@@ -160,25 +177,21 @@
                             name="user_id" readonly hidden />
                     </div>
                     <br>
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Status </label>
                         <input type="text" class="form-control"
                             placeholder="status"
-                            [defaultValue]="dataRequest.status"
-                            name="status" readonly />
+                            [defaultValue]="dataRequest.status" name="status"
+                            readonly />
                     </div>
-
                     <br>
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Reason </label>
                         <input type="text" class="form-control"
                             placeholder="reason"
-                            [defaultValue]="dataRequest.reason"
-                            name="reason" readonly />
+                            [defaultValue]="dataRequest.reason" name="reason"
+                            readonly />
                     </div>
-
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Description
@@ -186,21 +199,17 @@
                         <textarea type="text" class="form-control"
                             placeholder="description"
                             [defaultValue]="dataRequest.description"
-                            name="description" readonly> </textarea>
-
+                            name="description" readonly></textarea>
                     </div>
-
                     <br>
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Motif Refused
                         </label>
                         <textarea type="text" class="form-control"
                             placeholder="motif_refused"
                             [defaultValue]="dataRequest.motif_refused"
-                            name="motif_refused" readonly> </textarea>
+                            name="motif_refused" readonly></textarea>
                     </div>
-
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Sending Date
@@ -210,10 +219,8 @@
                             [defaultValue]="dataRequest.created_at"
                             name="created_at" readonly />
                     </div>
-
                     <br>
                 </form>
-
             </div>
         </div>
     </div>
@@ -231,7 +238,6 @@
                 <!-- form update start here -->
                 <form [formGroup]="updaterequests" #f="ngForm"
                     (ngSubmit)="updaterequest(f)">
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> User ID </label>
                         <input type="text" class="form-control"
@@ -242,23 +248,18 @@
                             readonly />
                     </div>
                     <br>
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Status </label>
-
                         <select class="form-control"
                             id="exampleFormControlSelect1"
                             [(ngModel)]="dataRequest.status"
                             formControlName="status" name="status" ngModel>
-                            <option value="in_progress"><i class="fa fa-hourglass-half me-2"></i> </option>
-                            <option value="accepted">accepted </option>
-                            <option value="refused">refused </option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="refused">Refused</option>
                         </select>
-
                     </div>
-
                     <br>
-
                     <div class="form-group">
                         <label for="exampleFormControlInput1"> Motif Refused
                         </label>
@@ -269,13 +270,10 @@
                             name="motif_refused" formControlName="motif_refused"
                             minlength="2" maxlength="20" ngModel />
                     </div>
-
                     <br>
-
                     <button class="btn btn-primary"
                         type="submit">Update</button>
                 </form>
-
                 <!-- form update end here -->
             </div>
         </div>

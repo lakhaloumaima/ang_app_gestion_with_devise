@@ -116,6 +116,31 @@ export class EmployeeListRequestsComponent implements OnInit {
     });
   }
 
+
+applyStatusFilter(status: string): void {
+  if (status === '') {
+    this.demandesServicesService.getRequestsByID(this.user.id).subscribe(data => {
+      sessionStorage.setItem('requestdetails', JSON.stringify(data));
+      console.log(data);
+      this.dataArray = data;
+    }, (err: HttpErrorResponse) => {
+      this.messageErr = "We don't found this request in our database";
+    });
+  } else {
+    this.demandesServicesService.getRequestsByIDByStatus(this.user.user.id, status, this.user.user.company_id).subscribe(
+      (data) => {
+        sessionStorage.setItem('requestdetails', JSON.stringify(data));
+
+        this.dataArray = data; // Update employees based on status
+      },
+      (err: HttpErrorResponse) => {
+        console.error(`Error fetching ${status} employees:`, err);
+        // Handle error
+      }
+    );
+  }
+}
+
   delete(id: any, i: number): void {
     Swal.fire({
       title: 'Are you sure?',

@@ -117,6 +117,7 @@ export class ListEmployeesComponent implements OnInit {
     this.employeesServicesService.updateEmployee(this.dataEmployee.id, formData).subscribe((response: any) => {
       console.log(response);
       Swal.fire('Whooa!', 'Employee successfully updated!', 'success');
+      window.location.reload()
       this.loadEmployees();
     }, (err: HttpErrorResponse) => {
       console.error('Error updating employee:', err);

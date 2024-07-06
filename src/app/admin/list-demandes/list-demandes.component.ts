@@ -27,6 +27,7 @@ export class ListDemandesComponent {
   requestdetails: any;
   user: any;
   hasSicknessReason: any;
+  selectedStatus: any;
 
 
   constructor(private demandesServicesService: DemandesServicesService, private router: Router) {
@@ -179,6 +180,28 @@ export class ListDemandesComponent {
 }
 
 
+applyStatusFilter(status: string): void {
+  if (status === '') {
+    this.demandesServicesService.getAllRequests(this.user.user.company_id).subscribe(data => {
+
+      console.log(data)
+      this.dataArray = data
+
+      sessionStorage.setItem('requestdetails', JSON.stringify(data)), (err: HttpErrorResponse) => {
+        this.messageErr = "We dont't found this request in our database"
+      }
+    })  } else {
+    this.demandesServicesService.getRequestsByStatus(status, this.user.user.company_id).subscribe(
+      (data) => {
+        this.dataArray = data; // Update employees based on status
+      },
+      (err: HttpErrorResponse) => {
+        console.error(`Error fetching ${status} employees:`, err);
+        // Handle error
+      }
+    );
+  }
+}
 
 
 }

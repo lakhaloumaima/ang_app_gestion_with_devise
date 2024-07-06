@@ -1,0 +1,40 @@
+<div class="container-xxl position-relative bg-white d-flex p-0">
+  <!-- Sidebar Component -->
+  <app-sidebar-admin></app-sidebar-admin>
+
+  <div class="container-fluid content flex-fill">
+    <!-- Navbar Component -->
+    <app-navbar-admin></app-navbar-admin>
+    <br>
+    <div cdkDropListGroup>
+      <div class="kanban-board">
+        <div class="column" *ngFor="let column of columns">
+          <div class="container">
+            <h2>{{ column.title }}</h2>
+            <div
+              class="task-container"
+              cdkDropList
+              [cdkDropListData]="column.dataArrayyy"
+              (cdkDropListDropped)="onTaskDropped($event, column)"
+            >
+              <div
+                class="task"
+                *ngFor="let task of column.dataArrayyy"
+                cdkDrag
+                [cdkDragData]="task"
+                [cdkDragDisabled]="!canDrag(task)"
+              >
+                <p>{{ task.user.email }}</p>
+                <p>{{ task.reason.name }}</p>
+                <p>{{ task.status }}</p>
+              </div>
+              <div class="empty-task" *ngIf="column.dataArrayyy.length === 0">
+                No tasks in this column
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
