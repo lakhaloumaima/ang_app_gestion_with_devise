@@ -32,7 +32,7 @@ export class LoginComponent {
 
     this.usersServicesService.login(data).subscribe(
       response => {
-        if (response.status == 401) {
+        if (response.status != 200 ) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -55,24 +55,17 @@ export class LoginComponent {
 
 
           }
-          else if (response.role == "employee" && subdomain === response.subdomain) {
+          else if (response.role == "employee" ) {
             sessionStorage.setItem('user', JSON.stringify(response));
             // window.location.href = `http://${subdomain}.localhost:4200/dashboard-employee`;
             window.location.href = `http://localhost:4200/dashboard-employee`;
 
           }
-          else if (response.role == "rh" && subdomain === response.subdomain) {
+          else if (response.role == "rh" ) {
             sessionStorage.setItem('user', JSON.stringify(response));
             // window.location.href = `http://${subdomain}.localhost:4200/dashboard-rh`;
             window.location.href = `http://localhost:4200/dashboard-rh`;
 
-          }
-          else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Invalid Subdomain or Role'
-            });
           }
         }
       },

@@ -58,6 +58,16 @@ export class RegisterComponent {
             this.router.navigate(['/']);
           } else {
             Swal.fire('Whooa !', 'Account successfully created !', 'success');
+            // Clear the fields after successful registration
+            this.user = {
+              email: '',
+              password: ''
+            };
+            this.company = {
+              name: '',
+              subdomain: '',
+              solde: ''
+            };
           }
         }
       },

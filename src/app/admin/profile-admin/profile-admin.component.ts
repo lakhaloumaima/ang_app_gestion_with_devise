@@ -57,7 +57,7 @@ export class ProfileAdminComponent {
       if (result.isConfirmed) {
         this.usersServicesService.updateimageuser(this.user.user.id, imageformadata).subscribe(response => {
           sessionStorage.setItem('user', JSON.stringify(response));
-          window.location.reload();
+          // window.location.reload();
         }, (err: HttpErrorResponse) => {
           console.log(err.message);
         });

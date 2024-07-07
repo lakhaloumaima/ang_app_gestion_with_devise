@@ -18,13 +18,13 @@ export class AddEmployeeComponent implements OnInit {
 
   constructor(private usersServicesService: UsersServicesService, private router: Router) {
     this.registerr = new UntypedFormGroup({
-      email: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', [Validators.required, Validators.minLength(6)]),
       role: new UntypedFormControl('', [Validators.required]),
       first_name: new UntypedFormControl('', [Validators.required]),
       last_name: new UntypedFormControl('', [Validators.required]),
-      cin: new UntypedFormControl('', [Validators.required]),
-      phone: new UntypedFormControl('', [Validators.required]),
+      cin: new UntypedFormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]),
+      phone: new UntypedFormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]),
       address: new UntypedFormControl('', [Validators.required]),
       company_id: new UntypedFormControl('', [Validators.required]),
     });
@@ -48,8 +48,7 @@ export class AddEmployeeComponent implements OnInit {
     formData.append('address', this.registerr.value.address);
     formData.append('cin', this.registerr.value.cin);
 
-
-    if (data.email.length !== 0 && data.password.length !== 0) {
+    if (this.registerr.valid) {
       this.usersServicesService.registerEmployee(formData).subscribe(data => {
         Swal.fire('Whooa!', 'Account successfully created!', 'success');
         this.resetForm();  // Reset the form on success
@@ -59,7 +58,7 @@ export class AddEmployeeComponent implements OnInit {
         Swal.fire('Oups!', 'Parameter invalid!', 'error');
       });
     } else {
-      this.messageError = "Champs required";
+      this.messageError = "All fields are required and must be valid.";
     }
   }
 
